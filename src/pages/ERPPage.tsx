@@ -214,7 +214,7 @@ export default function ERPAdminPanel() {
           setOrganizationName(configuredOrganizationName);
         }
       } catch (error) {
-        console.error('Failed loading organization name from /public/json/organizations.json', error);
+        console.error('Failed loading organization name from GET /api/organizations/by-url', error);
       }
     };
 

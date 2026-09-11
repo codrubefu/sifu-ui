@@ -58,6 +58,8 @@ The shared API foundation is:
 
 `apiClient<T>()` builds requests with `Accept: application/json`, bearer token from `master-erp-api-token`, response unwrapping from `{ data: ... }`, and normalized `ApiClientError`. Feature services should use this helper unless a special response type is required, such as blob downloads.
 
+`src/api/organizationApi.ts` calls the public (unauthenticated) `GET /api/organizations/by-url?url=<frontend origin>` endpoint, used to resolve the current tenant from the origin the frontend is served from. It returns only the two fields the UI needs (`id`, `name`) even though the backend resource has more. `OrganizationConfigService` wraps it with a module-level cache keyed by `window.location.origin` so `getOrganizationIdForCurrentUrl()` and `getOrganizationNameForCurrentUrl()` share a single in-flight/cached request per page load instead of firing one call each; a failed request clears the cache so the next call retries.
+
 Main feature service files:
 
 - `src/services/ErpApiService.ts` for core ERP resources and shared API types
@@ -68,7 +70,7 @@ Main feature service files:
 - `src/services/paymentService.ts` for payment-specific calls
 - `src/services/eventService.ts` for event-specific calls
 - `src/services/articlesService.ts` for articles
-- `src/services/OrganizationConfigService.ts` for organization config
+- `src/services/OrganizationConfigService.ts` for resolving the current organization through the backend, `GET /api/organizations/by-url`
 - `src/services/ErpJsonDataService.ts` for optional local seed/cache data
 
 ## Authentication
