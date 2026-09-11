@@ -1,0 +1,4 @@
+http://sifu.local, http://*.sifu.local, http://sifu.demo {
+	bind 127.0.0.1
+	reverse_proxy 127.0.0.1:5173
+}

@@ -6,11 +6,9 @@ import {
   ChevronRight,
   CreditCard,
   CalendarDays,
-  CalendarClock,
   FileText,
   Info,
   KeyRound,
-  Tags,
   ScanLine,
   Megaphone,
   FileBarChart2,
@@ -107,10 +105,6 @@ const navGroups: readonly NavGroup[] = [
         labelKey: 'menu.events',
         icon: CalendarDays,
         rights: ['events.view', 'events.manage'],
-        children: [
-          { id: 'events/calendar', labelKey: 'menu.eventsCalendar', icon: CalendarClock, rights: ['events.view', 'events.manage'] },
-          { id: 'events/categories', labelKey: 'menu.eventCategories', icon: Tags, rights: ['events.manage'] },
-        ],
       },
       { id: 'articles', labelKey: 'menu.articles', icon: Bell, rights: ['articles.view', 'articles.manage'] },
       { id: 'campaigns', labelKey: 'menu.campaigns', icon: Megaphone, rights: ['campaigns.view', 'campaigns.manage', 'reports.manage', 'users.manage'] },
@@ -125,9 +119,27 @@ function cn(...classes: Array<string | false | null | undefined>) {
   return classes.filter(Boolean).join(' ');
 }
 
+function collectIds(item: NavItem): string[] {
+  return [item.id, ...(item.children ?? []).flatMap(collectIds)];
+}
+
+function itemContainsCurrent(item: NavItem, current: SectionId) {
+  return collectIds(item).includes(current);
+}
+
+function groupContainsCurrent(group: NavGroup, current: SectionId) {
+  return group.items.some((item) => itemContainsCurrent(item, current));
+}
+
 export function Sidebar({ organizationName, current, setCurrent, profileChildId, setProfileChildId, open, onClose }: SidebarProps) {
-  const [openGroups, setOpenGroups] = useState<Record<string, boolean>>({ organization: false, events: true });
+  const [manualOpen, setManualOpen] = useState<Record<string, boolean>>({});
   const [openProfileRow, setOpenProfileRow] = useState<'self' | number | null>(null);
+  const [trackedCurrent, setTrackedCurrent] = useState(current);
+  if (trackedCurrent !== current) {
+    setTrackedCurrent(current);
+    setManualOpen({});
+    if (!current.startsWith('profile-')) setOpenProfileRow(null);
+  }
   const [children, setChildren] = useState<AuthenticatedUserChild[]>([]);
   const { hasAnyRight, user } = useAuth();
   const { t } = useTranslation();
@@ -179,7 +191,8 @@ export function Sidebar({ organizationName, current, setCurrent, profileChildId,
     const itemAllowed = isItemAllowed(item);
     const visibleChildren = item.children ?? [];
     const hasChildren = visibleChildren.length > 0;
-    const isOpen = openGroups[item.id] ?? true;
+    const autoOpen = itemContainsCurrent(item, current);
+    const isOpen = manualOpen[item.id] ?? autoOpen;
     const Icon = item.icon;
     const active = current === item.id;
 
@@ -188,13 +201,13 @@ export function Sidebar({ organizationName, current, setCurrent, profileChildId,
         <div className="flex items-center gap-1">
           <button
             onClick={() => {
+              if (hasChildren) {
+                setManualOpen((prev) => ({ ...prev, [item.id]: !isOpen }));
+                return;
+              }
               if (itemAllowed) {
                 setCurrent(item.id);
                 onClose();
-                return;
-              }
-              if (hasChildren) {
-                setOpenGroups((prev) => ({ ...prev, [item.id]: !prev[item.id] }));
               }
             }}
             className={cn(
@@ -213,7 +226,7 @@ export function Sidebar({ organizationName, current, setCurrent, profileChildId,
           {hasChildren ? (
             <button
               aria-label={t(item.labelKey)}
-              onClick={() => setOpenGroups((prev) => ({ ...prev, [item.id]: !prev[item.id] }))}
+              onClick={() => setManualOpen((prev) => ({ ...prev, [item.id]: !isOpen }))}
               className="rounded-lg p-2 text-slate-500 hover:bg-slate-100 hover:text-slate-700"
             >
               <ChevronRight className={cn('h-4 w-4 transition-transform', isOpen && 'rotate-90')} />
@@ -244,14 +257,15 @@ export function Sidebar({ organizationName, current, setCurrent, profileChildId,
             if (visibleItems.length === 0) return null;
             const GroupIcon = group.icon ?? Building2;
             const isGrouped = Boolean(group.labelKey);
-            const isOpen = openGroups[group.id] ?? true;
+            const autoOpenGroup = groupContainsCurrent(group, current);
+            const isOpen = manualOpen[group.id] ?? autoOpenGroup;
             const groupLabel = group.labelKey ? t(group.labelKey) : '';
 
             return (
               <div key={group.id} className="space-y-1">
                 {isGrouped ? (
                   <button
-                    onClick={() => setOpenGroups((prev) => ({ ...prev, [group.id]: !prev[group.id] }))}
+                    onClick={() => setManualOpen((prev) => ({ ...prev, [group.id]: !isOpen }))}
                     className="flex w-full items-center justify-between rounded-lg px-2.5 py-2 text-left text-[0.6875rem] font-medium normal-case tracking-normal text-slate-500 transition hover:bg-slate-50 hover:text-slate-700"
                   >
                     <span className="flex min-w-0 items-center gap-2.5">
