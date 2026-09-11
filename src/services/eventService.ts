@@ -29,6 +29,23 @@ export type EventService = {
   name: string;
 };
 
+// Resolved reference objects embedded in `EventItem` (via `whenLoaded()` on the API side).
+// Only `{id, name}` is guaranteed regardless of how rich the underlying model is.
+export type EventLocation = {
+  id: number;
+  name: string;
+};
+
+export type EventInstructor = {
+  id: number;
+  name: string;
+};
+
+export type EventGroup = {
+  id: number;
+  name: string;
+};
+
 export type EventCategory = {
   id: number;
   name: string;
@@ -57,9 +74,21 @@ export type EventItem = {
   id: number;
   category_id: number | null;
   category?: EventCategory | null;
+  // Structured location/instructor/group, resolved server-side from the matching
+  // `*_id` foreign key (`whenLoaded()`). `null` when the relation isn't set or
+  // wasn't eager-loaded by the endpoint that returned this event.
+  location_id: number | null;
+  location?: EventLocation | null;
+  instructor_id: number | null;
+  instructor?: EventInstructor | null;
+  group_id: number | null;
+  group?: EventGroup | null;
   title: string;
   description: string | null;
-  location: string | null;
+  // Free-text fallback location label (legacy `location` column, used for
+  // ad-hoc events without a structured `location_id`). Not the same as
+  // `location` above, which is the resolved `location_id` relation.
+  location_text: string | null;
   start_time: string;
   end_time: string;
   recurrence_type: RecurrenceType;
@@ -81,7 +110,13 @@ export type EventItem = {
   updated_at?: string | null;
 };
 
-export type EventPayload = Omit<EventItem, 'id' | 'created_at' | 'updated_at' | 'required_service' | 'category'>;
+// Write payload: the resolved relation objects (`location`/`instructor`/`group`/`category`/
+// `required_service`) are read-only API output, not accepted on create/update. The backend
+// still accepts the free-text fallback label under the `location` key (returned back as
+// `location_text`), so it's re-added here as a plain string field.
+export type EventPayload = Omit<EventItem, 'id' | 'created_at' | 'updated_at' | 'required_service' | 'category' | 'location' | 'instructor' | 'group' | 'location_text'> & {
+  location?: string | null;
+};
 
 export type EventOccurrence = {
   id: number;
@@ -148,6 +183,27 @@ export type BulkAddParticipantsPayload = {
   status?: ParticipantStatus;
   registered_at?: string | null;
   notes?: string | null;
+  apply_to_future_occurrences?: boolean;
+};
+
+export type FutureOccurrenceSkip = {
+  user_id: number;
+  reason: string;
+};
+
+export type FutureOccurrenceUpdate = {
+  occurrence_id: number;
+  occurrence_date: string;
+  added_user_ids: number[];
+  skipped: FutureOccurrenceSkip[];
+};
+
+export type BulkAddParticipantsResponse = {
+  success?: boolean;
+  message?: string;
+  data: EventParticipant[];
+  requires_payment?: boolean;
+  future_occurrences_updated?: FutureOccurrenceUpdate[];
 };
 
 export type UpdateParticipantStatusPayload = {
@@ -188,7 +244,7 @@ function buildUrl(path: string, params?: Record<string, string | number | boolea
   return `${getApiBaseUrl().replace(/\/$/, '')}/${path.replace(/^\//, '')}${query.size ? `?${query.toString()}` : ''}`;
 }
 
-async function request<T>(path: string, options: RequestInit = {}, params?: Record<string, string | number | boolean | undefined>) {
+async function request<T>(path: string, options: RequestInit = {}, params?: Record<string, string | number | boolean | undefined>, requestOptions?: { raw?: boolean }) {
   try {
     const headers = new Headers(options.headers);
     headers.set('Accept', 'application/json');
@@ -207,7 +263,9 @@ async function request<T>(path: string, options: RequestInit = {}, params?: Reco
       normalized.errors = payload?.errors;
       throw normalized;
     }
-    return unwrap<T>(payload as T | { data?: T });
+    // `raw` skips the `{ data: ... }` unwrap so callers can read sibling
+    // envelope fields (e.g. `future_occurrences_updated`) alongside `data`.
+    return requestOptions?.raw ? (payload as T) : unwrap<T>(payload as T | { data?: T });
   } catch (error) {
     throw normalizeError(error);
   }
@@ -241,20 +299,24 @@ export const eventService = {
   getEventOccurrences: (eventId: number, params: OccurrenceFilters = {}) => request<Paginated<EventOccurrence>>(`/events/${eventId}/occurrences`, {}, params),
   getAllOccurrences: (params: OccurrenceFilters = {}) => request<Paginated<EventOccurrence>>('/event-occurrences', {}, params),
   getOccurrence: (id: number) => request<EventOccurrence>(`/event-occurrences/${id}`),
-  cancelOccurrence: (id: number) => {
-    void id;
-    return Promise.reject(new Error('Swagger nu expune un endpoint pentru anularea aparitiei.'));
-  },
+  cancelOccurrence: (id: number) => request<EventOccurrence>(`/event-occurrences/${id}/cancel`, { method: 'PATCH' }),
   getEligibleOccurrenceParticipants: (occurrenceId: number, params: EligibleParticipantFilters = {}) => request<Paginated<EventUser> | EventUser[]>(`/event-occurrences/${occurrenceId}/eligible-participants`, {}, params),
   getOccurrenceParticipants: (occurrenceId: number) => request<Paginated<EventParticipant> | EventParticipant[]>(`/event-occurrences/${occurrenceId}/participants`, {}, { per_page: 100 }),
   addOccurrenceParticipant: (occurrenceId: number, payload: AddParticipantPayload) => request<EventParticipant>(`/event-occurrences/${occurrenceId}/participants`, { method: 'POST', body: JSON.stringify(payload) }),
-  bulkAddOccurrenceParticipants: (occurrenceId: number, payload: BulkAddParticipantsPayload) => request<EventParticipant[]>(`/event-occurrences/${occurrenceId}/participants/bulk`, { method: 'POST', body: JSON.stringify(payload) }),
+  bulkAddOccurrenceParticipants: (occurrenceId: number, payload: BulkAddParticipantsPayload) => request<BulkAddParticipantsResponse>(`/event-occurrences/${occurrenceId}/participants/bulk`, { method: 'POST', body: JSON.stringify(payload) }, undefined, { raw: true }),
   removeOccurrenceParticipant: (occurrenceId: number, userId: number) => request<void>(`/event-occurrences/${occurrenceId}/participants/${userId}`, { method: 'DELETE' }),
   updateOccurrenceParticipantStatus: (occurrenceId: number, userId: number, payload: UpdateParticipantStatusPayload) => request<EventParticipant>(`/event-occurrences/${occurrenceId}/participants/${userId}`, { method: 'PATCH', body: JSON.stringify(payload) }),
   downloadOccurrenceParticipantsPdf,
   searchUsers: (search: string, page = 1, perPage = 10) => request<Paginated<EventUser> | EventUser[]>('/users', {}, { search, page, per_page: perPage }),
   searchUsersByCard: (cardCode: string, page = 1, perPage = 10) => request<Paginated<EventUser> | EventUser[]>('/users/search/user-code', {}, { search: cardCode, page, per_page: perPage }),
   getServices: () => request<EventService[] | Paginated<EventService>>('/services', {}, { per_page: 100, is_active: 1 }),
+  // Reference data for the location_id/instructor_id/group_id selects on `EventForm`.
+  // These reuse the same endpoints already owned by the Branches (`/locations`), Members
+  // (`/administrators`, staff-only) and Groups & Rights (`/groups`) modules instead of
+  // duplicating resources — see `ErpApiService`/`BranchesView`/`GroupsRightsView`/`AdminsView`.
+  getLocations: (params: { search?: string; per_page?: number } = {}) => request<EventLocation[] | Paginated<EventLocation>>('/locations', {}, { per_page: 100, ...params }),
+  getInstructors: (params: { search?: string; per_page?: number } = {}) => request<EventUser[] | Paginated<EventUser>>('/administrators', {}, { per_page: 100, ...params }),
+  getGroups: (params: { search?: string; per_page?: number } = {}) => request<EventGroup[] | Paginated<EventGroup>>('/groups', {}, { per_page: 100, ...params }),
 };
 
 export const payloadExamples = {

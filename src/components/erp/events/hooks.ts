@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { eventService, type EventFilters, type EventItem, type EventOccurrence, type EventParticipant, type OccurrenceFilters, type Paginated, type PaginationMeta } from '../../../services/eventService';
+import { eventService, type EventCategory, type EventFilters, type EventItem, type EventOccurrence, type EventParticipant, type EventUser, type OccurrenceFilters, type Paginated, type PaginationMeta } from '../../../services/eventService';
 
 function metaFrom<T>(payload: Paginated<T>): PaginationMeta {
   return payload.meta ?? {
@@ -112,4 +112,130 @@ export function useEventParticipants(occurrenceId?: number) {
   }, [reload]);
 
   return { participants, loading, error, reload };
+}
+
+// Reference data (categories, locations, instructors, groups) shared across the events
+// module. Previously `EventsPage`, `EventForm`, and `EventCalendarPage` each fetched
+// categories independently on mount. This hook centralizes those fetches with a simple
+// module-level cache (no react-query/SWR — YAGNI, consistent with this file's style): the
+// first component to mount triggers the request, every other mount within the same browser
+// session reuses the in-flight promise or the already-resolved list, so each resource is
+// only fetched once per navigation session instead of once per page.
+export type EventReferenceOption = { id: number; name: string };
+
+function instructorLabel(user: EventUser) {
+  return user.name || `${user.first_name ?? ''} ${user.last_name ?? ''}`.trim() || user.email || `#${user.id}`;
+}
+
+let categoriesCache: EventCategory[] | null = null;
+let categoriesPromise: Promise<EventCategory[]> | null = null;
+let locationsCache: EventReferenceOption[] | null = null;
+let locationsPromise: Promise<EventReferenceOption[]> | null = null;
+let instructorsCache: EventReferenceOption[] | null = null;
+let instructorsPromise: Promise<EventReferenceOption[]> | null = null;
+let groupsCache: EventReferenceOption[] | null = null;
+let groupsPromise: Promise<EventReferenceOption[]> | null = null;
+
+function loadCategories(): Promise<EventCategory[]> {
+  if (categoriesCache) return Promise.resolve(categoriesCache);
+  if (!categoriesPromise) {
+    categoriesPromise = eventService.getCategories({ per_page: 100, is_active: '1' })
+      .then((payload) => {
+        categoriesCache = payload.data ?? [];
+        return categoriesCache;
+      })
+      .catch((err) => {
+        categoriesPromise = null;
+        throw err;
+      });
+  }
+  return categoriesPromise;
+}
+
+function loadLocations(): Promise<EventReferenceOption[]> {
+  if (locationsCache) return Promise.resolve(locationsCache);
+  if (!locationsPromise) {
+    locationsPromise = eventService.getLocations()
+      .then((payload) => {
+        const items = Array.isArray(payload) ? payload : payload.data ?? [];
+        locationsCache = items.map((item) => ({ id: item.id, name: item.name }));
+        return locationsCache;
+      })
+      .catch((err) => {
+        locationsPromise = null;
+        throw err;
+      });
+  }
+  return locationsPromise;
+}
+
+function loadInstructors(): Promise<EventReferenceOption[]> {
+  if (instructorsCache) return Promise.resolve(instructorsCache);
+  if (!instructorsPromise) {
+    instructorsPromise = eventService.getInstructors()
+      .then((payload) => {
+        const items = Array.isArray(payload) ? payload : payload.data ?? [];
+        instructorsCache = items.map((item) => ({ id: item.id, name: instructorLabel(item) }));
+        return instructorsCache;
+      })
+      .catch((err) => {
+        instructorsPromise = null;
+        throw err;
+      });
+  }
+  return instructorsPromise;
+}
+
+function loadGroups(): Promise<EventReferenceOption[]> {
+  if (groupsCache) return Promise.resolve(groupsCache);
+  if (!groupsPromise) {
+    groupsPromise = eventService.getGroups()
+      .then((payload) => {
+        const items = Array.isArray(payload) ? payload : payload.data ?? [];
+        groupsCache = items.map((item) => ({ id: item.id, name: item.name }));
+        return groupsCache;
+      })
+      .catch((err) => {
+        groupsPromise = null;
+        throw err;
+      });
+  }
+  return groupsPromise;
+}
+
+// Categories are also managed (created/edited/deleted) from `EventCategoriesPage` within
+// this same module; call this after a successful category CRUD so the next mount of the
+// shared hook reflects the change instead of serving a session-stale cached list. Locations/
+// instructors/groups are managed outside the events module (Branches/Members/Access), so
+// they don't need an equivalent invalidation hook here.
+export function invalidateEventCategoriesCache() {
+  categoriesCache = null;
+  categoriesPromise = null;
+}
+
+export function useEventReferenceData() {
+  const [categories, setCategories] = useState<EventCategory[]>(categoriesCache ?? []);
+  const [locations, setLocations] = useState<EventReferenceOption[]>(locationsCache ?? []);
+  const [instructors, setInstructors] = useState<EventReferenceOption[]>(instructorsCache ?? []);
+  const [groups, setGroups] = useState<EventReferenceOption[]>(groupsCache ?? []);
+  const [loading, setLoading] = useState(!categoriesCache || !locationsCache || !instructorsCache || !groupsCache);
+
+  useEffect(() => {
+    let active = true;
+    // `loading`'s initial value (above) already reflects whether every resource is cached,
+    // so it doesn't need to be re-set to `true` here on every mount.
+    Promise.all([
+      loadCategories().then((data) => { if (active) setCategories(data); }).catch(() => { if (active) setCategories([]); }),
+      loadLocations().then((data) => { if (active) setLocations(data); }).catch(() => { if (active) setLocations([]); }),
+      loadInstructors().then((data) => { if (active) setInstructors(data); }).catch(() => { if (active) setInstructors([]); }),
+      loadGroups().then((data) => { if (active) setGroups(data); }).catch(() => { if (active) setGroups([]); }),
+    ]).finally(() => {
+      if (active) setLoading(false);
+    });
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  return { categories, locations, instructors, groups, loading };
 }

@@ -268,7 +268,7 @@ export function DashboardView(props: DashboardViewProps) {
                       {timeToHourMinute(occurrence.start_datetime)}
                     </div>
                     <div className="mt-1 truncate text-slate-700">{occurrence.event?.title ?? `Event #${occurrence.event_id}`}</div>
-                    <div className="mt-0.5 truncate text-slate-500">{occurrence.event?.location ?? '-'}</div>
+                    <div className="mt-0.5 truncate text-slate-500">{occurrence.event?.location?.name || occurrence.event?.location_text || '-'}</div>
                   </button>
                 )) : <p className="text-xs text-slate-400">{weekLoading ? 'Se incarca...' : 'Fara evenimente'}</p>}
                 {items.length > 5 ? <p className="text-xs font-semibold text-indigo-700">+{items.length - 5} mai multe</p> : null}
@@ -290,7 +290,7 @@ export function DashboardView(props: DashboardViewProps) {
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             <div className="rounded-lg border border-slate-200 bg-slate-50 px-3 py-2">
               <p className="text-xs font-semibold uppercase text-slate-500">Locatie</p>
-              <p className="mt-1 font-medium text-slate-900">{selectedOccurrence.event?.location || '-'}</p>
+              <p className="mt-1 font-medium text-slate-900">{selectedOccurrence.event?.location?.name || selectedOccurrence.event?.location_text || '-'}</p>
             </div>
             <div className="rounded-lg border border-slate-200 bg-slate-50 px-3 py-2">
               <p className="text-xs font-semibold uppercase text-slate-500">Categorie</p>
