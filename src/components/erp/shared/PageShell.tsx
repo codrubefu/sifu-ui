@@ -15,7 +15,7 @@ export function PageShell({ title, subtitle, backLabel, onBack, children }: Page
                 {backLabel}
               </button>
             ) : null}
-            {title ? <h2 className="mt-1 text-xl font-bold text-slate-950">{title}</h2> : null}
+            {title ? <h2 className="mt-1 text-xl font-medium text-slate-950">{title}</h2> : null}
             {subtitle ? <p className="mt-1 text-sm text-slate-500">{subtitle}</p> : null}
           </div>
         </div>

@@ -1,6 +1,7 @@
-import { BadgeEuro, Bell, Building2, CalendarClock, Check, ChevronLeft, ChevronRight, RefreshCw, UserCheck } from 'lucide-react';
+import { BadgeEuro, Bell, Building2, CalendarClock, Check, ChevronLeft, ChevronRight, RefreshCw, Target, UserCheck } from 'lucide-react';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 import { Bar, BarChart, CartesianGrid, Cell, Line, LineChart, Pie, PieChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import { dashboardService, type DashboardAutomation, type DashboardPayload } from '../../../services/dashboardService';
 import { articlesService, type Article } from '../../../services/articlesService';
@@ -11,13 +12,13 @@ import type { DashboardViewProps } from '../shared/types';
 import { deviceLocale } from '../../../utils/erp/formatters';
 
 const statusColors: Record<string, string> = {
-  active: '#4f46e5',
+  active: '#237c68',
   inactive: '#64748b',
-  expired: '#f59e0b',
+  expired: '#c4a064',
   suspended: '#dc2626',
-  pending: '#7c3aed',
-  reserved: '#0891b2',
-  consumed: '#16a34a',
+  pending: '#c4a064',
+  reserved: '#7b9eaa',
+  consumed: '#6ca68f',
 };
 
 function money(value: number) {
@@ -82,7 +83,7 @@ function dateToDateInput(value?: string | null) {
 export function DashboardView(props: DashboardViewProps) {
   void props;
   const { t } = useTranslation();
-  const { hasAnyRight } = useAuth();
+  const { hasAnyRight, user } = useAuth();
   const canViewDashboard = hasAnyRight(['dashboard.view', 'dashboard.manage', 'reports.view', 'reports.manage']);
   const [dashboard, setDashboard] = useState<DashboardPayload | null>(null);
   const [announcements, setAnnouncements] = useState<Article[]>([]);
@@ -211,8 +212,8 @@ export function DashboardView(props: DashboardViewProps) {
               <Bell className="mt-0.5 h-4 w-4 shrink-0 text-indigo-600" />
               <div className="min-w-0 flex-1">
                 <div className="flex items-start justify-between gap-2">
-                  <p className="text-sm font-semibold text-slate-900">{article.title}</p>
-                  <span className={`rounded-md px-2 py-1 text-[0.6875rem] font-semibold leading-none ${article.viewed_at ? 'bg-emerald-50 text-emerald-700 ring-1 ring-emerald-100' : 'bg-amber-50 text-amber-700 ring-1 ring-amber-100'}`}>
+                  <p className="text-sm font-medium text-slate-900">{article.title}</p>
+                  <span className={`rounded-md px-2 py-1 text-[0.6875rem] font-medium leading-none ${article.viewed_at ? 'bg-emerald-50 text-emerald-700 ring-1 ring-emerald-100' : 'bg-amber-50 text-amber-700 ring-1 ring-amber-100'}`}>
                     {article.viewed_at ? t('profile.announcementRead', 'Citit') : t('profile.announcementUnread', 'Necitit')}
                   </span>
                 </div>
@@ -240,13 +241,13 @@ export function DashboardView(props: DashboardViewProps) {
       action={(
         <div className="flex flex-wrap items-center gap-2">
           <button type="button" onClick={() => setWeekAnchor((current) => addDays(current, -7))} className="rounded-lg border border-slate-200 p-2 text-slate-700"><ChevronLeft className="h-4 w-4" /></button>
-          <button type="button" onClick={() => setWeekAnchor(new Date())} className="rounded-lg border border-slate-200 px-3 py-2 text-sm font-semibold text-slate-700">Azi</button>
+          <button type="button" onClick={() => setWeekAnchor(new Date())} className="rounded-lg border border-slate-200 px-3 py-2 text-sm font-medium text-slate-700">Azi</button>
           <button type="button" onClick={() => setWeekAnchor((current) => addDays(current, 7))} className="rounded-lg border border-slate-200 p-2 text-slate-700"><ChevronRight className="h-4 w-4" /></button>
           <Button type="button" size="sm" onClick={() => void loadWeekOccurrences()} disabled={weekLoading}><RefreshCw size={16} />{t('common.refresh')}</Button>
         </div>
       )}
     >
-      <div className="mb-3 text-sm font-semibold text-slate-700">{formatDateKey(weekRange.start)} - {formatDateKey(weekRange.end)}</div>
+      <div className="mb-3 text-sm font-medium text-slate-700">{formatDateKey(weekRange.start)} - {formatDateKey(weekRange.end)}</div>
       {weekError ? <Alert tone="error" className="mb-3">{weekError}</Alert> : null}
       <div className="-mx-1 flex snap-x snap-mandatory gap-3 overflow-x-auto px-1 pb-2 lg:mx-0 lg:grid lg:grid-cols-7 lg:gap-3 lg:overflow-visible lg:px-0 lg:pb-0">
         {weekDays.map((day) => {
@@ -257,13 +258,13 @@ export function DashboardView(props: DashboardViewProps) {
           return (
             <div key={key} className={`min-h-40 w-[78%] shrink-0 snap-start rounded-lg border p-3 min-[480px]:w-[45%] sm:w-[30%] lg:w-auto lg:shrink lg:snap-none ${isToday ? 'border-indigo-200 bg-indigo-50/40' : 'border-slate-200 bg-slate-50/70'}`}>
               <div className="mb-2 flex items-center justify-between">
-                <span className="text-xs font-bold uppercase text-slate-500">{day.toLocaleDateString(deviceLocale(), { weekday: 'short' })}</span>
-                <span className="text-sm font-bold text-slate-900">{day.getDate()}</span>
+                <span className="text-xs font-medium normal-case text-slate-500">{day.toLocaleDateString(deviceLocale(), { weekday: 'short' })}</span>
+                <span className="text-sm font-medium text-slate-900">{day.getDate()}</span>
               </div>
               <div className="space-y-2">
                 {items.length ? items.slice(0, 5).map((occurrence) => (
                   <button key={occurrence.id} type="button" onClick={() => setSelectedOccurrence(occurrence)} className="block w-full rounded-md border border-slate-200 bg-white px-2 py-2 text-left text-xs shadow-sm hover:border-indigo-200 hover:bg-indigo-50">
-                    <div className="flex items-center gap-1.5 font-semibold text-slate-900">
+                    <div className="flex items-center gap-1.5 font-medium text-slate-900">
                       <span className="h-2 w-2 rounded-full" style={{ backgroundColor: occurrence.event?.category?.color ?? '#64748b' }} />
                       {timeToHourMinute(occurrence.start_datetime)}
                     </div>
@@ -271,7 +272,7 @@ export function DashboardView(props: DashboardViewProps) {
                     <div className="mt-0.5 truncate text-slate-500">{occurrence.event?.location?.name || occurrence.event?.location_text || '-'}</div>
                   </button>
                 )) : <p className="text-xs text-slate-400">{weekLoading ? 'Se incarca...' : 'Fara evenimente'}</p>}
-                {items.length > 5 ? <p className="text-xs font-semibold text-indigo-700">+{items.length - 5} mai multe</p> : null}
+                {items.length > 5 ? <p className="text-xs font-medium text-indigo-700">+{items.length - 5} mai multe</p> : null}
               </div>
             </div>
           );
@@ -289,19 +290,19 @@ export function DashboardView(props: DashboardViewProps) {
         <div className="space-y-4 text-sm text-slate-700">
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             <div className="rounded-lg border border-slate-200 bg-slate-50 px-3 py-2">
-              <p className="text-xs font-semibold uppercase text-slate-500">Locatie</p>
+              <p className="text-xs font-medium normal-case text-slate-500">Locatie</p>
               <p className="mt-1 font-medium text-slate-900">{selectedOccurrence.event?.location?.name || selectedOccurrence.event?.location_text || '-'}</p>
             </div>
             <div className="rounded-lg border border-slate-200 bg-slate-50 px-3 py-2">
-              <p className="text-xs font-semibold uppercase text-slate-500">Categorie</p>
+              <p className="text-xs font-medium normal-case text-slate-500">Categorie</p>
               <p className="mt-1 font-medium text-slate-900">{selectedOccurrence.event?.category?.name || '-'}</p>
             </div>
             <div className="rounded-lg border border-slate-200 bg-slate-50 px-3 py-2">
-              <p className="text-xs font-semibold uppercase text-slate-500">Status</p>
+              <p className="text-xs font-medium normal-case text-slate-500">Status</p>
               <p className="mt-1 font-medium text-slate-900">{selectedOccurrence.status}</p>
             </div>
             <div className="rounded-lg border border-slate-200 bg-slate-50 px-3 py-2">
-              <p className="text-xs font-semibold uppercase text-slate-500">Locuri disponibile</p>
+              <p className="text-xs font-medium normal-case text-slate-500">Locuri disponibile</p>
               <p className="mt-1 font-medium text-slate-900">{selectedOccurrence.available_places ?? 'Nelimitat'}</p>
             </div>
           </div>
@@ -339,7 +340,11 @@ export function DashboardView(props: DashboardViewProps) {
   const automations = dashboard?.automations ?? [];
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-7">
+      <div className="dashboard-greeting">
+        <div><h1>{t('dashboard.greeting', 'Salut')}{user?.first_name ? `, ${user.first_name}` : ''} <span aria-hidden="true">☀</span></h1><p>{t('dashboard.welcomeMessage', 'O zi bună începe cu un club organizat.')}</p></div>
+        <time dateTime={formatDateKey(new Date())}>{new Intl.DateTimeFormat(deviceLocale(), { weekday: 'long', day: 'numeric', month: 'long' }).format(new Date())}</time>
+      </div>
       {error && (
         <Alert tone="error">
           <span className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
@@ -352,14 +357,33 @@ export function DashboardView(props: DashboardViewProps) {
         </Alert>
       )}
 
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
         <StatCard title={t('dashboard.activeMembers')} value={String(stats.active_members)} change={t('dashboard.liveUpdated')} helper={t('dashboard.activeMembersHelper')} icon={UserCheck} />
         <StatCard title={t('dashboard.flaggedServices')} value={String(stats.flagged_services)} change={t('dashboard.expiredOrSuspended')} helper={t('dashboard.needsFollowUp')} icon={CalendarClock} />
         <StatCard title={t('dashboard.totalRevenue')} value={`${money(stats.total_revenue)} RON`} change={t('dashboard.paymentsCalculated')} helper={t('dashboard.persistentData')} icon={BadgeEuro} />
-        <StatCard title={t('dashboard.activeBranches')} value={String(stats.active_locations)} change={t('dashboard.membersByLocation')} helper={t('dashboard.branchesDefined')} icon={Building2} />
       </div>
 
-      {weekCalendarPanel}
+      <div className="dashboard-overview">
+        <SectionCard title={formatDateKey(weekAnchor) === formatDateKey(new Date()) ? t('dashboard.todayTraining', 'Antrenamentele de azi') : t('dashboard.selectedDayTraining', 'Antrenamentele zilei selectate')} action={<a href="#weekly-calendar" className="text-xs text-indigo-600">{t('dashboard.viewSchedule', 'Vezi programul')} ↗</a>}>
+          {weekError ? <Alert tone="error">{weekError}</Alert> : weekLoading ? <p className="py-5 text-sm text-slate-500">{t('common.loading')}</p> : (weekOccurrencesByDate.get(formatDateKey(weekAnchor)) ?? []).length ? (
+            <div className="training-list">
+              {[...(weekOccurrencesByDate.get(formatDateKey(weekAnchor)) ?? [])].sort((a, b) => a.start_datetime.localeCompare(b.start_datetime)).map((occurrence) => (
+                <button key={occurrence.id} type="button" onClick={() => setSelectedOccurrence(occurrence)} className="training-row">
+                  <span className="training-time">{timeToHourMinute(occurrence.start_datetime)}<small>{timeToHourMinute(occurrence.end_datetime)}</small></span>
+                  <span className="training-detail" style={{ borderColor: occurrence.event?.category?.color || '#6ca68f' }}><span>{occurrence.event?.title ?? `Event #${occurrence.event_id}`}</span><small>{occurrence.event?.location?.name || occurrence.event?.location_text || '—'}</small></span>
+                </button>
+              ))}
+            </div>
+          ) : <p className="py-5 text-sm text-slate-500">{t('dashboard.noTrainingToday', 'Nu sunt antrenamente programate pentru această zi.')}</p>}
+        </SectionCard>
+        <section className="club-message">
+          <Target size={28} strokeWidth={1.5} aria-hidden="true" />
+          <h3>{t('dashboard.progressTitle', 'Progresul se construiește.')}<br />{t('dashboard.progressSubtitle', 'Antrenament cu antrenament.')}</h3>
+          <p>{t('dashboard.progressDescription', 'Urmărește parcursul fiecărui sportiv, de la primul pas la centura neagră.')}</p>
+          {hasAnyRight(['users.view', 'users.manage']) ? <Link to="/erp/members">{t('dashboard.meetTeam', 'Cunoaște echipa')}<span aria-hidden="true">↗</span></Link> : null}
+        </section>
+      </div>
+      <div id="weekly-calendar" className="scroll-mt-24">{weekCalendarPanel}</div>
 
       <div className="grid grid-cols-1 gap-4 xl:grid-cols-3">
         <div className="xl:col-span-2">
@@ -371,7 +395,7 @@ export function DashboardView(props: DashboardViewProps) {
                   <XAxis dataKey="period" tickLine={false} axisLine={false} interval="preserveStartEnd" tick={{ fill: '#64748b', fontSize: 11 }} />
                   <YAxis tickLine={false} axisLine={false} width={40} tickFormatter={compactMoney} tick={{ fill: '#64748b', fontSize: 11 }} />
                   <Tooltip cursor={{ fill: '#f8fafc' }} />
-                  <Bar dataKey="revenue" radius={[6, 6, 0, 0]} fill="#4f46e5" />
+                  <Bar dataKey="revenue" radius={[6, 6, 0, 0]} fill="#237c68" />
                 </BarChart>
               </ResponsiveContainer>
             </div>
@@ -396,7 +420,7 @@ export function DashboardView(props: DashboardViewProps) {
                     <span className="h-3 w-3 rounded-full" style={{ backgroundColor: item.color }} />
                     <span className="text-sm font-medium text-slate-700">{item.name}</span>
                   </div>
-                  <span className="text-sm font-semibold text-slate-900">{item.value}</span>
+                  <span className="text-sm font-medium text-slate-900">{item.value}</span>
                 </div>
               ))}
             </div>
@@ -414,8 +438,8 @@ export function DashboardView(props: DashboardViewProps) {
                   <XAxis dataKey="period" tickLine={false} axisLine={false} interval="preserveStartEnd" tick={{ fill: '#64748b', fontSize: 11 }} />
                   <YAxis tickLine={false} axisLine={false} width={32} tick={{ fill: '#64748b', fontSize: 11 }} />
                   <Tooltip />
-                  <Line type="monotone" dataKey="active" stroke="#4f46e5" strokeWidth={2.5} dot={{ r: 3 }} />
-                  <Line type="monotone" dataKey="messages" stroke="#0891b2" strokeWidth={2.5} dot={{ r: 3 }} />
+                  <Line type="monotone" dataKey="active" stroke="#237c68" strokeWidth={2.5} dot={{ r: 3 }} />
+                  <Line type="monotone" dataKey="messages" stroke="#7b9eaa" strokeWidth={2.5} dot={{ r: 3 }} />
                 </LineChart>
               </ResponsiveContainer>
             </div>
@@ -427,6 +451,7 @@ export function DashboardView(props: DashboardViewProps) {
       </div>
 
       <div className="grid grid-cols-1 gap-4 xl:grid-cols-3">
+        <StatCard title={t('dashboard.activeBranches')} value={String(stats.active_locations)} change={t('dashboard.membersByLocation')} helper={t('dashboard.branchesDefined')} icon={Building2} />
         <div>
           <SectionCard title={t('dashboard.activeAutomations')}>
             <div className="space-y-2.5">
@@ -434,7 +459,7 @@ export function DashboardView(props: DashboardViewProps) {
                 <div key={item.key} className="flex items-start gap-3 rounded-md border border-slate-100 bg-slate-50/80 p-3">
                   <div className={`mt-1 h-2.5 w-2.5 rounded-full ${item.enabled ? 'bg-emerald-500' : 'bg-slate-300'}`} />
                   <div>
-                    <p className="text-sm font-semibold text-slate-900">{automationTitle(item, t)}</p>
+                    <p className="text-sm font-medium text-slate-900">{automationTitle(item, t)}</p>
                     <p className="text-xs text-slate-500">{automationHelper(item, t)}</p>
                   </div>
                 </div>

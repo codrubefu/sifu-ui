@@ -145,7 +145,7 @@ export function SmsView() {
             </select>
           </label>
           <div className="flex items-end">
-            <button onClick={applyFilters} className="w-full rounded-lg bg-slate-900 px-4 py-3 text-sm font-semibold text-white">{t('common.search')}</button>
+            <button onClick={applyFilters} className="w-full rounded-lg bg-slate-900 px-4 py-3 text-sm font-medium text-white">{t('common.search')}</button>
           </div>
         </div>
 
@@ -159,21 +159,21 @@ export function SmsView() {
           <div className="overflow-x-auto">
           <table className="min-w-[980px] w-full text-left text-sm text-slate-700 [&_tbody_tr:nth-child(even)]:bg-slate-50/45">
             <thead>
-              <tr className="bg-slate-50 text-xs uppercase text-slate-500">
-                <th className="border-b border-slate-200 px-5 py-3 font-semibold">{t('sms.recipient')}</th>
-                <th className="border-b border-slate-200 px-4 py-3 font-semibold">{t('sms.destination')}</th>
-                <th className="border-b border-slate-200 px-4 py-3 font-semibold">{t('sms.message')}</th>
-                <th className="border-b border-slate-200 px-4 py-3 font-semibold">{t('sms.service')}</th>
-                <th className="border-b border-slate-200 px-4 py-3 font-semibold">{t('sms.type')}</th>
-                <th className="border-b border-slate-200 px-4 py-3 font-semibold">{t('common.status')}</th>
-                <th className="border-b border-slate-200 px-5 py-3 font-semibold">{t('sms.sentAt')}</th>
+              <tr className="bg-slate-50 text-xs normal-case text-slate-500">
+                <th className="border-b border-slate-200 px-5 py-3 font-medium">{t('sms.recipient')}</th>
+                <th className="border-b border-slate-200 px-4 py-3 font-medium">{t('sms.destination')}</th>
+                <th className="border-b border-slate-200 px-4 py-3 font-medium">{t('sms.message')}</th>
+                <th className="border-b border-slate-200 px-4 py-3 font-medium">{t('sms.service')}</th>
+                <th className="border-b border-slate-200 px-4 py-3 font-medium">{t('sms.type')}</th>
+                <th className="border-b border-slate-200 px-4 py-3 font-medium">{t('common.status')}</th>
+                <th className="border-b border-slate-200 px-5 py-3 font-medium">{t('sms.sentAt')}</th>
               </tr>
             </thead>
             <tbody>
               {messages.length ? messages.map((message) => (
                 <tr key={message.id} className="border-b border-slate-100 align-top transition-colors hover:bg-indigo-50/30">
                   <td className="px-5 py-3">
-                    <p className="font-semibold text-slate-900">{userName(message)}</p>
+                    <p className="font-medium text-slate-900">{userName(message)}</p>
                   </td>
                   <td className="px-4 py-3 text-slate-600">{message.destination || '-'}</td>
                   <td className="max-w-[420px] px-4 py-3 text-slate-600">{message.message || '-'}</td>

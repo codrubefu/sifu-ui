@@ -26,7 +26,7 @@ export function QuickCreateMenu({ onNavigate }: QuickCreateMenuProps) {
           return (
             <button key={item.key} onClick={() => onNavigate(item.key)} className="rounded-lg border border-slate-200 bg-white p-4 text-left shadow-sm transition hover:border-indigo-200 hover:bg-slate-50">
               <div className="inline-flex rounded-lg bg-indigo-50 p-2.5 text-indigo-700"><Icon className="h-5 w-5" /></div>
-              <p className="mt-4 text-base font-semibold text-slate-900">{item.label}</p>
+              <p className="mt-4 text-base font-medium text-slate-900">{item.label}</p>
               <p className="mt-1 text-sm text-slate-500">{t('quick.description')}</p>
             </button>
           );

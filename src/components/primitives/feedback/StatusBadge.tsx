@@ -33,5 +33,5 @@ export function StatusBadge({ status }: StatusBadgeProps) {
 
   const tone = map[status] ?? map[status.trim()] ?? Object.entries(map).find(([key]) => key.toLowerCase() === status.trim().toLowerCase())?.[1];
 
-  return <span className={cn('inline-flex rounded-full px-2.5 py-1 text-xs font-semibold leading-none', tone ?? 'bg-slate-100 text-slate-700')}>{status}</span>;
+  return <span className={cn('inline-flex rounded-full px-2.5 py-1 text-xs font-medium leading-none', tone ?? 'bg-slate-100 text-slate-700')}>{status}</span>;
 }

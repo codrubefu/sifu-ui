@@ -1529,10 +1529,10 @@ export function UserManagementView({
           <div key={group.id} className="rounded-lg border border-slate-200 bg-white">
             <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 bg-slate-50 px-4 py-3">
               <div>
-                <h3 className="text-sm font-semibold text-slate-900">{group.name}</h3>
+                <h3 className="text-sm font-medium text-slate-900">{group.name}</h3>
                 <p className="text-xs text-slate-500">{selectedCount}/{group.locations.length} {t('articles.locations')}</p>
               </div>
-              <label className="flex h-9 items-center gap-2 rounded-lg border border-slate-200 bg-white px-3 text-sm font-semibold text-slate-700 shadow-sm">
+              <label className="flex h-9 items-center gap-2 rounded-lg border border-slate-200 bg-white px-3 text-sm font-medium text-slate-700 shadow-sm">
                 <input
                   type="checkbox"
                   checked={allSelected}
@@ -1618,17 +1618,17 @@ export function UserManagementView({
         <SectionCard
           title={editing ? t('users.editTitle', { label: editEntityLabel }) : t('users.addCardTitle', { label: resolvedEntityLabel })}
           action={
-            <button onClick={closeForm} className="inline-flex h-10 items-center gap-2 rounded-lg border border-slate-200 bg-white px-4 text-sm font-semibold text-slate-700 shadow-sm">
+            <button onClick={closeForm} className="inline-flex h-10 items-center gap-2 rounded-lg border border-slate-200 bg-white px-4 text-sm font-medium text-slate-700 shadow-sm">
               <X className="h-4 w-4" />{t('common.close')}
             </button>
           }
         >
           <label className="mb-5 block sm:hidden">
-            <span className="mb-2 block text-sm font-semibold text-slate-700">{t('common.section', 'Sectiune')}</span>
+            <span className="mb-2 block text-sm font-medium text-slate-700">{t('common.section', 'Sectiune')}</span>
             <select
               value={activeFormTab}
               onChange={(event) => setActiveFormTab(event.target.value as UserFormTab)}
-              className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-base font-semibold text-slate-800 shadow-sm outline-none focus:border-indigo-400 focus:ring-4 focus:ring-indigo-100"
+              className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-base font-medium text-slate-800 shadow-sm outline-none focus:border-indigo-400 focus:ring-4 focus:ring-indigo-100"
             >
               {formTabs.map(([tab, label]) => <option key={tab} value={tab}>{label}</option>)}
             </select>
@@ -1638,7 +1638,7 @@ export function UserManagementView({
               <button
                 key={tab}
                 onClick={() => setActiveFormTab(tab as UserFormTab)}
-                className={`h-9 rounded-lg px-3 text-sm font-semibold transition ${activeFormTab === tab ? 'bg-white text-indigo-700 shadow-sm ring-1 ring-slate-200' : 'text-slate-500 hover:text-slate-900'}`}
+                className={`h-9 rounded-lg px-3 text-sm font-medium transition ${activeFormTab === tab ? 'bg-white text-indigo-700 shadow-sm ring-1 ring-slate-200' : 'text-slate-500 hover:text-slate-900'}`}
               >
                 {label}
               </button>
@@ -1694,7 +1694,7 @@ export function UserManagementView({
                                   <td className="px-3 py-2 text-slate-500">{candidate.email || '-'}</td>
                                   <td className="px-3 py-2 text-slate-500">{candidate.phone || '-'}</td>
                                   <td className="px-3 py-2 text-right">
-                                    <button type="button" onClick={() => selectParentUser(candidate)} className="text-sm font-semibold text-indigo-600 hover:text-indigo-700">
+                                    <button type="button" onClick={() => selectParentUser(candidate)} className="text-sm font-medium text-indigo-600 hover:text-indigo-700">
                                       {t('users.selectParentUser', 'Selecteaza')}
                                     </button>
                                   </td>
@@ -1788,7 +1788,7 @@ export function UserManagementView({
               <div className={`rounded-lg border px-4 py-3 text-sm ${scanningCode ? 'border-indigo-200 bg-indigo-50 text-indigo-800' : 'border-slate-200 bg-slate-50 text-slate-600'}`}>
                 {scanningCode ? (
                   <div className="space-y-1">
-                    <p className="font-semibold">{t('users.scanWaiting')}</p>
+                    <p className="font-medium">{t('users.scanWaiting')}</p>
                     <p>{scanBuffer || t('users.scanEmpty')}</p>
                   </div>
                 ) : (
@@ -1819,12 +1819,12 @@ export function UserManagementView({
                   <div className="flex items-end gap-2 md:col-span-3"><Button onClick={() => void saveUserGrade()} disabled={gradeSaving || !gradeForm.grade_id || !gradeForm.obtained_at} variant="primary"><Save className="h-4 w-4" />{gradeSaving ? t('common.saving') : editingGrade ? t('common.save') : t('users.addGrade')}</Button>{editingGrade ? <Button onClick={() => { setEditingGrade(null); setGradeForm({ grade_id: '', obtained_at: todayDate(), description: '' }); }}>{t('common.cancel')}</Button> : null}</div>
                 </div>
               ) : null}
-              <div className="overflow-x-auto rounded-lg border border-slate-200"><table className="min-w-full text-left text-sm"><thead className="bg-slate-50 text-slate-500"><tr><th className="px-4 py-3">{t('users.grade')}</th><th className="px-4 py-3">{t('users.gradeObtainedAt')}</th><th className="px-4 py-3">{t('users.gradeDescription')}</th><th className="px-4 py-3 text-right">{t('common.actions')}</th></tr></thead><tbody>{gradeHistory.map((record) => <tr key={record.id} className="border-t border-slate-100"><td className="px-4 py-3 font-semibold">{record.grade?.name ?? record.grade_id}{record.id === gradeHistory[0]?.id ? <span className="ml-2 rounded-full bg-emerald-50 px-2 py-1 text-xs text-emerald-700">{t('users.activeGrade')}</span> : null}</td><td className="px-4 py-3">{formatDate(record.obtained_at)}</td><td className="px-4 py-3">{record.description || '-'}</td><td className="px-4 py-3 text-right">{canManageGrades ? <div className="flex justify-end gap-2"><button onClick={() => { setEditingGrade(record); setGradeForm({ grade_id: String(record.grade_id), obtained_at: record.obtained_at, description: record.description ?? '' }); }} className="rounded-lg border p-2"><Edit3 className="h-4 w-4" /></button><button onClick={() => void deleteUserGrade(record)} className="rounded-lg border border-red-100 p-2 text-red-600"><Trash2 className="h-4 w-4" /></button></div> : null}</td></tr>)}{gradeHistory.length === 0 ? <tr><td colSpan={4} className="px-4 py-10 text-center text-sm text-slate-500">{t('users.noGrades')}</td></tr> : null}</tbody></table></div>
+              <div className="overflow-x-auto rounded-lg border border-slate-200"><table className="min-w-full text-left text-sm"><thead className="bg-slate-50 text-slate-500"><tr><th className="px-4 py-3">{t('users.grade')}</th><th className="px-4 py-3">{t('users.gradeObtainedAt')}</th><th className="px-4 py-3">{t('users.gradeDescription')}</th><th className="px-4 py-3 text-right">{t('common.actions')}</th></tr></thead><tbody>{gradeHistory.map((record) => <tr key={record.id} className="border-t border-slate-100"><td className="px-4 py-3 font-medium">{record.grade?.name ?? record.grade_id}{record.id === gradeHistory[0]?.id ? <span className="ml-2 rounded-full bg-emerald-50 px-2 py-1 text-xs text-emerald-700">{t('users.activeGrade')}</span> : null}</td><td className="px-4 py-3">{formatDate(record.obtained_at)}</td><td className="px-4 py-3">{record.description || '-'}</td><td className="px-4 py-3 text-right">{canManageGrades ? <div className="flex justify-end gap-2"><button onClick={() => { setEditingGrade(record); setGradeForm({ grade_id: String(record.grade_id), obtained_at: record.obtained_at, description: record.description ?? '' }); }} className="rounded-lg border p-2"><Edit3 className="h-4 w-4" /></button><button onClick={() => void deleteUserGrade(record)} className="rounded-lg border border-red-100 p-2 text-red-600"><Trash2 className="h-4 w-4" /></button></div> : null}</td></tr>)}{gradeHistory.length === 0 ? <tr><td colSpan={4} className="px-4 py-10 text-center text-sm text-slate-500">{t('users.noGrades')}</td></tr> : null}</tbody></table></div>
             </div>
           ) : activeFormTab === 'events' && editing ? (
             <div className="space-y-4">
               {userEventsError ? <p className="rounded-lg border border-red-100 bg-red-50 px-4 py-3 text-sm font-medium text-red-700">{userEventsError}</p> : null}
-              <div className="overflow-x-auto rounded-lg border border-slate-200"><table className="min-w-[900px] w-full text-left text-sm"><thead className="bg-slate-50 text-slate-500"><tr><th className="px-4 py-3">{t('users.event')}</th><th className="px-4 py-3">{t('users.eventDate')}</th><th className="px-4 py-3">{t('users.eventStatus')}</th><th className="px-4 py-3">{t('users.participantStatus')}</th><th className="px-4 py-3">{t('users.registeredAt')}</th><th className="px-4 py-3">{t('users.eventNotes')}</th></tr></thead><tbody>{userEvents.map((event) => <tr key={event.id} className="border-t border-slate-100"><td className="px-4 py-3 font-semibold">{event.event?.title ?? `#${event.event_id}`}</td><td className="px-4 py-3">{formatDeviceDateTime(event.start_datetime)} - {formatDeviceDateTime(event.end_datetime)}</td><td className="px-4 py-3"><StatusBadge status={event.status} /></td><td className="px-4 py-3"><StatusBadge status={event.participant_status ?? '-'} /></td><td className="px-4 py-3">{formatDeviceDateTime(event.registered_at)}</td><td className="px-4 py-3">{event.notes || '-'}</td></tr>)}{userEvents.length === 0 ? <tr><td colSpan={6} className="px-4 py-10 text-center text-sm text-slate-500">{userEventsLoading ? t('common.loading') : t('users.noEvents')}</td></tr> : null}</tbody></table></div>
+              <div className="overflow-x-auto rounded-lg border border-slate-200"><table className="min-w-[900px] w-full text-left text-sm"><thead className="bg-slate-50 text-slate-500"><tr><th className="px-4 py-3">{t('users.event')}</th><th className="px-4 py-3">{t('users.eventDate')}</th><th className="px-4 py-3">{t('users.eventStatus')}</th><th className="px-4 py-3">{t('users.participantStatus')}</th><th className="px-4 py-3">{t('users.registeredAt')}</th><th className="px-4 py-3">{t('users.eventNotes')}</th></tr></thead><tbody>{userEvents.map((event) => <tr key={event.id} className="border-t border-slate-100"><td className="px-4 py-3 font-medium">{event.event?.title ?? `#${event.event_id}`}</td><td className="px-4 py-3">{formatDeviceDateTime(event.start_datetime)} - {formatDeviceDateTime(event.end_datetime)}</td><td className="px-4 py-3"><StatusBadge status={event.status} /></td><td className="px-4 py-3"><StatusBadge status={event.participant_status ?? '-'} /></td><td className="px-4 py-3">{formatDeviceDateTime(event.registered_at)}</td><td className="px-4 py-3">{event.notes || '-'}</td></tr>)}{userEvents.length === 0 ? <tr><td colSpan={6} className="px-4 py-10 text-center text-sm text-slate-500">{userEventsLoading ? t('common.loading') : t('users.noEvents')}</td></tr> : null}</tbody></table></div>
               <div className="flex items-center justify-end gap-2 text-sm text-slate-600"><button onClick={() => setUserEventsPage((page) => page - 1)} disabled={userEventsLoading || userEventsPage <= 1} className="rounded-lg border border-slate-200 px-3 py-2 disabled:opacity-40">{t('users.previousPage')}</button><span>{t('users.pageOf', { page: userEventsPage, lastPage: userEventsLastPage })}</span><button onClick={() => setUserEventsPage((page) => page + 1)} disabled={userEventsLoading || userEventsPage >= userEventsLastPage} className="rounded-lg border border-slate-200 px-3 py-2 disabled:opacity-40">{t('users.nextPage')}</button></div>
             </div>
           ) : activeFormTab === 'privacy' && editing ? (
@@ -1849,17 +1849,17 @@ export function UserManagementView({
                 <table className="min-w-[920px] w-full text-left text-sm text-slate-700 [&_tbody_tr:nth-child(even)]:bg-slate-50/45">
                   <thead className="bg-slate-50 text-slate-500">
                     <tr>
-                      <th className="border-b border-slate-200 px-5 py-3 font-semibold">type</th>
-                      <th className="border-b border-slate-200 px-4 py-3 font-semibold">model</th>
-                      <th className="border-b border-slate-200 px-4 py-3 font-semibold">actor</th>
-                      <th className="border-b border-slate-200 px-4 py-3 font-semibold">created_at</th>
-                      <th className="border-b border-slate-200 px-5 py-3 font-semibold">new_values</th>
+                      <th className="border-b border-slate-200 px-5 py-3 font-medium">type</th>
+                      <th className="border-b border-slate-200 px-4 py-3 font-medium">model</th>
+                      <th className="border-b border-slate-200 px-4 py-3 font-medium">actor</th>
+                      <th className="border-b border-slate-200 px-4 py-3 font-medium">created_at</th>
+                      <th className="border-b border-slate-200 px-5 py-3 font-medium">new_values</th>
                     </tr>
                   </thead>
                   <tbody>
                     {activities.length ? activities.map((activity) => (
                       <tr key={activity.id} className="border-b border-slate-100 align-top transition-colors hover:bg-indigo-50/30">
-                        <td className="px-5 py-3 font-semibold text-slate-900">{activity.type}</td>
+                        <td className="px-5 py-3 font-medium text-slate-900">{activity.type}</td>
                         <td className="px-4 py-3 text-slate-600">{activity.model_type ?? '-'} #{activity.model_id ?? '-'}</td>
                         <td className="px-4 py-3 text-slate-600">{activity.actor_id ?? '-'}</td>
                         <td className="px-4 py-3 text-slate-600">{formatDate(activity.created_at)}</td>
@@ -1922,17 +1922,17 @@ export function UserManagementView({
               ) : null}
 
               <div>
-                <h3 className="mb-3 text-sm font-semibold text-slate-900">{t('users.currentServices')}</h3>
+                <h3 className="mb-3 text-sm font-medium text-slate-900">{t('users.currentServices')}</h3>
                 <div className="rounded-lg border border-slate-200 bg-white shadow-sm">
                   <div className="overflow-x-auto">
                   <table className="min-w-[980px] w-full text-left text-sm text-slate-700 [&_tbody_tr:nth-child(even)]:bg-slate-50/45">
                     <thead className="bg-slate-50 text-slate-500">
                       <tr>
-                        <th className="border-b border-slate-200 px-5 py-3 font-semibold">{t('services.service')}</th>
-                        <th className="border-b border-slate-200 px-4 py-3 font-semibold">{t('users.added')}</th>
-                        <th className="border-b border-slate-200 px-4 py-3 font-semibold">{t('users.expires')}</th>
-                        <th className="border-b border-slate-200 px-4 py-3 font-semibold">{t('common.status')}</th>
-                        <th className="border-b border-slate-200 px-5 py-3 font-semibold text-right">{t('common.actions')}</th>
+                        <th className="border-b border-slate-200 px-5 py-3 font-medium">{t('services.service')}</th>
+                        <th className="border-b border-slate-200 px-4 py-3 font-medium">{t('users.added')}</th>
+                        <th className="border-b border-slate-200 px-4 py-3 font-medium">{t('users.expires')}</th>
+                        <th className="border-b border-slate-200 px-4 py-3 font-medium">{t('common.status')}</th>
+                        <th className="border-b border-slate-200 px-5 py-3 font-medium text-right">{t('common.actions')}</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -1964,7 +1964,7 @@ export function UserManagementView({
                                   <div key={payment.id} className="rounded-lg border border-slate-200 bg-slate-50 px-3 py-2">
                                     <div className="flex flex-wrap items-center justify-between gap-2">
                                       <div>
-                                        <p className="text-xs font-semibold text-slate-900">Payment #{payment.id} - {payment.amount}</p>
+                                        <p className="text-xs font-medium text-slate-900">Payment #{payment.id} - {payment.amount}</p>
                                         <p className="text-xs text-slate-500">{paymentMethodLabel(payment)} - {payment.paid_at ?? '-'}</p>
                                       </div>
                                       <div className="flex flex-wrap justify-end gap-2">
@@ -2006,7 +2006,7 @@ export function UserManagementView({
                                 <button
                                   type="button"
                                   onClick={() => setOpenServiceActionsId((currentId) => (currentId === assignment.id ? null : assignment.id))}
-                                  className="inline-flex h-9 items-center gap-2 rounded-lg border border-slate-200 bg-white px-3 text-sm font-semibold text-slate-700 shadow-sm transition hover:border-slate-300 hover:bg-slate-50"
+                                  className="inline-flex h-9 items-center gap-2 rounded-lg border border-slate-200 bg-white px-3 text-sm font-medium text-slate-700 shadow-sm transition hover:border-slate-300 hover:bg-slate-50"
                                   aria-expanded={openServiceActionsId === assignment.id}
                                 >
                                   <MoreVertical className="h-4 w-4" />
@@ -2094,16 +2094,16 @@ export function UserManagementView({
               </div>
 
               <div>
-                <h3 className="mb-3 text-sm font-semibold text-slate-900">{t('users.serviceHistory')}</h3>
+                <h3 className="mb-3 text-sm font-medium text-slate-900">{t('users.serviceHistory')}</h3>
                 <div className="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm">
                   <div className="overflow-x-auto">
                   <table className="min-w-[760px] w-full text-left text-sm text-slate-700 [&_tbody_tr:nth-child(even)]:bg-slate-50/45">
                     <thead className="bg-slate-50 text-slate-500">
                       <tr>
-                        <th className="border-b border-slate-200 px-5 py-3 font-semibold">{t('services.service')}</th>
-                        <th className="border-b border-slate-200 px-4 py-3 font-semibold">{t('users.added')}</th>
-                        <th className="border-b border-slate-200 px-4 py-3 font-semibold">{t('users.expires')}</th>
-                        <th className="border-b border-slate-200 px-5 py-3 font-semibold">{t('common.status')}</th>
+                        <th className="border-b border-slate-200 px-5 py-3 font-medium">{t('services.service')}</th>
+                        <th className="border-b border-slate-200 px-4 py-3 font-medium">{t('users.added')}</th>
+                        <th className="border-b border-slate-200 px-4 py-3 font-medium">{t('users.expires')}</th>
+                        <th className="border-b border-slate-200 px-5 py-3 font-medium">{t('common.status')}</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -2152,7 +2152,7 @@ export function UserManagementView({
             <button onClick={() => void loadUsers()} className="inline-flex h-10 items-center gap-2 rounded-lg border border-slate-200 bg-white px-3 text-sm font-medium text-slate-700 shadow-sm hover:bg-slate-50">
               <RefreshCw className="mr-2 inline h-4 w-4" />{t('common.refresh')}
             </button>
-            <button onClick={startCreate} className="inline-flex h-10 items-center gap-2 rounded-lg bg-indigo-600 px-4 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700">
+            <button onClick={startCreate} className="inline-flex h-10 items-center gap-2 rounded-lg bg-indigo-600 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700">
               <Plus className="mr-2 inline h-4 w-4" />{resolvedAddLabel}
             </button>
           </div>
@@ -2190,7 +2190,7 @@ export function UserManagementView({
             <button onClick={() => {
               setPage(1);
               void fetchUsers(searchTerm, perPage, 1);
-            }} className="h-10 w-full rounded-lg bg-slate-900 px-4 text-sm font-semibold text-white">{t('common.search')}</button>
+            }} className="h-10 w-full rounded-lg bg-slate-900 px-4 text-sm font-medium text-white">{t('common.search')}</button>
           </div>
         </div>
 
@@ -2204,21 +2204,21 @@ export function UserManagementView({
           <div className="overflow-x-auto">
           <table className="min-w-[1120px] w-full text-left text-sm text-slate-700 [&_tbody_tr:nth-child(even)]:bg-slate-50/45">
             <thead>
-              <tr className="bg-slate-50 text-xs uppercase text-slate-500">
-                <th className="border-b border-slate-200 px-5 py-3 font-semibold">{t('users.user')}</th>
-                <th className="border-b border-slate-200 px-4 py-3 font-semibold">{t('users.contact')}</th>
-                {showGroupsInList ? <th className="border-b border-slate-200 px-4 py-3 font-semibold">{t('users.groups')}</th> : null}
-                <th className="border-b border-slate-200 px-4 py-3 font-semibold">{t('users.services')}</th>
-                <th className="border-b border-slate-200 px-4 py-3 font-semibold">{t('articles.locations')}</th>
-                <th className="border-b border-slate-200 px-4 py-3 font-semibold">{t('common.status')}</th>
-                <th className="border-b border-slate-200 px-5 py-3 font-semibold text-right">{t('common.actions')}</th>
+              <tr className="bg-slate-50 text-xs normal-case text-slate-500">
+                <th className="border-b border-slate-200 px-5 py-3 font-medium">{t('users.user')}</th>
+                <th className="border-b border-slate-200 px-4 py-3 font-medium">{t('users.contact')}</th>
+                {showGroupsInList ? <th className="border-b border-slate-200 px-4 py-3 font-medium">{t('users.groups')}</th> : null}
+                <th className="border-b border-slate-200 px-4 py-3 font-medium">{t('users.services')}</th>
+                <th className="border-b border-slate-200 px-4 py-3 font-medium">{t('articles.locations')}</th>
+                <th className="border-b border-slate-200 px-4 py-3 font-medium">{t('common.status')}</th>
+                <th className="border-b border-slate-200 px-5 py-3 font-medium text-right">{t('common.actions')}</th>
               </tr>
             </thead>
             <tbody>
               {users.length > 0 ? users.map((user) => (
                 <tr key={user.id} className="border-b border-slate-100 align-top transition-colors hover:bg-indigo-50/30">
                   <td className="px-5 py-3">
-                    <p className="font-semibold text-slate-900">{userName(user)}</p>
+                    <p className="font-medium text-slate-900">{userName(user)}</p>
                     {user.parent ? (
                       <p className="mt-1 text-xs text-slate-500">{t('users.parentUser')}: {userName(user.parent)}</p>
                     ) : null}

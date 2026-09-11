@@ -24,8 +24,8 @@ export function LoginView({ credentials, onChange, onSubmit, loading = false, er
       <div className="grid w-full max-w-6xl grid-cols-1 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-xl shadow-slate-900/10 lg:grid-cols-[1.05fr_0.95fr]">
         <div className="hidden bg-slate-950 p-10 text-white lg:flex lg:flex-col lg:justify-between">
           <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.25em] text-white/70">{t('login.brand')}</p>
-            <h1 className="mt-5 text-4xl font-bold leading-tight">{t('login.heroTitle')}</h1>
+            <p className="text-sm font-medium normal-case tracking-normal text-white/70">{t('login.brand')}</p>
+            <h1 className="mt-5 text-4xl font-medium leading-tight">{t('login.heroTitle')}</h1>
             <p className="mt-4 max-w-xl text-base text-white/80">{t('login.heroDescription')}</p>
           </div>
           <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
@@ -35,7 +35,7 @@ export function LoginView({ credentials, onChange, onSubmit, loading = false, er
               [t('login.cardPayments'), t('login.cardPaymentsDescription')],
             ].map(([title, desc]) => (
               <div key={title} className="rounded-2xl border border-white/10 bg-white/5 p-4">
-                <p className="text-lg font-semibold">{title}</p>
+                <p className="text-lg font-medium">{title}</p>
                 <p className="mt-1 text-sm text-white/70">{desc}</p>
               </div>
             ))}
@@ -44,8 +44,8 @@ export function LoginView({ credentials, onChange, onSubmit, loading = false, er
         <div className="p-8 md:p-12">
           <div className="mx-auto max-w-md">
             <div className="mb-8">
-                <p className="text-sm font-semibold uppercase tracking-[0.2em] text-indigo-600">{t('login.title')}</p>
-              <h2 className="mt-3 text-3xl font-bold text-slate-900">{t('login.subtitle')}</h2>
+                <p className="text-sm font-medium normal-case tracking-normal text-indigo-600">{t('login.title')}</p>
+              <h2 className="mt-3 text-3xl font-medium text-slate-900">{t('login.subtitle')}</h2>
               <p className="mt-2 text-sm text-slate-500">{t('login.description')}</p>
             </div>
             <form
@@ -80,12 +80,12 @@ export function LoginView({ credentials, onChange, onSubmit, loading = false, er
                 />
               </div>
               <div className="text-right">
-                <Link to="/forgot-password" className="text-sm font-semibold text-indigo-600 hover:text-indigo-700">
+                <Link to="/forgot-password" className="text-sm font-medium text-indigo-600 hover:text-indigo-700">
                   {t('login.forgotPassword')}
                 </Link>
               </div>
               {error ? <p className="rounded-2xl border border-red-100 bg-red-50 px-4 py-3 text-sm font-medium text-red-700">{error}</p> : null}
-              <button type="submit" disabled={loading} className="w-full rounded-xl bg-[#5b45f0] px-4 py-3 text-sm font-semibold text-white shadow-sm hover:bg-[#4c38d6] disabled:cursor-not-allowed disabled:opacity-60">
+              <button type="submit" disabled={loading} className="w-full rounded-xl bg-[#237c68] px-4 py-3 text-sm font-medium text-white shadow-sm hover:bg-[#1b6354] disabled:cursor-not-allowed disabled:opacity-60">
                 {loading ? t('login.loading') : t('login.submit')}
               </button>
             </form>

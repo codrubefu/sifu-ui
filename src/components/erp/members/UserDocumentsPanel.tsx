@@ -184,7 +184,7 @@ export function UserDocumentsPanel({ userId, locations = [], canUpload, canDelet
             </div>
             <label className="block md:col-span-2">
               <span className="mb-2 block text-sm font-medium text-slate-700">{t('userDocuments.file')}</span>
-              <input type="file" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx" onChange={(event) => updateField('file', event.target.files?.[0] ?? null)} className="block w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm file:mr-3 file:rounded-md file:border-0 file:bg-slate-100 file:px-3 file:py-1.5 file:text-xs file:font-semibold file:text-slate-700 focus:border-indigo-400 focus:ring-4 focus:ring-indigo-100" />
+              <input type="file" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx" onChange={(event) => updateField('file', event.target.files?.[0] ?? null)} className="block w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm file:mr-3 file:rounded-md file:border-0 file:bg-slate-100 file:px-3 file:py-1.5 file:text-xs file:font-medium file:text-slate-700 focus:border-indigo-400 focus:ring-4 focus:ring-indigo-100" />
               <span className="mt-2 block text-xs text-slate-500">{selectedFileName} - {t('userDocuments.fileHint')}</span>
             </label>
           </div>
@@ -206,19 +206,19 @@ export function UserDocumentsPanel({ userId, locations = [], canUpload, canDelet
           <table className="min-w-[920px] w-full text-left text-sm text-slate-700 [&_tbody_tr:nth-child(even)]:bg-slate-50/45">
             <thead className="bg-slate-50 text-slate-500">
               <tr>
-                <th className="border-b border-slate-200 px-5 py-3 font-semibold">{t('userDocuments.document')}</th>
-                <th className="border-b border-slate-200 px-4 py-3 font-semibold">{t('userDocuments.category')}</th>
-                <th className="border-b border-slate-200 px-4 py-3 font-semibold">{t('userDocuments.expires')}</th>
-                <th className="border-b border-slate-200 px-4 py-3 font-semibold">{t('userDocuments.file')}</th>
-                <th className="border-b border-slate-200 px-4 py-3 font-semibold">{t('userDocuments.operator')}</th>
-                <th className="border-b border-slate-200 px-5 py-3 font-semibold text-right">{t('common.actions')}</th>
+                <th className="border-b border-slate-200 px-5 py-3 font-medium">{t('userDocuments.document')}</th>
+                <th className="border-b border-slate-200 px-4 py-3 font-medium">{t('userDocuments.category')}</th>
+                <th className="border-b border-slate-200 px-4 py-3 font-medium">{t('userDocuments.expires')}</th>
+                <th className="border-b border-slate-200 px-4 py-3 font-medium">{t('userDocuments.file')}</th>
+                <th className="border-b border-slate-200 px-4 py-3 font-medium">{t('userDocuments.operator')}</th>
+                <th className="border-b border-slate-200 px-5 py-3 font-medium text-right">{t('common.actions')}</th>
               </tr>
             </thead>
             <tbody>
               {documents.length ? documents.map((document) => (
                 <tr key={document.id} className="border-b border-slate-100 align-top transition-colors hover:bg-indigo-50/30">
                   <td className="px-5 py-3">
-                    <p className="font-semibold text-slate-900"><FileText className="mr-2 inline h-4 w-4" />{document.title}</p>
+                    <p className="font-medium text-slate-900"><FileText className="mr-2 inline h-4 w-4" />{document.title}</p>
                     <p className="text-xs text-slate-500">{document.description || '-'}</p>
                     {document.replaces_document_id ? <p className="mt-1 text-xs text-slate-500">{t('userDocuments.replaces', { id: document.replaces_document_id })}</p> : null}
                   </td>

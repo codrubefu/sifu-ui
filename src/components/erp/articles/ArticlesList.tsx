@@ -89,7 +89,7 @@ export default function ArticlesList() {
     <ProtectedRoute requiredRights={['articles.view', 'articles.manage']}>
       <div className="space-y-6">
       {toast ? <Toast {...toast} onClose={() => setToast(null)} /> : null}
-      <SectionCard title={t('articles.title')} action={canCreateArticle ? <Link to="/erp/articles/create" className="inline-flex items-center gap-2 rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white"><Plus className="h-4 w-4" />{t('articles.add')}</Link> : null}>
+      <SectionCard title={t('articles.title')} action={canCreateArticle ? <Link to="/erp/articles/create" className="inline-flex items-center gap-2 rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white"><Plus className="h-4 w-4" />{t('articles.add')}</Link> : null}>
         <div className="grid grid-cols-1 gap-3 md:grid-cols-4">
           <label className="block md:col-span-2">
             <span className="mb-2 block text-sm font-medium text-slate-700">{t('articles.searchLabel')}</span>
@@ -104,21 +104,21 @@ export default function ArticlesList() {
             <select value={filters.location} onChange={(event) => setFilters((prev) => ({ ...prev, location: event.target.value }))} className="w-full rounded-lg border border-slate-200 bg-white px-4 py-3 text-sm outline-none focus:border-indigo-400 focus:ring-4 focus:ring-indigo-100"><option value="">{t('common.all')}</option>{locations.map((item) => <option key={item.id} value={item.id}>{labelFor(item)}</option>)}</select>
           </label>
           <div className="flex items-end gap-2 md:col-span-2">
-            <button onClick={() => void load()} className="inline-flex flex-1 items-center justify-center gap-2 rounded-lg bg-slate-900 px-4 py-3 text-sm font-semibold text-white"><Search className="h-4 w-4" />{t('common.search')}</button>
-            {canCreateArticle ? <Link to="/erp/articles/create" className="inline-flex flex-1 items-center justify-center gap-2 rounded-lg bg-indigo-600 px-4 py-3 text-sm font-semibold text-white"><Plus className="h-4 w-4" />{t('articles.add')}</Link> : null}
+            <button onClick={() => void load()} className="inline-flex flex-1 items-center justify-center gap-2 rounded-lg bg-slate-900 px-4 py-3 text-sm font-medium text-white"><Search className="h-4 w-4" />{t('common.search')}</button>
+            {canCreateArticle ? <Link to="/erp/articles/create" className="inline-flex flex-1 items-center justify-center gap-2 rounded-lg bg-indigo-600 px-4 py-3 text-sm font-medium text-white"><Plus className="h-4 w-4" />{t('articles.add')}</Link> : null}
           </div>
         </div>
-        {error ? <p className="mt-4 rounded-lg bg-red-50 px-4 py-3 text-sm font-semibold text-red-700">{error}</p> : null}
+        {error ? <p className="mt-4 rounded-lg bg-red-50 px-4 py-3 text-sm font-medium text-red-700">{error}</p> : null}
         <div className="mt-6 overflow-x-auto">
           <table className="min-w-full text-left text-sm">
             <thead><tr className="border-b text-slate-500"><th className="pb-3">{t('articles.titleField')}</th><th className="pb-3">status</th><th className="pb-3">publish_at</th><th className="pb-3">audience</th><th className="pb-3">{t('articles.groups')}</th><th className="pb-3">{t('articles.locations')}</th><th className="pb-3 text-right">{t('common.actions')}</th></tr></thead>
             <tbody>{visibleArticles.length ? visibleArticles.map((article) => (
               <tr key={article.id} className="border-b border-slate-100 align-top">
                 <td className="max-w-[320px] py-4">
-                  <p className="font-semibold text-slate-900">{article.title}</p>
+                  <p className="font-medium text-slate-900">{article.title}</p>
                   <p className="mt-1 line-clamp-2 text-slate-600">{article.description}</p>
                 </td>
-                <td className="py-4"><span className={`rounded-full px-2.5 py-1 text-xs font-semibold ${statusClass(article.status)}`}>{article.status ?? 'draft'}</span></td>
+                <td className="py-4"><span className={`rounded-full px-2.5 py-1 text-xs font-medium ${statusClass(article.status)}`}>{article.status ?? 'draft'}</span></td>
                 <td className="py-4 text-slate-600">
                   <p>{formatApiDate(article.publish_at)}</p>
                   {article.expires_at ? <p className="text-xs text-slate-500">expira {formatApiDate(article.expires_at)}</p> : null}
@@ -141,8 +141,8 @@ export default function ArticlesList() {
         <Modal open onClose={() => setDeleting(null)} title={t('articles.deleteConfirmTitle')} maxWidthClassName="max-w-md">
           <p className="text-sm text-slate-600">{t('articles.deleteConfirm')}</p>
           <div className="mt-6 flex justify-end gap-2">
-            <button onClick={() => setDeleting(null)} className="rounded-lg border border-slate-200 px-4 py-2 text-sm font-semibold">{t('common.cancel')}</button>
-            <button onClick={() => void remove()} className="rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white">{t('common.delete')}</button>
+            <button onClick={() => setDeleting(null)} className="rounded-lg border border-slate-200 px-4 py-2 text-sm font-medium">{t('common.cancel')}</button>
+            <button onClick={() => void remove()} className="rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white">{t('common.delete')}</button>
           </div>
         </Modal>
       ) : null}

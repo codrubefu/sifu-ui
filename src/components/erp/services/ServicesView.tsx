@@ -300,7 +300,7 @@ export function ServicesView({ openOnMount = false }: ServicesViewProps = {}) {
         <SectionCard
           title={editing ? t('services.editCardTitle', { id: editing.id }) : t('services.add')}
           action={
-            <button onClick={closeForm} className="inline-flex h-10 items-center gap-2 rounded-lg border border-slate-200 bg-white px-4 text-sm font-semibold text-slate-700 shadow-sm">
+            <button onClick={closeForm} className="inline-flex h-10 items-center gap-2 rounded-lg border border-slate-200 bg-white px-4 text-sm font-medium text-slate-700 shadow-sm">
               <X className="h-4 w-4" />{t('common.close')}
             </button>
           }
@@ -340,10 +340,10 @@ export function ServicesView({ openOnMount = false }: ServicesViewProps = {}) {
           <div className="mt-6 flex flex-wrap justify-end gap-2">
             <button onClick={closeForm} className="h-10 rounded-lg border border-slate-200 bg-white px-4 text-sm font-medium text-slate-700 shadow-sm">{t('common.cancel')}</button>
             <Can anyOf={editing ? ['services.update', 'services.manage'] : ['services.create', 'services.manage']}>
-              <button onClick={() => void saveService()} disabled={saving} className="h-10 rounded-lg bg-indigo-600 px-4 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700 disabled:cursor-not-allowed disabled:opacity-60">
+              <button onClick={() => void saveService()} disabled={saving} className="h-10 rounded-lg bg-indigo-600 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 disabled:cursor-not-allowed disabled:opacity-60">
                 <Save className="mr-2 inline h-4 w-4" />{saving ? t('common.saving') : t('services.save')}
               </button>
-              <button onClick={() => void saveService(true)} disabled={saving} className="h-10 rounded-lg bg-slate-900 px-4 text-sm font-semibold text-white shadow-sm hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-60">
+              <button onClick={() => void saveService(true)} disabled={saving} className="h-10 rounded-lg bg-slate-900 px-4 text-sm font-medium text-white shadow-sm hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-60">
                 <Save className="mr-2 inline h-4 w-4" />{saving ? t('common.saving') : t('common.saveAndClose')}
               </button>
             </Can>
@@ -365,7 +365,7 @@ export function ServicesView({ openOnMount = false }: ServicesViewProps = {}) {
         <SectionCard
           title={t('services.serviceMembers')}
           action={
-            <button onClick={closeUsersPanel} className="inline-flex h-10 items-center gap-2 rounded-lg border border-slate-200 bg-white px-4 text-sm font-semibold text-slate-700 shadow-sm">
+            <button onClick={closeUsersPanel} className="inline-flex h-10 items-center gap-2 rounded-lg border border-slate-200 bg-white px-4 text-sm font-medium text-slate-700 shadow-sm">
               <X className="h-4 w-4" />{t('common.close')}
             </button>
           }
@@ -378,17 +378,17 @@ export function ServicesView({ openOnMount = false }: ServicesViewProps = {}) {
             <div className="overflow-x-auto">
             <table className="min-w-[760px] w-full text-left text-sm text-slate-700 [&_tbody_tr:nth-child(even)]:bg-slate-50/45">
               <thead>
-                <tr className="bg-slate-50 text-xs uppercase text-slate-500">
-                  <th className="border-b border-slate-200 px-5 py-3 font-semibold">{t('payments.member')}</th>
-                  <th className="border-b border-slate-200 px-4 py-3 font-semibold">{t('users.contact')}</th>
-                  <th className="border-b border-slate-200 px-5 py-3 font-semibold">{t('common.status')}</th>
+                <tr className="bg-slate-50 text-xs normal-case text-slate-500">
+                  <th className="border-b border-slate-200 px-5 py-3 font-medium">{t('payments.member')}</th>
+                  <th className="border-b border-slate-200 px-4 py-3 font-medium">{t('users.contact')}</th>
+                  <th className="border-b border-slate-200 px-5 py-3 font-medium">{t('common.status')}</th>
                 </tr>
               </thead>
               <tbody>
                 {usersForSelectedService.length > 0 ? usersForSelectedService.map((user) => (
                   <tr key={user.id} className="border-b border-slate-100 align-top transition-colors hover:bg-indigo-50/30">
                     <td className="px-5 py-3">
-                      <p className="font-semibold text-slate-900">{userName(user)}</p>
+                      <p className="font-medium text-slate-900">{userName(user)}</p>
                     </td>
                     <td className="px-4 py-3 text-slate-600">
                       <p>{user.email}</p>
@@ -425,7 +425,7 @@ export function ServicesView({ openOnMount = false }: ServicesViewProps = {}) {
               <RefreshCw className="mr-2 inline h-4 w-4" />{t('common.refresh')}
             </button>
             <Can anyOf={['services.create', 'services.manage']}>
-              <button onClick={startCreate} className="inline-flex h-10 items-center gap-2 rounded-lg bg-indigo-600 px-4 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700">
+              <button onClick={startCreate} className="inline-flex h-10 items-center gap-2 rounded-lg bg-indigo-600 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700">
                 <Plus className="mr-2 inline h-4 w-4" />{t('services.add')}
               </button>
             </Can>
@@ -457,7 +457,7 @@ export function ServicesView({ openOnMount = false }: ServicesViewProps = {}) {
             </select>
           </label>
           <div className="flex items-end">
-            <button onClick={() => void loadServices()} className="h-10 w-full rounded-lg bg-slate-900 px-4 text-sm font-semibold text-white">{t('common.search')}</button>
+            <button onClick={() => void loadServices()} className="h-10 w-full rounded-lg bg-slate-900 px-4 text-sm font-medium text-white">{t('common.search')}</button>
           </div>
         </div>
 
@@ -471,25 +471,25 @@ export function ServicesView({ openOnMount = false }: ServicesViewProps = {}) {
           <div className="overflow-x-auto">
           <table className="min-w-[1050px] w-full text-left text-sm text-slate-700 [&_tbody_tr:nth-child(even)]:bg-slate-50/45">
             <thead>
-              <tr className="bg-slate-50 text-xs uppercase text-slate-500">
-                <th className="border-b border-slate-200 px-5 py-3 font-semibold">{t('services.service')}</th>
-                <th className="border-b border-slate-200 px-4 py-3 font-semibold">{t('services.price')}</th>
-                <th className="border-b border-slate-200 px-4 py-3 font-semibold">{t('services.limits')}</th>
-                <th className="border-b border-slate-200 px-4 py-3 font-semibold">{t('services.members')}</th>
-                <th className="border-b border-slate-200 px-4 py-3 font-semibold">{t('common.status')}</th>
-                <th className="border-b border-slate-200 px-5 py-3 font-semibold text-right">{t('common.actions')}</th>
+              <tr className="bg-slate-50 text-xs normal-case text-slate-500">
+                <th className="border-b border-slate-200 px-5 py-3 font-medium">{t('services.service')}</th>
+                <th className="border-b border-slate-200 px-4 py-3 font-medium">{t('services.price')}</th>
+                <th className="border-b border-slate-200 px-4 py-3 font-medium">{t('services.limits')}</th>
+                <th className="border-b border-slate-200 px-4 py-3 font-medium">{t('services.members')}</th>
+                <th className="border-b border-slate-200 px-4 py-3 font-medium">{t('common.status')}</th>
+                <th className="border-b border-slate-200 px-5 py-3 font-medium text-right">{t('common.actions')}</th>
               </tr>
             </thead>
             <tbody>
               {services.length > 0 ? services.map((service) => (
                 <tr key={service.id} className="border-b border-slate-100 align-top transition-colors hover:bg-indigo-50/30">
                   <td className="max-w-[320px] px-5 py-3">
-                    <p className="font-semibold text-slate-900">{service.name}</p>
+                    <p className="font-medium text-slate-900">{service.name}</p>
                     <p className="text-xs text-slate-500">#{service.id} - {t('branches.updated')} {formatDeviceDate(service.updated_at)}</p>
-                    <p className="mt-1 text-xs font-semibold text-slate-500">{serviceTypeLabel(service.type, t)} - {expirationRuleLabel(service.expiration_rule, t)}</p>
+                    <p className="mt-1 text-xs font-medium text-slate-500">{serviceTypeLabel(service.type, t)} - {expirationRuleLabel(service.expiration_rule, t)}</p>
                     <p className="mt-1 text-sm text-slate-600">{service.description || '-'}</p>
                   </td>
-                  <td className="px-4 py-3 font-semibold text-slate-900">{service.price} {service.currency}</td>
+                  <td className="px-4 py-3 font-medium text-slate-900">{service.price} {service.currency}</td>
                   <td className="px-4 py-3 text-slate-600">
                     <p>{t('services.duration')}: {service.duration_days ? t('services.days', { count: service.duration_days }) : t('services.noAutoExpiry')}</p>
                     {service.expiration_rule === 'fixed_date' ? <p>{t('services.fixedExpiresAt')}: {formatDeviceDate(service.fixed_expires_at)}</p> : null}

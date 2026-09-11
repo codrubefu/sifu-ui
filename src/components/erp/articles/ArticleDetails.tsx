@@ -37,11 +37,11 @@ export default function ArticleDetails() {
   }, [id, t]);
 
   if (loading) return <SectionCard title={t('articles.details')}><p className="text-sm text-slate-500">{t('articles.loadingOne')}</p></SectionCard>;
-  if (error || !article) return <SectionCard title={t('articles.details')}><p className="text-sm font-semibold text-red-700">{error || t('articles.notFound')}</p></SectionCard>;
+  if (error || !article) return <SectionCard title={t('articles.details')}><p className="text-sm font-medium text-red-700">{error || t('articles.notFound')}</p></SectionCard>;
 
   return (
     <ProtectedRoute requiredRights={['articles.view', 'articles.manage']}>
-      <SectionCard title={article.title} action={<div className="flex gap-2"><Link to="/erp/articles" className="rounded-lg border border-slate-200 px-4 py-2 text-sm font-semibold">{t('common.back')}</Link><Can anyOf={['articles.update', 'articles.manage']}><Link to={`/erp/articles/${article.id}/edit`} className="inline-flex items-center gap-2 rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white"><Edit3 className="h-4 w-4" />{t('common.edit')}</Link></Can></div>}>
+      <SectionCard title={article.title} action={<div className="flex gap-2"><Link to="/erp/articles" className="rounded-lg border border-slate-200 px-4 py-2 text-sm font-medium">{t('common.back')}</Link><Can anyOf={['articles.update', 'articles.manage']}><Link to={`/erp/articles/${article.id}/edit`} className="inline-flex items-center gap-2 rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white"><Edit3 className="h-4 w-4" />{t('common.edit')}</Link></Can></div>}>
         <div className="grid grid-cols-1 gap-4 text-sm md:grid-cols-2">
           <p className="md:col-span-2"><b>{t('articles.description')}:</b> {article.description || '-'}</p>
           <p><b>status:</b> {article.status ?? 'draft'}</p>

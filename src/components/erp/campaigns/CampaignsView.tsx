@@ -189,13 +189,13 @@ export function CampaignsView() {
           <div className="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm">
             <div className="overflow-x-auto">
             <table className="min-w-[900px] w-full text-left text-sm text-slate-700 [&_tbody_tr:nth-child(even)]:bg-slate-50/45">
-              <thead className="bg-slate-50 text-xs uppercase text-slate-500">
+              <thead className="bg-slate-50 text-xs normal-case text-slate-500">
                 <tr><th className="border-b border-slate-200 px-5 py-3">Campanie</th><th className="border-b border-slate-200 px-4 py-3">Canal</th><th className="border-b border-slate-200 px-4 py-3">Status</th><th className="border-b border-slate-200 px-4 py-3">Programata</th><th className="border-b border-slate-200 px-5 py-3 text-right">Actiuni</th></tr>
               </thead>
               <tbody>
                 {campaigns.length ? campaigns.map((campaign) => (
                   <tr key={campaign.id} className="border-b border-slate-100 align-top transition-colors hover:bg-indigo-50/30">
-                    <td className="px-5 py-3"><p className="font-semibold text-slate-900">{campaign.name}</p><p className="text-xs text-slate-500">{campaign.subject || segmentName(campaign.segment_id)}</p></td>
+                    <td className="px-5 py-3"><p className="font-medium text-slate-900">{campaign.name}</p><p className="text-xs text-slate-500">{campaign.subject || segmentName(campaign.segment_id)}</p></td>
                     <td className="px-4 py-3 text-slate-600">{campaign.channel}</td>
                     <td className="px-4 py-3 text-slate-600">{campaign.status}</td>
                     <td className="px-4 py-3 text-slate-600">{campaign.scheduled_at?.slice(0, 16) ?? '-'}</td>
@@ -217,7 +217,7 @@ export function CampaignsView() {
           <div className="space-y-4">
             <div className="rounded-lg border border-slate-200 bg-slate-50 p-4">
               <div className="mb-3 flex items-center justify-between">
-                <h3 className="text-sm font-semibold text-slate-900">{selected ? `#${selected.id}` : 'Campanie noua'}</h3>
+                <h3 className="text-sm font-medium text-slate-900">{selected ? `#${selected.id}` : 'Campanie noua'}</h3>
                 <Button type="button" size="sm" onClick={resetForm}>Noua</Button>
               </div>
               {!isDraft ? <Alert tone="warning" className="mb-3">Doar campaniile draft pot fi editate.</Alert> : null}
@@ -239,7 +239,7 @@ export function CampaignsView() {
 
             {selected ? (
               <div className="rounded-lg border border-slate-200 bg-white p-4">
-                <h3 className="mb-3 text-sm font-semibold text-slate-900">Programare</h3>
+                <h3 className="mb-3 text-sm font-medium text-slate-900">Programare</h3>
                 <div className="flex flex-wrap gap-2">
                   <Input label="scheduled_at" type="datetime-local" value={scheduledAt} onChange={(event) => setScheduledAt(event.target.value)} />
                   <div className="flex items-end"><Button type="button" onClick={() => void schedule()} disabled={loading || !scheduledAt}><CalendarClock className="h-4 w-4" />Programeaza</Button></div>
@@ -262,7 +262,7 @@ export function CampaignsView() {
       {statistics ? (
         <SectionCard title="Statistici">
           <div className="grid grid-cols-2 gap-3 md:grid-cols-5">
-            {Object.entries(statistics).map(([key, value]) => <div key={key} className="rounded-lg border border-slate-200 bg-white p-4"><p className="text-xs uppercase text-slate-500">{key}</p><p className="text-2xl font-bold text-slate-900">{value}</p></div>)}
+            {Object.entries(statistics).map(([key, value]) => <div key={key} className="rounded-lg border border-slate-200 bg-white p-4"><p className="text-xs normal-case text-slate-500">{key}</p><p className="text-2xl font-medium text-slate-900">{value}</p></div>)}
           </div>
         </SectionCard>
       ) : null}

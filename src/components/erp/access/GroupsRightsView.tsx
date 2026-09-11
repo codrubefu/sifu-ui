@@ -297,7 +297,7 @@ export function GroupsRightsView() {
         <SectionCard
           title={editing ? t('access.editCardTitle', { id: editing.id }) : t('access.addResource', { resource: t(config.labelKey).toLowerCase() })}
           action={
-            <button onClick={closeForm} className="inline-flex items-center gap-2 rounded-lg border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700">
+            <button onClick={closeForm} className="inline-flex items-center gap-2 rounded-lg border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700">
               <X className="h-4 w-4" />{t('common.close')}
             </button>
           }
@@ -326,7 +326,7 @@ export function GroupsRightsView() {
                     <div className="space-y-4 rounded-lg border border-slate-200 bg-white p-4">
                       {groupedRights.map((group) => (
                         <section key={group.key} className="space-y-2">
-                          <h4 className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">{group.label}</h4>
+                          <h4 className="text-xs font-medium normal-case tracking-normal text-slate-500">{group.label}</h4>
                           <div className="grid gap-2 sm:grid-cols-2 xl:grid-cols-3">
                             {group.items.map((right) => {
                               const label = right.label || right.name;
@@ -370,10 +370,10 @@ export function GroupsRightsView() {
             })}
             <div className="flex flex-wrap justify-end gap-2">
               <button onClick={closeForm} className="rounded-lg border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700">{t('common.cancel')}</button>
-              <button onClick={() => void save()} disabled={saving} className="inline-flex items-center justify-center gap-2 rounded-lg bg-indigo-600 px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-indigo-100 disabled:cursor-not-allowed disabled:opacity-60">
+              <button onClick={() => void save()} disabled={saving} className="inline-flex items-center justify-center gap-2 rounded-lg bg-indigo-600 px-4 py-3 text-sm font-medium text-white shadow-lg shadow-indigo-100 disabled:cursor-not-allowed disabled:opacity-60">
                 <Save className="h-4 w-4" /> {saving ? t('common.saving') : t('common.save')}
               </button>
-              <button onClick={() => void save(true)} disabled={saving} className="inline-flex items-center justify-center gap-2 rounded-lg bg-slate-900 px-4 py-3 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:opacity-60">
+              <button onClick={() => void save(true)} disabled={saving} className="inline-flex items-center justify-center gap-2 rounded-lg bg-slate-900 px-4 py-3 text-sm font-medium text-white disabled:cursor-not-allowed disabled:opacity-60">
                 <Save className="h-4 w-4" /> {saving ? t('common.saving') : t('common.saveAndClose')}
               </button>
             </div>
@@ -389,10 +389,10 @@ export function GroupsRightsView() {
         title={t(config.titleKey)}
         action={
           <div className="flex items-center gap-2">
-            <button onClick={() => loadItems(search)} className="inline-flex items-center gap-2 rounded-lg border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700">
+            <button onClick={() => loadItems(search)} className="inline-flex items-center gap-2 rounded-lg border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700">
               <RefreshCw className="h-4 w-4" /> {t('common.refresh')}
             </button>
-            <button onClick={startCreate} className="inline-flex items-center gap-2 rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white">
+            <button onClick={startCreate} className="inline-flex items-center gap-2 rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white">
               <Plus className="h-4 w-4" /> {t('access.new')}
             </button>
           </div>
@@ -414,7 +414,7 @@ export function GroupsRightsView() {
               placeholder={t(config.searchPlaceholderKey)}
               className="w-56 rounded-lg border border-slate-200 px-4 py-2 text-sm outline-none focus:border-indigo-400"
             />
-            <button onClick={() => loadItems(search)} className="rounded-lg bg-slate-900 px-4 py-2 text-sm font-semibold text-white">{t('common.search')}</button>
+            <button onClick={() => loadItems(search)} className="rounded-lg bg-slate-900 px-4 py-2 text-sm font-medium text-white">{t('common.search')}</button>
           </div>
         }
       >
@@ -422,7 +422,7 @@ export function GroupsRightsView() {
           <div className="overflow-x-auto">
             <table className="min-w-full divide-y divide-slate-100 text-left text-sm">
               <thead>
-                <tr className="text-xs uppercase text-slate-500">
+                <tr className="text-xs normal-case text-slate-500">
                   <th className="px-3 py-3">ID</th>
                   {config.columns.map((column) => <th key={column.key} className="px-3 py-3">{t(column.labelKey)}</th>)}
                   <th className="px-3 py-3 text-right">{t('common.actions')}</th>
@@ -431,7 +431,7 @@ export function GroupsRightsView() {
               <tbody className="divide-y divide-slate-100">
                 {items.map((item) => (
                   <tr key={item.id} className="align-top">
-                    <td className="px-3 py-4 font-semibold text-slate-900">{item.id}</td>
+                    <td className="px-3 py-4 font-medium text-slate-900">{item.id}</td>
                     {config.columns.map((column) => (
                       <td key={column.key} className="max-w-[320px] px-3 py-4 text-slate-600">{column.render ? column.render(item, users) : readValue(item, column.key)}</td>
                     ))}

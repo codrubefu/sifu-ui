@@ -155,7 +155,7 @@ export function ProfileInfoPage({ childId }: { childId?: number } = {}) {
             <div className="flex items-center gap-3">
               <span className="rounded-lg bg-indigo-100 p-3 text-indigo-700"><UserCircle className="h-6 w-6" /></span>
               <div className="min-w-0">
-                <p className="truncate text-lg font-bold text-slate-900">{displayName}</p>
+                <p className="truncate text-lg font-medium text-slate-900">{displayName}</p>
               </div>
             </div>
           </div>
@@ -166,27 +166,27 @@ export function ProfileInfoPage({ childId }: { childId?: number } = {}) {
         </div>
         <div className="mt-5 grid grid-cols-1 gap-4 md:grid-cols-2">
           <div>
-            <p className="mb-2 text-sm font-semibold text-slate-700">{t('profile.groups')}</p>
+            <p className="mb-2 text-sm font-medium text-slate-700">{t('profile.groups')}</p>
             <div className="flex flex-wrap gap-2">
-              {groups.length ? groups.map((group) => <span key={group.id} className="rounded-full bg-indigo-50 px-3 py-1 text-xs font-semibold text-indigo-700">{group.label || group.name}</span>) : <span className="text-sm text-slate-500">-</span>}
+              {groups.length ? groups.map((group) => <span key={group.id} className="rounded-full bg-indigo-50 px-3 py-1 text-xs font-medium text-indigo-700">{group.label || group.name}</span>) : <span className="text-sm text-slate-500">-</span>}
             </div>
           </div>
           <div>
-            <p className="mb-2 text-sm font-semibold text-slate-700">{t('profile.locations')}</p>
+            <p className="mb-2 text-sm font-medium text-slate-700">{t('profile.locations')}</p>
             <div className="flex flex-wrap gap-2">
-              {locations.length ? locations.map((location) => <span key={location.id} className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-700">{location.name}</span>) : <span className="text-sm text-slate-500">-</span>}
+              {locations.length ? locations.map((location) => <span key={location.id} className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-700">{location.name}</span>) : <span className="text-sm text-slate-500">-</span>}
             </div>
           </div>
         </div>
       </SectionCard>
 
-      <SectionCard title={t('profile.customFields')} action={<button onClick={() => void loadCustomFields()} className="rounded-lg border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700">{t('common.refresh')}</button>}>
+      <SectionCard title={t('profile.customFields')} action={<button onClick={() => void loadCustomFields()} className="rounded-lg border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700">{t('common.refresh')}</button>}>
         {customFieldsError ? <Alert tone="error" className="mb-4">{customFieldsError}</Alert> : null}
         {rows.length ? (
           <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
             {rows.map((row) => (
               <div key={row.key} className="rounded-lg border border-slate-100 bg-slate-50 px-4 py-3">
-                <p className="text-xs font-semibold uppercase text-slate-500">{row.label}</p>
+                <p className="text-xs font-medium normal-case text-slate-500">{row.label}</p>
                 <p className="mt-1 break-words text-sm font-medium text-slate-900">{row.value}</p>
               </div>
             ))}
@@ -250,7 +250,7 @@ export function ProfileSecurityPage() {
         <Input label={t('profile.currentPassword')} type="password" value={form.current_password} onChange={(event) => setField('current_password', event.target.value)} />
         <Input label={t('profile.newPassword')} type="password" value={form.password} onChange={(event) => setField('password', event.target.value)} />
         <Input label={t('profile.confirmPassword')} type="password" value={form.password_confirmation} onChange={(event) => setField('password_confirmation', event.target.value)} />
-        <button type="submit" disabled={loading} className="inline-flex items-center gap-2 rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:opacity-60">
+        <button type="submit" disabled={loading} className="inline-flex items-center gap-2 rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white disabled:cursor-not-allowed disabled:opacity-60">
           <KeyRound className="h-4 w-4" />
           {loading ? t('common.saving') : t('profile.savePassword')}
         </button>
@@ -310,7 +310,7 @@ export function ProfileAnnouncementsPage({ childId }: { childId?: number } = {})
               <div className="min-w-0">
                 <div className="flex flex-wrap items-center gap-2">
                   <Bell className="h-4 w-4 text-indigo-600" />
-                  <h3 className="text-base font-semibold text-slate-950">{article.title}</h3>
+                  <h3 className="text-base font-medium text-slate-950">{article.title}</h3>
                   {article.viewed_at ? <StatusBadge status={t('profile.announcementRead', 'Citit')} /> : <StatusBadge status={t('profile.announcementUnread', 'Necitit')} />}
                 </div>
                 <p className="mt-2 whitespace-pre-wrap text-sm leading-6 text-slate-700">{article.description}</p>
@@ -361,22 +361,22 @@ export function ProfileEventsPage({ childId }: { childId?: number } = {}) {
   }, [loadEvents]);
 
   return (
-    <SectionCard title={t('profile.eventsTitle')} action={<button onClick={() => void loadEvents()} className="rounded-lg border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700">{t('common.refresh')}</button>}>
+    <SectionCard title={t('profile.eventsTitle')} action={<button onClick={() => void loadEvents()} className="rounded-lg border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700">{t('common.refresh')}</button>}>
       {error ? <Alert tone="error" className="mb-4">{error}</Alert> : null}
       <div className="overflow-x-auto">
         <table className="min-w-full text-left text-sm">
           <thead>
             <tr className="border-b border-slate-200 text-slate-500">
-              <th className="pb-3 font-semibold">{t('profile.event')}</th>
-              <th className="pb-3 font-semibold">{t('profile.startsAt')}</th>
-              <th className="pb-3 font-semibold">{t('profile.endsAt')}</th>
-              <th className="pb-3 font-semibold">{t('common.status')}</th>
+              <th className="pb-3 font-medium">{t('profile.event')}</th>
+              <th className="pb-3 font-medium">{t('profile.startsAt')}</th>
+              <th className="pb-3 font-medium">{t('profile.endsAt')}</th>
+              <th className="pb-3 font-medium">{t('common.status')}</th>
             </tr>
           </thead>
           <tbody>
             {events.length ? events.map((event) => (
               <tr key={event.id} className="border-b border-slate-100">
-                <td className="py-4 font-semibold text-slate-900"><CalendarDays className="mr-2 inline h-4 w-4 text-indigo-600" />{eventTitle(event)}</td>
+                <td className="py-4 font-medium text-slate-900"><CalendarDays className="mr-2 inline h-4 w-4 text-indigo-600" />{eventTitle(event)}</td>
                 <td className="py-4 text-slate-600">{formatDate(eventStart(event))}</td>
                 <td className="py-4 text-slate-600">{formatDate(eventEnd(event))}</td>
                 <td className="py-4">{event.status ? <StatusBadge status={event.status} /> : '-'}</td>
@@ -414,31 +414,31 @@ export function ProfileServicesPage({ childId }: { childId?: number } = {}) {
   }, [loadServices]);
 
   return (
-    <SectionCard title={t('profile.servicesTitle')} action={<button onClick={() => void loadServices()} className="rounded-lg border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700">{t('common.refresh')}</button>}>
+    <SectionCard title={t('profile.servicesTitle')} action={<button onClick={() => void loadServices()} className="rounded-lg border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700">{t('common.refresh')}</button>}>
       {error ? <Alert tone="error" className="mb-4">{error}</Alert> : null}
       <div className="overflow-x-auto">
         <table className="min-w-full text-left text-sm">
           <thead>
             <tr className="border-b border-slate-200 text-slate-500">
-              <th className="pb-3 font-semibold">{t('services.service')}</th>
-              <th className="pb-3 font-semibold">{t('services.price')}</th>
-              <th className="pb-3 font-semibold">{t('services.duration')}</th>
-              <th className="pb-3 font-semibold">{t('users.startDate')}</th>
-              <th className="pb-3 font-semibold">{t('users.expires')}</th>
-              <th className="pb-3 font-semibold">{t('services.accesses')}</th>
-              <th className="pb-3 font-semibold">{t('services.resumeAt')}</th>
-              <th className="pb-3 font-semibold">{t('common.status')}</th>
+              <th className="pb-3 font-medium">{t('services.service')}</th>
+              <th className="pb-3 font-medium">{t('services.price')}</th>
+              <th className="pb-3 font-medium">{t('services.duration')}</th>
+              <th className="pb-3 font-medium">{t('users.startDate')}</th>
+              <th className="pb-3 font-medium">{t('users.expires')}</th>
+              <th className="pb-3 font-medium">{t('services.accesses')}</th>
+              <th className="pb-3 font-medium">{t('services.resumeAt')}</th>
+              <th className="pb-3 font-medium">{t('common.status')}</th>
             </tr>
           </thead>
           <tbody>
             {services.length ? services.map((service) => (
               <tr key={service.id} className="border-b border-slate-100 align-top">
                 <td className="max-w-[360px] py-4">
-                  <p className="font-semibold text-slate-900">{service.name}</p>
+                  <p className="font-medium text-slate-900">{service.name}</p>
                   <p className="mt-1 text-xs text-slate-500">#{service.id}</p>
                   <p className="mt-1 text-sm text-slate-600">{service.description || '-'}</p>
                 </td>
-                <td className="py-4 font-semibold text-slate-900">{service.price} {service.currency}</td>
+                <td className="py-4 font-medium text-slate-900">{service.price} {service.currency}</td>
                 <td className="py-4 text-slate-600">{service.duration_days ? t('services.days', { count: service.duration_days }) : t('services.noAutoExpiry')}</td>
                 <td className="py-4 text-slate-600">{formatDate(service.start_date ?? service.pivot?.start_date)}</td>
                 <td className="py-4 text-slate-600">{formatDate(service.expires_at ?? service.pivot?.expires_at)}</td>
@@ -497,7 +497,7 @@ export function ProfileCodePage({ childId }: { childId?: number } = {}) {
       {error ? <Alert tone="error" className="mb-4">{error}</Alert> : null}
       <div className="flex items-center gap-3 rounded-lg bg-slate-50 p-4">
         <span className="rounded-lg bg-indigo-100 p-3 text-indigo-700"><ScanLine className="h-6 w-6" /></span>
-        <p className="text-lg font-bold text-slate-900">{loading ? t('common.loading') : userCode || '-'}</p>
+        <p className="text-lg font-medium text-slate-900">{loading ? t('common.loading') : userCode || '-'}</p>
       </div>
     </SectionCard>
   );
@@ -540,7 +540,7 @@ export function ProfileGradesPage({ childId }: { childId?: number } = {}) {
           <tbody>
             {gradeHistory.map((record) => (
               <tr key={record.id} className="border-t border-slate-100">
-                <td className="px-4 py-3 font-semibold">
+                <td className="px-4 py-3 font-medium">
                   <Award className="mr-2 inline h-4 w-4 text-indigo-600" />
                   {record.grade?.name ?? record.grade_id}
                   {record.id === gradeHistory[0]?.id ? <span className="ml-2 rounded-full bg-emerald-50 px-2 py-1 text-xs text-emerald-700">{t('users.activeGrade')}</span> : null}

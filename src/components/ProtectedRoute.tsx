@@ -20,7 +20,7 @@ export function ProtectedRoute({ requiredRights = [], requireAll = false, childr
   }
 
   if (error) {
-    return <div className="min-h-screen bg-slate-50 p-8 text-sm font-semibold text-red-700">{error.includes('.') ? t(error) : error}</div>;
+    return <div className="min-h-screen bg-slate-50 p-8 text-sm font-medium text-red-700">{error.includes('.') ? t(error) : error}</div>;
   }
 
   if (!user || !erpApiService.getToken()) {

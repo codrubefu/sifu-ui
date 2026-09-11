@@ -86,7 +86,7 @@ export function CheckInView() {
       <div className="grid gap-5 xl:grid-cols-[minmax(0,1.3fr)_minmax(22rem,0.7fr)]">
         <section className="space-y-4">
           <div className="rounded-lg border border-slate-200 bg-white p-4 shadow-sm">
-            <label className="text-sm font-semibold text-slate-700" htmlFor="check-in-occurrence">{t('checkIn.currentClass')}</label>
+            <label className="text-sm font-medium text-slate-700" htmlFor="check-in-occurrence">{t('checkIn.currentClass')}</label>
             <select
               id="check-in-occurrence"
               value={occurrenceId ?? ''}
@@ -103,7 +103,7 @@ export function CheckInView() {
           </div>
 
           <div className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
-            <label className="text-sm font-semibold text-slate-700" htmlFor="check-in-search">{t('checkIn.searchLabel')}</label>
+            <label className="text-sm font-medium text-slate-700" htmlFor="check-in-search">{t('checkIn.searchLabel')}</label>
             <div className="mt-2 flex gap-2">
               <input
                 ref={inputRef}
@@ -112,9 +112,9 @@ export function CheckInView() {
                 onChange={(event) => setQuery(event.target.value)}
                 onKeyDown={(event) => { if (event.key === 'Enter') void search(); }}
                 placeholder={t('checkIn.searchPlaceholder')}
-                className="h-14 min-w-0 flex-1 rounded-lg border border-slate-200 px-4 text-lg font-semibold text-slate-950 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-100"
+                className="h-14 min-w-0 flex-1 rounded-lg border border-slate-200 px-4 text-lg font-medium text-slate-950 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-100"
               />
-              <button onClick={() => void search()} disabled={loading || !query.trim()} className="inline-flex h-14 items-center gap-2 rounded-lg bg-indigo-600 px-5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700 disabled:cursor-not-allowed disabled:opacity-50">
+              <button onClick={() => void search()} disabled={loading || !query.trim()} className="inline-flex h-14 items-center gap-2 rounded-lg bg-indigo-600 px-5 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 disabled:cursor-not-allowed disabled:opacity-50">
                 {loading ? <Loader2 className="h-5 w-5 animate-spin" /> : <Search className="h-5 w-5" />}
                 {t('checkIn.search')}
               </button>
@@ -126,7 +126,7 @@ export function CheckInView() {
 
           <div className={`min-h-[13rem] rounded-lg border p-6 shadow-sm ${styles.className}`}>
             {loading ? (
-              <div className="flex h-40 items-center justify-center gap-3 text-lg font-semibold"><Loader2 className="h-6 w-6 animate-spin" />{t('checkIn.loading')}</div>
+              <div className="flex h-40 items-center justify-center gap-3 text-lg font-medium"><Loader2 className="h-6 w-6 animate-spin" />{t('checkIn.loading')}</div>
             ) : result ? (
               <div className="space-y-5">
                 <div className="flex flex-wrap items-center gap-4">
@@ -138,14 +138,14 @@ export function CheckInView() {
                 </div>
                 {result.member ? (
                   <div className="grid gap-3 rounded-lg bg-white/70 p-4 text-slate-800 md:grid-cols-3">
-                    <div><p className="text-xs font-semibold uppercase text-slate-500">{t('checkIn.member')}</p><p className="text-lg font-bold">{result.member.first_name} {result.member.last_name}</p></div>
-                    <div><p className="text-xs font-semibold uppercase text-slate-500">{t('checkIn.code')}</p><p className="font-semibold">{result.member.user_code ?? '-'}</p></div>
-                    <div><p className="text-xs font-semibold uppercase text-slate-500">{t('checkIn.subscription')}</p><p className="font-semibold">{result.active_subscription ? t('checkIn.active') : t('checkIn.inactive')}</p></div>
+                    <div><p className="text-xs font-medium normal-case text-slate-500">{t('checkIn.member')}</p><p className="text-lg font-medium">{result.member.first_name} {result.member.last_name}</p></div>
+                    <div><p className="text-xs font-medium normal-case text-slate-500">{t('checkIn.code')}</p><p className="font-medium">{result.member.user_code ?? '-'}</p></div>
+                    <div><p className="text-xs font-medium normal-case text-slate-500">{t('checkIn.subscription')}</p><p className="font-medium">{result.active_subscription ? t('checkIn.active') : t('checkIn.inactive')}</p></div>
                   </div>
                 ) : null}
                 <div className="flex flex-wrap gap-2">
-                  {canConfirm ? <button onClick={() => void confirm(false)} disabled={confirming} className="inline-flex h-12 items-center gap-2 rounded-lg bg-emerald-700 px-5 text-sm font-bold text-white hover:bg-emerald-800 disabled:opacity-50"><UserCheck className="h-5 w-5" />{confirming ? t('checkIn.confirming') : t('checkIn.confirm')}</button> : null}
-                  {canConfirmOverride ? <button onClick={() => void confirm(true)} disabled={confirming} className="inline-flex h-12 items-center gap-2 rounded-lg bg-amber-600 px-5 text-sm font-bold text-white hover:bg-amber-700 disabled:opacity-50"><ShieldAlert className="h-5 w-5" />{t('checkIn.override')}</button> : null}
+                  {canConfirm ? <button onClick={() => void confirm(false)} disabled={confirming} className="inline-flex h-12 items-center gap-2 rounded-lg bg-emerald-700 px-5 text-sm font-medium text-white hover:bg-emerald-800 disabled:opacity-50"><UserCheck className="h-5 w-5" />{confirming ? t('checkIn.confirming') : t('checkIn.confirm')}</button> : null}
+                  {canConfirmOverride ? <button onClick={() => void confirm(true)} disabled={confirming} className="inline-flex h-12 items-center gap-2 rounded-lg bg-amber-600 px-5 text-sm font-medium text-white hover:bg-amber-700 disabled:opacity-50"><ShieldAlert className="h-5 w-5" />{t('checkIn.override')}</button> : null}
                 </div>
               </div>
             ) : (
@@ -156,12 +156,12 @@ export function CheckInView() {
 
         <aside className="space-y-4">
           <div className="rounded-lg border border-slate-200 bg-white p-4 shadow-sm">
-            <h3 className="font-bold text-slate-950">{t('checkIn.classDetails')}</h3>
+            <h3 className="font-medium text-slate-950">{t('checkIn.classDetails')}</h3>
             <p className="mt-2 text-sm text-slate-600">{selectedOccurrence?.event?.title ?? t('checkIn.noClassSelected')}</p>
             <p className="mt-1 text-sm text-slate-500">{selectedOccurrence ? formatApiDate(selectedOccurrence.start_datetime) : '-'}</p>
           </div>
           <div className="rounded-lg border border-slate-200 bg-white p-4 shadow-sm">
-            <h3 className="font-bold text-slate-950">{t('checkIn.lastCheckIn')}</h3>
+            <h3 className="font-medium text-slate-950">{t('checkIn.lastCheckIn')}</h3>
             <p className="mt-2 text-sm text-slate-600">{result?.last_check_in?.event_title ?? t('checkIn.noLastCheckIn')}</p>
             <p className="mt-1 text-sm text-slate-500">{result?.last_check_in?.registered_at ? formatApiDate(result.last_check_in.registered_at) : '-'}</p>
           </div>

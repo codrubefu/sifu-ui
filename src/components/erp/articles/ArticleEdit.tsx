@@ -53,7 +53,7 @@ export default function ArticleEdit() {
   };
 
   if (loading) return <SectionCard title={t('articles.edit')}><p className="text-sm text-slate-500">{t('articles.loadingOne')}</p></SectionCard>;
-  if (!article && error) return <SectionCard title={t('articles.edit')}><p className="text-sm font-semibold text-red-700">{error}</p></SectionCard>;
+  if (!article && error) return <SectionCard title={t('articles.edit')}><p className="text-sm font-medium text-red-700">{error}</p></SectionCard>;
 
   return <ProtectedRoute requiredRights={['articles.update', 'articles.manage']}><ArticleForm mode="edit" initialData={article} onSubmit={save} submitting={submitting} serverError={error} successMessage={success} /></ProtectedRoute>;
 }

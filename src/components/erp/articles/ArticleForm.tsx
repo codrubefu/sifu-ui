@@ -106,10 +106,10 @@ export default function ArticleForm({ mode, initialData, onSubmit, submitting, s
 
   return (
     <form onSubmit={submit} className="space-y-6">
-      <SectionCard title={title} action={<Link to="/erp/articles" className="rounded-lg border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700">{t('common.back')}</Link>}>
-        {serverError ? <p className="mb-4 rounded-lg bg-red-50 px-4 py-3 text-sm font-semibold text-red-700">{serverError}</p> : null}
-        {successMessage ? <SuccessMessage fixed className="rounded-lg border-none font-semibold">{successMessage}</SuccessMessage> : null}
-        {optionsError ? <p className="mb-4 rounded-lg bg-red-50 px-4 py-3 text-sm font-semibold text-red-700">{optionsError}</p> : null}
+      <SectionCard title={title} action={<Link to="/erp/articles" className="rounded-lg border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700">{t('common.back')}</Link>}>
+        {serverError ? <p className="mb-4 rounded-lg bg-red-50 px-4 py-3 text-sm font-medium text-red-700">{serverError}</p> : null}
+        {successMessage ? <SuccessMessage fixed className="rounded-lg border-none font-medium">{successMessage}</SuccessMessage> : null}
+        {optionsError ? <p className="mb-4 rounded-lg bg-red-50 px-4 py-3 text-sm font-medium text-red-700">{optionsError}</p> : null}
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <label className="block">
             <span className="mb-2 block text-sm font-medium text-slate-700">{t('articles.titleField')}</span>
@@ -148,12 +148,12 @@ export default function ArticleForm({ mode, initialData, onSubmit, submitting, s
           </label>
         </div>
         <div className="mt-6 flex justify-end gap-2">
-          <Link to="/erp/articles" className="rounded-lg border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700">{t('common.cancel')}</Link>
-          <button disabled={submitting} className="inline-flex items-center gap-2 rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white disabled:opacity-60">
+          <Link to="/erp/articles" className="rounded-lg border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700">{t('common.cancel')}</Link>
+          <button disabled={submitting} className="inline-flex items-center gap-2 rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white disabled:opacity-60">
             <Save className="h-4 w-4" />
             {t('common.save')}
           </button>
-          <button type="button" onClick={submitAndClose} disabled={submitting} className="inline-flex items-center gap-2 rounded-lg bg-slate-900 px-4 py-2 text-sm font-semibold text-white disabled:opacity-60">
+          <button type="button" onClick={submitAndClose} disabled={submitting} className="inline-flex items-center gap-2 rounded-lg bg-slate-900 px-4 py-2 text-sm font-medium text-white disabled:opacity-60">
             <Save className="h-4 w-4" />
             {t('common.saveAndClose')}
           </button>

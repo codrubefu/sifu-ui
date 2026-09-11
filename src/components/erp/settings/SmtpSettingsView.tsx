@@ -173,7 +173,7 @@ export function SmtpSettingsView() {
                 {t('common.delete')}
               </button>
             ) : null}
-            <button type="submit" disabled={saving || loading} className="inline-flex items-center gap-2 rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:opacity-60">
+            <button type="submit" disabled={saving || loading} className="inline-flex items-center gap-2 rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white disabled:cursor-not-allowed disabled:opacity-60">
               <Save className="h-4 w-4" />
               {saving ? t('common.saving') : t('smtpSettings.save')}
             </button>

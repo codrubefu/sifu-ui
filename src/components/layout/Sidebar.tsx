@@ -33,6 +33,7 @@ import { useTranslation } from 'react-i18next';
 import type { SectionId } from '../../types/erp';
 
 type SidebarProps = {
+  organizationName: string;
   current: SectionId;
   setCurrent: (id: SectionId) => void;
   profileChildId: number | null;
@@ -124,7 +125,7 @@ function cn(...classes: Array<string | false | null | undefined>) {
   return classes.filter(Boolean).join(' ');
 }
 
-export function Sidebar({ current, setCurrent, profileChildId, setProfileChildId, open, onClose }: SidebarProps) {
+export function Sidebar({ organizationName, current, setCurrent, profileChildId, setProfileChildId, open, onClose }: SidebarProps) {
   const [openGroups, setOpenGroups] = useState<Record<string, boolean>>({ organization: false, events: true });
   const [openProfileRow, setOpenProfileRow] = useState<'self' | number | null>(null);
   const [children, setChildren] = useState<AuthenticatedUserChild[]>([]);
@@ -198,7 +199,7 @@ export function Sidebar({ current, setCurrent, profileChildId, setProfileChildId
             }}
             className={cn(
               'flex min-w-0 flex-1 items-center justify-between rounded-lg px-2.5 py-2.5 text-left text-sm transition-colors duration-150',
-              active ? 'border border-indigo-100 bg-indigo-50 text-indigo-700 shadow-sm' : 'border border-transparent text-slate-600 hover:bg-slate-100 hover:text-slate-950'
+              active ? 'nav-active border border-indigo-100 bg-indigo-50 text-indigo-700 shadow-sm' : 'border border-transparent text-slate-600 hover:bg-slate-100 hover:text-slate-950'
             )}
           >
             <span className="flex min-w-0 items-center gap-2.5 font-medium">
@@ -225,19 +226,16 @@ export function Sidebar({ current, setCurrent, profileChildId, setProfileChildId
   });
 
   return (
-    <aside id="primary-navigation" aria-label={t('common.navigation', 'Navigare principala')} className={cn('fixed inset-y-0 left-0 z-30 w-[min(88vw,20rem)] border-r border-slate-200 bg-white px-3 pb-[max(1rem,env(safe-area-inset-bottom))] pt-[max(1rem,env(safe-area-inset-top))] shadow-[1px_0_0_rgba(15,23,42,0.02)] transition-transform duration-300 ease-out lg:sticky lg:top-0 lg:h-screen lg:w-[17rem] lg:translate-x-0', open ? 'translate-x-0 shadow-2xl shadow-slate-900/10' : '-translate-x-full')}>
+    <aside id="primary-navigation" aria-label={t('common.navigation', 'Navigare principala')} className={cn('app-sidebar fixed inset-y-0 left-0 z-30 w-[min(88vw,20rem)] border-r border-slate-200 bg-white px-3 pb-[max(1rem,env(safe-area-inset-bottom))] pt-[max(1rem,env(safe-area-inset-top))] shadow-none transition-transform duration-300 ease-out lg:sticky lg:top-0 lg:h-screen lg:w-[17rem] lg:translate-x-0', open ? 'translate-x-0 shadow-2xl shadow-slate-900/10' : '-translate-x-full')}>
       <div className="flex h-full flex-col">
-        <div className="flex items-center gap-3 border-b border-slate-100 px-2 pb-4 pt-1">
-          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-indigo-600 text-sm font-bold text-white shadow-sm shadow-indigo-600/20">
-            O
-          </span>
-          <div className="min-w-0">
-            <p className="truncate text-sm font-bold text-slate-950">Optimizer ERP</p>
-            <p className="truncate text-[0.6875rem] font-semibold uppercase tracking-[0.08em] text-slate-400">Admin panel</p>
-          </div>
-          <button type="button" onClick={onClose} className="ml-auto inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-lg text-slate-500 hover:bg-slate-100 lg:hidden" aria-label={t('common.close', 'Inchide')}>
-            <X className="h-5 w-5" />
-          </button>
+        <div className="sidebar-brand">
+          <span className="brand-seal" aria-hidden="true">s</span>
+          <span className="brand-wordmark">sifu.</span>
+          <button type="button" onClick={onClose} className="ml-auto rounded-lg p-2 lg:hidden" aria-label={t('common.close', 'Închide')}><X className="h-5 w-5" /></button>
+        </div>
+        <div className="sidebar-organization">
+          <span className="organization-symbol"><Building2 size={25} strokeWidth={1.25} /></span>
+          <div className="min-w-0"><p className="truncate">{organizationName || 'Sifu'}</p><p className="mt-1 text-xs text-white/65">{t('header.clubSpace', 'Spațiul clubului tău')}</p></div>
         </div>
 
         <nav className="mt-4 flex-1 space-y-3 overflow-y-auto pr-1">
@@ -254,7 +252,7 @@ export function Sidebar({ current, setCurrent, profileChildId, setProfileChildId
                 {isGrouped ? (
                   <button
                     onClick={() => setOpenGroups((prev) => ({ ...prev, [group.id]: !prev[group.id] }))}
-                    className="flex w-full items-center justify-between rounded-lg px-2.5 py-2 text-left text-[0.6875rem] font-bold uppercase tracking-[0.08em] text-slate-500 transition hover:bg-slate-50 hover:text-slate-700"
+                    className="flex w-full items-center justify-between rounded-lg px-2.5 py-2 text-left text-[0.6875rem] font-medium normal-case tracking-normal text-slate-500 transition hover:bg-slate-50 hover:text-slate-700"
                   >
                     <span className="flex min-w-0 items-center gap-2.5">
                       <span className="rounded-md bg-slate-100 p-1.5 text-slate-600 ring-1 ring-slate-200">
@@ -313,7 +311,7 @@ export function Sidebar({ current, setCurrent, profileChildId, setProfileChildId
                               }}
                               className={cn(
                                 'flex w-full items-center gap-2.5 rounded-lg px-2.5 py-2.5 text-left text-sm font-medium transition-colors duration-150',
-                                active ? 'border border-indigo-100 bg-indigo-50 text-indigo-700 shadow-sm' : 'border border-transparent text-slate-600 hover:bg-slate-100 hover:text-slate-950'
+                                active ? 'nav-active border border-indigo-100 bg-indigo-50 text-indigo-700 shadow-sm' : 'border border-transparent text-slate-600 hover:bg-slate-100 hover:text-slate-950'
                               )}
                             >
                               <span className={cn('rounded-md p-1.5 transition', active ? 'bg-indigo-600 text-white shadow-sm shadow-indigo-600/20' : 'bg-slate-100 text-slate-500')}>
@@ -331,6 +329,10 @@ export function Sidebar({ current, setCurrent, profileChildId, setProfileChildId
             </div>
           ) : null}
         </nav>
+        <div className="sidebar-account">
+          <span className="account-avatar">{selfLabel.split(' ').map((part) => part[0]).slice(0, 2).join('')}</span>
+          <div className="min-w-0"><p className="truncate text-sm">{selfLabel}</p><p className="mt-1 text-xs text-white/65">{t('common.administrator')}</p></div>
+        </div>
       </div>
     </aside>
   );

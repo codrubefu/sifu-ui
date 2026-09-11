@@ -9,7 +9,7 @@ export function LanguageSelector() {
       <select
         value={i18n.language}
         onChange={(event) => void i18n.changeLanguage(event.target.value)}
-        className="bg-transparent text-sm font-semibold outline-none"
+        className="bg-transparent text-sm font-medium outline-none"
         aria-label={t('common.language')}
       >
         <option value="ro">RO</option>

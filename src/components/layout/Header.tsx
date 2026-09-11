@@ -15,15 +15,15 @@ export function Header({ onToggleSidebar, onLogout, organizationName }: HeaderPr
   const mobileSearchInputRef = useRef<HTMLInputElement>(null);
 
   return (
-    <header className="sticky top-0 z-20 border-b border-slate-200 bg-white/95 shadow-[0_1px_2px_rgba(15,23,42,0.03)] backdrop-blur">
+    <header className="app-header sticky top-0 z-20 border-b border-slate-200 bg-white/95 shadow-none backdrop-blur">
       <div className="mx-auto flex h-16 max-w-[1540px] items-center justify-between gap-4 px-4 sm:px-5 lg:px-6 xl:px-7">
       <div className="flex min-w-0 items-center gap-2.5">
         <button onClick={onToggleSidebar} className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-700 shadow-sm lg:hidden" aria-label={t('common.navigation', 'Deschide navigarea')} aria-controls="primary-navigation">
           <Menu className="h-5 w-5" />
         </button>
         <div className="min-w-0">
-          <p className="hidden text-[0.6875rem] font-bold uppercase tracking-[0.1em] text-slate-400 min-[390px]:block">{t('common.administrator')}</p>
-          <h1 className="max-w-[9rem] truncate text-sm font-bold text-slate-950 min-[390px]:max-w-[13rem] min-[390px]:text-base sm:max-w-none sm:text-lg">{organizationName}</h1>
+          <p className="hidden text-[0.6875rem] font-medium normal-case tracking-normal text-slate-400 min-[390px]:block">{t('header.clubSpace', 'Spațiul clubului tău')}</p>
+          <h1 className="max-w-[9rem] truncate text-sm font-medium text-slate-950 min-[390px]:max-w-[13rem] min-[390px]:text-base sm:max-w-none sm:text-lg">{organizationName}</h1>
         </div>
       </div>
       <div className="flex min-w-0 items-center gap-2">
@@ -41,7 +41,7 @@ export function Header({ onToggleSidebar, onLogout, organizationName }: HeaderPr
           {mobileSearchOpen ? <X className="h-5 w-5" /> : <Search className="h-5 w-5" />}
         </button>
         <div className="hidden md:block"><LanguageSelector /></div>
-        <button onClick={onLogout} aria-label={t('common.logout')} className="inline-flex h-11 shrink-0 items-center gap-2 rounded-lg border border-slate-200 bg-white px-3 text-sm font-semibold text-slate-700 shadow-sm transition hover:border-slate-300 hover:bg-slate-50">
+        <button onClick={onLogout} aria-label={t('common.logout')} className="inline-flex h-11 shrink-0 items-center gap-2 rounded-lg border border-slate-200 bg-white px-3 text-sm font-medium text-slate-700 shadow-sm transition hover:border-slate-300 hover:bg-slate-50">
           <LogOut className="h-4 w-4" /><span className="hidden xl:inline">{t('common.logout')}</span>
         </button>
       </div>

@@ -203,7 +203,7 @@ export function CustomFieldsView() {
         {success ? <SuccessMessage fixed>{success}</SuccessMessage> : null}
         <SectionCard
           title={editing ? t('customFields.editCardTitle', { id: editing.id }) : t('customFields.add')}
-          action={<button onClick={closeForm} className="inline-flex items-center gap-2 rounded-lg border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700"><X className="h-4 w-4" />{t('common.close')}</button>}
+          action={<button onClick={closeForm} className="inline-flex items-center gap-2 rounded-lg border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700"><X className="h-4 w-4" />{t('common.close')}</button>}
         >
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <Input label={t('customFields.entityType')} value={form.entity_type} onChange={(event) => setForm((prev) => ({ ...prev, entity_type: event.target.value }))} placeholder="users" />
@@ -213,7 +213,7 @@ export function CustomFieldsView() {
               {fieldTypes.map((type) => <option key={type} value={type}>{t(`customFields.types.${type}`)}</option>)}
             </Select>
             <Input label={t('customFields.sortOrder')} type="number" min="0" value={form.sort_order} onChange={(event) => setForm((prev) => ({ ...prev, sort_order: event.target.value }))} />
-            <label className="flex items-end gap-3 rounded-lg border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-700">
+            <label className="flex items-end gap-3 rounded-lg border border-slate-200 bg-white px-4 py-3 text-sm font-medium text-slate-700">
               <input type="checkbox" checked={form.is_required} onChange={(event) => setForm((prev) => ({ ...prev, is_required: event.target.checked }))} className="h-4 w-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500" />
               {t('customFields.required')}
             </label>
@@ -230,10 +230,10 @@ export function CustomFieldsView() {
           </div>
           <div className="mt-6 flex flex-wrap justify-end gap-2">
             <button onClick={closeForm} className="rounded-lg border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700">{t('common.cancel')}</button>
-            <button onClick={() => void saveField()} disabled={saving || !form.name || !form.slug} className="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:opacity-60">
+            <button onClick={() => void saveField()} disabled={saving || !form.name || !form.slug} className="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white disabled:cursor-not-allowed disabled:opacity-60">
               <Save className="mr-2 inline h-4 w-4" />{saving ? t('common.saving') : t('customFields.save')}
             </button>
-            <button onClick={() => void saveField(true)} disabled={saving || !form.name || !form.slug} className="rounded-lg bg-slate-900 px-4 py-2 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:opacity-60">
+            <button onClick={() => void saveField(true)} disabled={saving || !form.name || !form.slug} className="rounded-lg bg-slate-900 px-4 py-2 text-sm font-medium text-white disabled:cursor-not-allowed disabled:opacity-60">
               <Save className="mr-2 inline h-4 w-4" />{saving ? t('common.saving') : t('common.saveAndClose')}
             </button>
           </div>
@@ -248,14 +248,14 @@ export function CustomFieldsView() {
       action={
         <div className="flex flex-wrap items-center gap-2">
           <button onClick={() => void loadFields()} className="rounded-lg border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700"><RefreshCw className="mr-2 inline h-4 w-4" />{t('common.refresh')}</button>
-          <button onClick={startCreate} className="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white"><Plus className="mr-2 inline h-4 w-4" />{t('customFields.add')}</button>
+          <button onClick={startCreate} className="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white"><Plus className="mr-2 inline h-4 w-4" />{t('customFields.add')}</button>
         </div>
       }
     >
       <div className="mb-6 grid grid-cols-1 gap-4 md:grid-cols-[minmax(0,1fr)_auto]">
         <Input label={t('customFields.entityType')} value={entityType} onChange={(event) => setEntityType(event.target.value)} onKeyDown={(event) => { if (event.key === 'Enter') void loadFields(); }} placeholder="users" />
         <div className="flex items-end">
-          <button onClick={() => void loadFields()} className="w-full rounded-lg bg-slate-900 px-4 py-3 text-sm font-semibold text-white">{t('customFields.loadEntity')}</button>
+          <button onClick={() => void loadFields()} className="w-full rounded-lg bg-slate-900 px-4 py-3 text-sm font-medium text-white">{t('customFields.loadEntity')}</button>
         </div>
       </div>
 
@@ -266,20 +266,20 @@ export function CustomFieldsView() {
         <table className="min-w-full text-left text-sm">
           <thead>
             <tr className="border-b border-slate-200 text-slate-500">
-              <th className="pb-3 font-semibold">{t('customFields.name')}</th>
-              <th className="pb-3 font-semibold">{t('customFields.entityType')}</th>
-              <th className="pb-3 font-semibold">{t('customFields.type')}</th>
-              <th className="pb-3 font-semibold">{t('customFields.required')}</th>
-              <th className="pb-3 font-semibold">{t('customFields.sortOrder')}</th>
-              <th className="pb-3 font-semibold">{t('customFields.updated')}</th>
-              <th className="pb-3 font-semibold text-right">{t('common.actions')}</th>
+              <th className="pb-3 font-medium">{t('customFields.name')}</th>
+              <th className="pb-3 font-medium">{t('customFields.entityType')}</th>
+              <th className="pb-3 font-medium">{t('customFields.type')}</th>
+              <th className="pb-3 font-medium">{t('customFields.required')}</th>
+              <th className="pb-3 font-medium">{t('customFields.sortOrder')}</th>
+              <th className="pb-3 font-medium">{t('customFields.updated')}</th>
+              <th className="pb-3 font-medium text-right">{t('common.actions')}</th>
             </tr>
           </thead>
           <tbody>
             {sortedFields.length > 0 ? sortedFields.map((field) => (
               <tr key={field.id} className="border-b border-slate-100 align-top">
                 <td className="max-w-[320px] py-4">
-                  <p className="font-semibold text-slate-900">{field.name}</p>
+                  <p className="font-medium text-slate-900">{field.name}</p>
                   <p className="mt-1 font-mono text-xs text-slate-500">{field.slug}</p>
                   {field.options?.choices?.length ? <p className="mt-2 text-xs text-slate-500">{field.options.choices.length} {t('customFields.options')}</p> : null}
                 </td>

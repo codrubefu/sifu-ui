@@ -151,7 +151,7 @@ export function BranchesView() {
         <SectionCard
           title={editing ? t('branches.editCardTitle', { id: editing.id }) : t('branches.add')}
           action={
-            <button onClick={closeForm} className="inline-flex items-center gap-2 rounded-lg border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700">
+            <button onClick={closeForm} className="inline-flex items-center gap-2 rounded-lg border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700">
               <X className="h-4 w-4" />{t('common.close')}
             </button>
           }
@@ -173,10 +173,10 @@ export function BranchesView() {
           </div>
           <div className="mt-6 flex flex-wrap justify-end gap-2">
             <button onClick={closeForm} className="rounded-lg border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700">{t('common.cancel')}</button>
-            <button onClick={() => void saveLocation()} disabled={saving} className="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:opacity-60">
+            <button onClick={() => void saveLocation()} disabled={saving} className="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white disabled:cursor-not-allowed disabled:opacity-60">
               <Save className="mr-2 inline h-4 w-4" />{saving ? t('common.saving') : t('branches.save')}
             </button>
-            <button onClick={() => void saveLocation(true)} disabled={saving} className="rounded-lg bg-slate-900 px-4 py-2 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:opacity-60">
+            <button onClick={() => void saveLocation(true)} disabled={saving} className="rounded-lg bg-slate-900 px-4 py-2 text-sm font-medium text-white disabled:cursor-not-allowed disabled:opacity-60">
               <Save className="mr-2 inline h-4 w-4" />{saving ? t('common.saving') : t('common.saveAndClose')}
             </button>
           </div>
@@ -194,7 +194,7 @@ export function BranchesView() {
             <button onClick={() => void loadLocations()} className="rounded-lg border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700">
               <RefreshCw className="mr-2 inline h-4 w-4" />{t('common.refresh')}
             </button>
-            <button onClick={startCreate} className="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white">
+            <button onClick={startCreate} className="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white">
               <Plus className="mr-2 inline h-4 w-4" />{t('branches.add')}
             </button>
           </div>
@@ -211,7 +211,7 @@ export function BranchesView() {
             placeholder={t('branches.searchPlaceholder')}
           />
           <div className="flex items-end">
-            <button onClick={() => void loadLocations()} className="w-full rounded-lg bg-slate-900 px-4 py-3 text-sm font-semibold text-white">{t('common.search')}</button>
+            <button onClick={() => void loadLocations()} className="w-full rounded-lg bg-slate-900 px-4 py-3 text-sm font-medium text-white">{t('common.search')}</button>
           </div>
         </div>
 
@@ -236,7 +236,7 @@ export function BranchesView() {
             <tbody>
               {locations.map((location) => (
                 <TableRow key={location.id}>
-                  <TableCell label={t('branches.name')} className="font-semibold text-slate-900">{location.name}</TableCell>
+                  <TableCell label={t('branches.name')} className="font-medium text-slate-900">{location.name}</TableCell>
                   <TableCell label={t('branches.description')} className="max-w-[360px] text-slate-600">{location.description || t('branches.defaultDescription')}</TableCell>
                   <TableCell label={t('branches.locationGroup')} className="text-slate-600">{location.location_group?.name ?? t('branches.noLocationGroup')}</TableCell>
                   <TableCell label={t('branches.users')} className="text-slate-600">{location.users_count ?? 0}</TableCell>

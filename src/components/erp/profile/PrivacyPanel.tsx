@@ -203,7 +203,7 @@ export function PrivacyPanel({ userId, childId, administrative = false, canExpor
       {exportRecord ? (
         <SectionCard title="Export date">
           <div className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-slate-200 bg-slate-50 px-4 py-3 text-sm">
-            <div><p className="font-semibold text-slate-900">#{exportRecord.id}</p><p className="text-slate-600">{exportRecord.status} - expira: {formatDate(exportRecord.expires_at)}</p></div>
+            <div><p className="font-medium text-slate-900">#{exportRecord.id}</p><p className="text-slate-600">{exportRecord.status} - expira: {formatDate(exportRecord.expires_at)}</p></div>
             <div className="flex flex-wrap gap-2">
               <Button type="button" onClick={() => void refreshExport()} disabled={loading}><RefreshCw className="h-4 w-4" />Status</Button>
               {exportRecord.status === 'ready' ? <Button type="button" onClick={() => void downloadExport()} disabled={loading} variant="primary"><Download className="h-4 w-4" />Download</Button> : null}

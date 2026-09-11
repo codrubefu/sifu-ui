@@ -7,13 +7,13 @@ export function AnnouncementsView({ items, onCreate, onEdit }: AnnouncementsView
   const { t } = useTranslation();
 
   return (
-    <SectionCard title={t('announcements.title')} action={<button onClick={onCreate} className="inline-flex h-10 items-center gap-2 rounded-lg bg-indigo-600 px-4 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700"><Plus className="h-4 w-4" />{t('announcements.new')}</button>}>
+    <SectionCard title={t('announcements.title')} action={<button onClick={onCreate} className="inline-flex h-10 items-center gap-2 rounded-lg bg-indigo-600 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700"><Plus className="h-4 w-4" />{t('announcements.new')}</button>}>
       <div className="grid grid-cols-1 gap-4 xl:grid-cols-3">
         {items.map((item) => (
           <div key={item.id} className="rounded-lg border border-slate-200 bg-white p-4 shadow-sm">
             <div className="flex items-start justify-between gap-3">
               <div>
-                <h4 className="text-lg font-semibold text-slate-900">{item.title}</h4>
+                <h4 className="text-lg font-medium text-slate-900">{item.title}</h4>
                 <p className="mt-1 text-sm text-slate-500">{item.audience}</p>
               </div>
               <StatusBadge status={item.status} />

@@ -52,7 +52,7 @@ export function TableRow({ className, children, ...props }: React.ComponentProps
 }
 
 export function TableHeadCell({ align = 'left', className, children }: { align?: 'left' | 'right'; className?: string; children: React.ReactNode }) {
-  return <th className={cn('border-b border-slate-200 bg-slate-50 px-4 py-3 text-[0.6875rem] font-bold uppercase tracking-[0.07em] text-slate-500 first:pl-5 last:pr-5', align === 'right' && 'text-right', className)}>{children}</th>;
+  return <th className={cn('border-b border-slate-200 bg-slate-50 px-4 py-3 text-[0.6875rem] font-medium normal-case tracking-normal text-slate-500 first:pl-5 last:pr-5', align === 'right' && 'text-right', className)}>{children}</th>;
 }
 
 // `label` repeats the column header on mobile, where the row becomes a card and the
@@ -68,7 +68,7 @@ export function TableCell({ align = 'left', className, children, colSpan, label 
         className,
       )}
     >
-      {label ? <span className="mb-0.5 block text-[0.6875rem] font-bold uppercase tracking-[0.05em] text-slate-400 sm:hidden">{label}</span> : null}
+      {label ? <span className="mb-0.5 block text-[0.6875rem] font-medium normal-case tracking-normal text-slate-400 sm:hidden">{label}</span> : null}
       {children}
     </td>
   );

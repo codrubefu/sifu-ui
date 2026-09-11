@@ -50,7 +50,7 @@ export function Modal({ open, onClose, title, subtitle, maxWidthClassName = 'max
         {title || subtitle ? (
           <div className="flex shrink-0 items-start justify-between gap-3 px-6 pb-4 pt-2 sm:pt-6">
             <div className="min-w-0">
-              {title ? <h3 className="text-lg font-semibold text-slate-900">{title}</h3> : null}
+              {title ? <h3 className="text-lg font-medium text-slate-900">{title}</h3> : null}
               {subtitle ? <p className="text-sm text-slate-500">{subtitle}</p> : null}
             </div>
             <button

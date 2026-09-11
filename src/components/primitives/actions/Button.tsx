@@ -29,7 +29,7 @@ export function Button({ variant = 'secondary', size = 'md', className, children
     <button
       {...props}
       className={cn(
-        'inline-flex shrink-0 items-center justify-center gap-2 whitespace-nowrap font-semibold transition-colors duration-150 focus:outline-none focus:ring-4 focus:ring-indigo-100 disabled:cursor-not-allowed disabled:opacity-60',
+        'inline-flex shrink-0 items-center justify-center gap-2 whitespace-nowrap font-medium transition-colors duration-150 focus:outline-none focus:ring-4 focus:ring-indigo-100 disabled:cursor-not-allowed disabled:opacity-60',
         variantClasses[variant],
         sizeClasses[size],
         className
@@ -45,7 +45,7 @@ export function ButtonLink({ variant = 'secondary', size = 'md', className, chil
     <Link
       {...props}
       className={cn(
-        'inline-flex shrink-0 items-center justify-center gap-2 whitespace-nowrap font-semibold transition-colors duration-150 focus:outline-none focus:ring-4 focus:ring-indigo-100',
+        'inline-flex shrink-0 items-center justify-center gap-2 whitespace-nowrap font-medium transition-colors duration-150 focus:outline-none focus:ring-4 focus:ring-indigo-100',
         variantClasses[variant],
         sizeClasses[size],
         className

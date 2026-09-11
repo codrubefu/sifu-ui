@@ -133,21 +133,21 @@ function SelectField({ label, error, children, ...props }: React.SelectHTMLAttri
 
 export function StatusBadge({ status }: { status: string }) {
   const tone = status.includes('cancel') || status === 'inactive' ? 'bg-red-50 text-red-700' : status === 'active' || status === 'scheduled' || status === 'registered' || status === 'attended' ? 'bg-emerald-50 text-emerald-700' : 'bg-slate-100 text-slate-700';
-  return <span className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${tone}`}>{status}</span>;
+  return <span className={`inline-flex rounded-full px-3 py-1 text-xs font-medium ${tone}`}>{status}</span>;
 }
 
 export function RecurrenceBadge({ type }: { type: RecurrenceType }) {
-  return <span className="inline-flex rounded-full bg-indigo-50 px-3 py-1 text-xs font-semibold text-indigo-700">{type}</span>;
+  return <span className="inline-flex rounded-full bg-indigo-50 px-3 py-1 text-xs font-medium text-indigo-700">{type}</span>;
 }
 
 function CategoryBadge({ category }: { category?: EventCategory | null }) {
   if (!category) return <span className="text-xs text-slate-400">-</span>;
-  return <span className="inline-flex items-center gap-2 rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-700"><span className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: category.color ?? '#64748b' }} />{category.name}</span>;
+  return <span className="inline-flex items-center gap-2 rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-700"><span className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: category.color ?? '#64748b' }} />{category.name}</span>;
 }
 
 export function ServiceRequirementBadge({ event }: { event: Pick<EventItem, 'requires_active_service' | 'required_service'> }) {
   const { t } = useTranslation();
-  return <span className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${event.requires_active_service ? 'bg-amber-50 text-amber-700' : 'bg-slate-100 text-slate-700'}`}>{event.requires_active_service ? t('events.requiresService', { name: event.required_service?.name ? `: ${event.required_service.name}` : '' }) : t('events.noRequiredService')}</span>;
+  return <span className={`inline-flex rounded-full px-3 py-1 text-xs font-medium ${event.requires_active_service ? 'bg-amber-50 text-amber-700' : 'bg-slate-100 text-slate-700'}`}>{event.requires_active_service ? t('events.requiresService', { name: event.required_service?.name ? `: ${event.required_service.name}` : '' }) : t('events.noRequiredService')}</span>;
 }
 
 function DeleteConfirmModal({ label, loading, onCancel, onConfirm }: { label: string; loading?: boolean; onCancel: () => void; onConfirm: () => void }) {
@@ -156,8 +156,8 @@ function DeleteConfirmModal({ label, loading, onCancel, onConfirm }: { label: st
     <Modal open onClose={onCancel} title={t('events.deleteConfirmTitle')} maxWidthClassName="max-w-md">
       <p className="text-sm text-slate-600">{t('events.deleteConfirm', { label })}</p>
       <div className="mt-6 flex justify-end gap-2">
-        <button onClick={onCancel} className="rounded-lg border border-slate-200 px-4 py-2 text-sm font-semibold">{t('common.cancel')}</button>
-        <button onClick={onConfirm} disabled={loading} className="rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white disabled:opacity-60">{t('common.delete')}</button>
+        <button onClick={onCancel} className="rounded-lg border border-slate-200 px-4 py-2 text-sm font-medium">{t('common.cancel')}</button>
+        <button onClick={onConfirm} disabled={loading} className="rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white disabled:opacity-60">{t('common.delete')}</button>
       </div>
     </Modal>
   );
@@ -169,8 +169,8 @@ function CancelOccurrenceConfirmModal({ occurrence, loading, onCancel, onConfirm
     <Modal open onClose={onCancel} title={t('events.cancelOccurrenceConfirmTitle')} maxWidthClassName="max-w-md">
       <p className="text-sm text-slate-600">{t('events.cancelOccurrenceConfirm', { date: occurrence.occurrence_date })}</p>
       <div className="mt-6 flex justify-end gap-2">
-        <button onClick={onCancel} className="rounded-lg border border-slate-200 px-4 py-2 text-sm font-semibold">{t('common.cancel')}</button>
-        <button onClick={onConfirm} disabled={loading} className="rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white disabled:opacity-60">{t('events.cancelOccurrenceConfirmButton')}</button>
+        <button onClick={onCancel} className="rounded-lg border border-slate-200 px-4 py-2 text-sm font-medium">{t('common.cancel')}</button>
+        <button onClick={onConfirm} disabled={loading} className="rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white disabled:opacity-60">{t('events.cancelOccurrenceConfirmButton')}</button>
       </div>
     </Modal>
   );
@@ -249,20 +249,20 @@ function EventsPage() {
           <SelectField label="Paid event" value={filters.requires_payment} onChange={(e) => updateFilters({ requires_payment: e.target.value, page: 1 })}><option value="">{t('common.all')}</option><option value="1">{t('common.yes')}</option><option value="0">{t('common.no')}</option></SelectField>
           <SelectField label={t('events.sort')} value={filters.sort} onChange={(e) => updateFilters({ sort: e.target.value as EventFilters['sort'] })}><option value="created_at">created_at</option><option value="start_date">start_date</option><option value="title">title</option></SelectField>
           <SelectField label="direction" value={filters.direction} onChange={(e) => updateFilters({ direction: e.target.value as EventFilters['direction'] })}><option value="desc">desc</option><option value="asc">asc</option></SelectField>
-          <button onClick={() => void reload()} className="mt-7 inline-flex items-center justify-center gap-2 rounded-lg bg-slate-900 px-4 py-3 text-sm font-semibold text-white"><Search className="h-4 w-4" />{t('common.search')}</button>
+          <button onClick={() => void reload()} className="mt-7 inline-flex items-center justify-center gap-2 rounded-lg bg-slate-900 px-4 py-3 text-sm font-medium text-white"><Search className="h-4 w-4" />{t('common.search')}</button>
         </div>
-        {error ? <p className="mt-4 rounded-lg bg-red-50 px-4 py-3 text-sm font-semibold text-red-700">{error}</p> : null}
+        {error ? <p className="mt-4 rounded-lg bg-red-50 px-4 py-3 text-sm font-medium text-red-700">{error}</p> : null}
         <div className="mt-6 overflow-x-auto">
           <table className="min-w-full text-left text-sm">
             <thead><tr className="border-b text-slate-500"><th className="pb-3">{t('common.title')}</th><th className="pb-3">Categorie</th><th className="pb-3">{t('events.date')}</th><th className="pb-3">{t('events.recurrence')}</th><th className="pb-3">{t('services.service')}</th><th className="pb-3">Paid</th><th className="pb-3">{t('common.status')}</th><th className="pb-3 text-right">{t('common.actions')}</th></tr></thead>
             <tbody>{events.length ? events.map((event) => (
               <tr key={event.id} className="border-b border-slate-100 align-top">
-                <td className="py-4 font-semibold text-slate-900">{event.title}<p className="text-xs font-normal text-slate-500">{eventLocationLabel(event) || '-'}</p></td>
+                <td className="py-4 font-medium text-slate-900">{event.title}<p className="text-xs font-normal text-slate-500">{eventLocationLabel(event) || '-'}</p></td>
                 <td className="py-4"><CategoryBadge category={event.category} /></td>
                 <td className="py-4 text-slate-600">{formatDeviceDate(event.start_date)} {event.start_time}-{event.end_time}</td>
                 <td className="py-4"><RecurrenceBadge type={event.recurrence_type} /></td>
                 <td className="py-4"><ServiceRequirementBadge event={event} /></td>
-                <td className="py-4">{event.requires_payment ? <span className="font-semibold text-slate-900">{event.payment_amount ?? '-'} {event.payment_type ?? ''}</span> : '-'}</td>
+                <td className="py-4">{event.requires_payment ? <span className="font-medium text-slate-900">{event.payment_amount ?? '-'} {event.payment_type ?? ''}</span> : '-'}</td>
                 <td className="py-4"><StatusBadge status={event.status} /></td>
                 <td className="py-4"><div className="flex flex-wrap justify-end gap-2">
                   <Link to={`${event.id}`} className="rounded-lg border px-3 py-2"><Eye className="h-4 w-4" /></Link>
@@ -522,7 +522,7 @@ function EventForm({ mode }: { mode: 'create' | 'edit' }) {
         {duplicateSourceTitle ? <p className="mb-4 rounded-lg bg-amber-50 px-4 py-3 text-sm font-medium text-amber-800">{t('events.duplicatedFromNotice', { title: duplicateSourceTitle })}</p> : null}
         <div className="space-y-8">
           <div>
-            <h3 className="mb-4 border-b border-slate-100 pb-2 text-sm font-bold uppercase tracking-[0.04em] text-slate-800">{t('events.sectionBasicInfo')}</h3>
+            <h3 className="mb-4 border-b border-slate-100 pb-2 text-sm font-medium normal-case tracking-normal text-slate-800">{t('events.sectionBasicInfo')}</h3>
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
               <TextField label={t('common.title')} value={form.title} onChange={(e) => updateField('title', e.target.value)} error={fieldError(errors, 'title')} />
               <SelectField label="Categorie" value={form.category_id ?? ''} onChange={(e) => updateField('category_id', e.target.value ? Number(e.target.value) : null)} error={fieldError(errors, 'category_id')}><option value="">Fara categorie</option>{categories.map((category) => <option key={category.id} value={category.id}>{category.name}</option>)}</SelectField>
@@ -540,7 +540,7 @@ function EventForm({ mode }: { mode: 'create' | 'edit' }) {
             </div>
           </div>
           <div>
-            <h3 className="mb-4 border-b border-slate-100 pb-2 text-sm font-bold uppercase tracking-[0.04em] text-slate-800">{t('events.sectionRecurrence')}</h3>
+            <h3 className="mb-4 border-b border-slate-100 pb-2 text-sm font-medium normal-case tracking-normal text-slate-800">{t('events.sectionRecurrence')}</h3>
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
               <SelectField label="recurrence_type" value={form.recurrence_type} onChange={(e) => updateField('recurrence_type', e.target.value as RecurrenceType)} error={fieldError(errors, 'recurrence_type')}><option value="once">once</option><option value="weekly">weekly</option><option value="monthly">monthly</option></SelectField>
               {recurrenceType === 'monthly' ? <TextField label="monthly_day" type="number" min={1} max={31} value={form.monthly_day ?? ''} onChange={(e) => updateField('monthly_day', e.target.value ? Number(e.target.value) : null)} error={fieldError(errors, 'monthly_day')} /> : null}
@@ -548,18 +548,18 @@ function EventForm({ mode }: { mode: 'create' | 'edit' }) {
             </div>
           </div>
           <div>
-            <h3 className="mb-4 border-b border-slate-100 pb-2 text-sm font-bold uppercase tracking-[0.04em] text-slate-800">{t('events.sectionEligibilityPayment')}</h3>
+            <h3 className="mb-4 border-b border-slate-100 pb-2 text-sm font-medium normal-case tracking-normal text-slate-800">{t('events.sectionEligibilityPayment')}</h3>
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
               <label className="flex items-center gap-3 rounded-lg border px-4 py-3 text-sm font-medium text-slate-700"><input type="checkbox" checked={form.requires_active_service} onChange={(e) => updateField('requires_active_service', e.target.checked)} className="accent-indigo-600" />requires_active_service</label>
               {needsService ? <SelectField label={t('events.requiredService')} value={form.required_service_id ?? ''} onChange={(e) => updateField('required_service_id', e.target.value ? Number(e.target.value) : null)} error={fieldError(errors, 'required_service_id')}><option value="">{t('common.select')}</option>{services.map((s) => <option key={s.id} value={s.id}>{s.name}</option>)}</SelectField> : null}
               <div className="md:col-span-2 rounded-lg border border-slate-200 bg-slate-50 p-4">
-                <label className="flex items-center gap-3 text-sm font-semibold text-slate-800"><input type="checkbox" checked={form.requires_payment} onChange={(e) => updateField('requires_payment', e.target.checked)} className="accent-indigo-600" />Paid Event</label>
+                <label className="flex items-center gap-3 text-sm font-medium text-slate-800"><input type="checkbox" checked={form.requires_payment} onChange={(e) => updateField('requires_payment', e.target.checked)} className="accent-indigo-600" />Paid Event</label>
                 {needsPayment ? <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2"><TextField label="payment_amount" type="number" min={0} step="0.01" value={form.payment_amount ?? ''} onChange={(e) => updateField('payment_amount', e.target.value ? Number(e.target.value) : null)} error={fieldError(errors, 'payment_amount')} /><TextField label="currency" value={form.payment_type ?? 'RON'} onChange={(e) => updateField('payment_type', e.target.value)} error={fieldError(errors, 'payment_type')} /></div> : <p className="mt-2 text-sm text-slate-500">Payment fields are cleared while this event is free.</p>}
               </div>
             </div>
           </div>
         </div>
-        <div className="mt-6 flex justify-end gap-2"><button type="button" onClick={() => navigate('/erp/events')} className="rounded-lg border px-4 py-2 text-sm font-semibold">{t('common.cancel')}</button><button type="submit" onClick={() => setCloseAfterSave(false)} disabled={isSubmitting} className="inline-flex items-center gap-2 rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white disabled:opacity-60"><Save className="h-4 w-4" />{t('common.save')}</button><button type="submit" onClick={() => setCloseAfterSave(true)} disabled={isSubmitting} className="inline-flex items-center gap-2 rounded-lg bg-slate-900 px-4 py-2 text-sm font-semibold text-white disabled:opacity-60"><Save className="h-4 w-4" />{t('common.saveAndClose')}</button></div>
+        <div className="mt-6 flex justify-end gap-2"><button type="button" onClick={() => navigate('/erp/events')} className="rounded-lg border px-4 py-2 text-sm font-medium">{t('common.cancel')}</button><button type="submit" onClick={() => setCloseAfterSave(false)} disabled={isSubmitting} className="inline-flex items-center gap-2 rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white disabled:opacity-60"><Save className="h-4 w-4" />{t('common.save')}</button><button type="submit" onClick={() => setCloseAfterSave(true)} disabled={isSubmitting} className="inline-flex items-center gap-2 rounded-lg bg-slate-900 px-4 py-2 text-sm font-medium text-white disabled:opacity-60"><Save className="h-4 w-4" />{t('common.saveAndClose')}</button></div>
       </SectionCard>
     </form>
   );
@@ -614,7 +614,7 @@ function EventDetailsPage() {
       title={event.title}
       action={permissions.canManageEvents ? (
         <div className="flex flex-wrap gap-2">
-          <button type="button" onClick={() => navigate('/erp/events/new', { state: { duplicateFromId: event.id } })} className="inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-slate-200 bg-white px-4 text-sm font-semibold text-slate-700 shadow-sm hover:border-slate-300 hover:bg-slate-50">
+          <button type="button" onClick={() => navigate('/erp/events/new', { state: { duplicateFromId: event.id } })} className="inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-slate-200 bg-white px-4 text-sm font-medium text-slate-700 shadow-sm hover:border-slate-300 hover:bg-slate-50">
             {t('events.duplicate')}
           </button>
           <ButtonLink to="edit" variant="secondary">{t('common.edit')}</ButtonLink>
@@ -627,7 +627,7 @@ function EventDetailsPage() {
             key={tab}
             type="button"
             onClick={() => setActiveTab(tab)}
-            className={`h-9 rounded-lg px-3 text-sm font-semibold transition ${activeTab === tab ? 'bg-white text-indigo-700 shadow-sm ring-1 ring-slate-200' : 'text-slate-500 hover:text-slate-900'}`}
+            className={`h-9 rounded-lg px-3 text-sm font-medium transition ${activeTab === tab ? 'bg-white text-indigo-700 shadow-sm ring-1 ring-slate-200' : 'text-slate-500 hover:text-slate-900'}`}
           >
             {label}
           </button>
@@ -743,8 +743,8 @@ function EventCategoriesPage() {
           <TextField label="Descriere" value={form.description ?? ''} onChange={(e) => setForm((prev) => ({ ...prev, description: e.target.value }))} error={fieldError(serverErrors, 'description')} />
           <label className="mt-7 flex items-center gap-2 rounded-lg border border-slate-200 px-4 py-3 text-sm font-medium text-slate-700"><input type="checkbox" checked={form.is_active ?? true} onChange={(e) => setForm((prev) => ({ ...prev, is_active: e.target.checked }))} className="accent-indigo-600" />Activa</label>
           <div className="flex gap-2 md:col-span-4">
-            <button type="button" onClick={() => void save()} disabled={saving} className="inline-flex items-center gap-2 rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white disabled:opacity-60"><Save className="h-4 w-4" />{saving ? 'Se salveaza...' : editing ? 'Actualizeaza' : 'Adauga'}</button>
-            {editing ? <button type="button" onClick={resetForm} className="rounded-lg border px-4 py-2 text-sm font-semibold">Anuleaza editarea</button> : null}
+            <button type="button" onClick={() => void save()} disabled={saving} className="inline-flex items-center gap-2 rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white disabled:opacity-60"><Save className="h-4 w-4" />{saving ? 'Se salveaza...' : editing ? 'Actualizeaza' : 'Adauga'}</button>
+            {editing ? <button type="button" onClick={resetForm} className="rounded-lg border px-4 py-2 text-sm font-medium">Anuleaza editarea</button> : null}
           </div>
         </form>
       </SectionCard>
@@ -752,9 +752,9 @@ function EventCategoriesPage() {
         <div className="mb-4 grid grid-cols-1 gap-3 md:grid-cols-[1fr_180px_auto]">
           <TextField label="Cauta" value={filters.search} onChange={(e) => setFilters((prev) => ({ ...prev, search: e.target.value, page: 1 }))} />
           <SelectField label="Status" value={filters.is_active} onChange={(e) => setFilters((prev) => ({ ...prev, is_active: e.target.value, page: 1 }))}><option value="">Toate</option><option value="1">Active</option><option value="0">Inactive</option></SelectField>
-          <button onClick={() => void reload()} className="mt-7 rounded-lg bg-slate-900 px-4 py-3 text-sm font-semibold text-white">Cauta</button>
+          <button onClick={() => void reload()} className="mt-7 rounded-lg bg-slate-900 px-4 py-3 text-sm font-medium text-white">Cauta</button>
         </div>
-        {error ? <p className="mb-4 rounded-lg bg-red-50 px-4 py-3 text-sm font-semibold text-red-700">{error}</p> : null}
+        {error ? <p className="mb-4 rounded-lg bg-red-50 px-4 py-3 text-sm font-medium text-red-700">{error}</p> : null}
         <div className="overflow-x-auto">
           <table className="min-w-full text-left text-sm">
             <thead><tr className="border-b text-slate-500"><th className="pb-3">Categorie</th><th className="pb-3">Descriere</th><th className="pb-3">Evenimente</th><th className="pb-3">Status</th><th className="pb-3 text-right">Actiuni</th></tr></thead>
@@ -880,23 +880,23 @@ function EventCalendarPage() {
     <SectionCard title={t('events.calendarTitle')} action={<div className="flex flex-wrap gap-2"><ButtonLink to="/erp/events" variant="secondary">{t('events.list')}</ButtonLink><ButtonLink to="/erp/events/new" variant="primary"><Plus className="h-4 w-4" />{t('events.event')}</ButtonLink></div>}>
       <div className="mb-5 grid grid-cols-1 gap-3 lg:grid-cols-[auto_auto_1fr_180px_180px_auto]">
         <div className="flex rounded-lg border border-slate-200 bg-white p-1">
-          <button type="button" onClick={() => setMode('month')} className={`rounded-md px-3 py-2 text-sm font-semibold ${mode === 'month' ? 'bg-indigo-600 text-white' : 'text-slate-600'}`}>Lunar</button>
-          <button type="button" onClick={() => setMode('week')} className={`rounded-md px-3 py-2 text-sm font-semibold ${mode === 'week' ? 'bg-indigo-600 text-white' : 'text-slate-600'}`}>Saptamanal</button>
+          <button type="button" onClick={() => setMode('month')} className={`rounded-md px-3 py-2 text-sm font-medium ${mode === 'month' ? 'bg-indigo-600 text-white' : 'text-slate-600'}`}>Lunar</button>
+          <button type="button" onClick={() => setMode('week')} className={`rounded-md px-3 py-2 text-sm font-medium ${mode === 'week' ? 'bg-indigo-600 text-white' : 'text-slate-600'}`}>Saptamanal</button>
         </div>
         <div className="flex items-center gap-2">
           <button type="button" onClick={() => move(-1)} className="rounded-lg border border-slate-200 p-2"><ChevronLeft className="h-4 w-4" /></button>
-          <button type="button" onClick={() => setAnchor(new Date())} className="rounded-lg border border-slate-200 px-3 py-2 text-sm font-semibold">{t('common.today')}</button>
+          <button type="button" onClick={() => setAnchor(new Date())} className="rounded-lg border border-slate-200 px-3 py-2 text-sm font-medium">{t('common.today')}</button>
           <button type="button" onClick={() => move(1)} className="rounded-lg border border-slate-200 p-2"><ChevronRight className="h-4 w-4" /></button>
         </div>
-        <div className="flex items-center text-lg font-bold capitalize text-slate-900">{title}</div>
+        <div className="flex items-center text-lg font-medium capitalize text-slate-900">{title}</div>
         <SelectField label="Categorie" value={categoryId} onChange={(event) => setCategoryId(event.target.value)}><option value="">Toate</option>{categories.map((category) => <option key={category.id} value={category.id}>{category.name}</option>)}</SelectField>
         <SelectField label="Status" value={status} onChange={(event) => setStatus(event.target.value)}><option value="">Toate</option>{occurrenceStatuses.map((item) => <option key={item}>{item}</option>)}</SelectField>
-        <button type="button" onClick={() => void reload()} className="mt-7 rounded-lg bg-slate-900 px-4 py-3 text-sm font-semibold text-white">Refresh</button>
+        <button type="button" onClick={() => void reload()} className="mt-7 rounded-lg bg-slate-900 px-4 py-3 text-sm font-medium text-white">Refresh</button>
       </div>
 
-      {error ? <p className="mb-4 rounded-lg bg-red-50 px-4 py-3 text-sm font-semibold text-red-700">{error}</p> : null}
+      {error ? <p className="mb-4 rounded-lg bg-red-50 px-4 py-3 text-sm font-medium text-red-700">{error}</p> : null}
       <div className="grid grid-cols-7 overflow-hidden rounded-lg border border-slate-200 bg-white">
-        {weekdays.map((day) => <div key={day} className="border-b border-slate-200 bg-slate-50 px-3 py-2 text-xs font-bold uppercase text-slate-500">{day.slice(0, 3)}</div>)}
+        {weekdays.map((day) => <div key={day} className="border-b border-slate-200 bg-slate-50 px-3 py-2 text-xs font-medium normal-case text-slate-500">{day.slice(0, 3)}</div>)}
         {days.map((day) => {
           const key = formatDateKey(day);
           const items = occurrencesByDate.get(key) ?? [];
@@ -904,18 +904,18 @@ function EventCalendarPage() {
           return (
             <div key={key} className={`min-h-32 border-b border-r border-slate-100 p-2 ${outsideMonth ? 'bg-slate-50 text-slate-400' : 'bg-white text-slate-900'}`}>
               <div className="mb-2 flex items-center justify-between">
-                <span className="text-xs font-bold">{day.getDate()}</span>
-                {items.length ? <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[0.6875rem] font-semibold text-slate-500">{items.length}</span> : null}
+                <span className="text-xs font-medium">{day.getDate()}</span>
+                {items.length ? <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[0.6875rem] font-medium text-slate-500">{items.length}</span> : null}
               </div>
               <div className="space-y-1">
                 {items.slice(0, mode === 'month' ? 4 : 10).map((occurrence) => (
                   <Link key={occurrence.id} to={`/erp/events/${occurrence.event_id}?tab=occurrences&occurrence=${occurrence.id}`} className="block rounded-md border border-slate-200 bg-slate-50 px-2 py-1.5 text-xs hover:border-indigo-200 hover:bg-indigo-50">
-                    <div className="flex items-center gap-1.5 font-semibold text-slate-900"><span className="h-2 w-2 rounded-full" style={{ backgroundColor: occurrence.event?.category?.color ?? '#64748b' }} />{timeToHourMinute(occurrence.start_datetime)}</div>
+                    <div className="flex items-center gap-1.5 font-medium text-slate-900"><span className="h-2 w-2 rounded-full" style={{ backgroundColor: occurrence.event?.category?.color ?? '#64748b' }} />{timeToHourMinute(occurrence.start_datetime)}</div>
                     <div className="mt-0.5 truncate text-slate-700">{occurrence.event?.title ?? `Event #${occurrence.event_id}`}</div>
                     <div className="mt-0.5 truncate text-slate-500">{(occurrence.event ? eventLocationLabel(occurrence.event) : '') || '-'}</div>
                   </Link>
                 ))}
-                {items.length > (mode === 'month' ? 4 : 10) ? <div className="text-xs font-semibold text-slate-500">+{items.length - (mode === 'month' ? 4 : 10)} mai multe</div> : null}
+                {items.length > (mode === 'month' ? 4 : 10) ? <div className="text-xs font-medium text-slate-500">+{items.length - (mode === 'month' ? 4 : 10)} mai multe</div> : null}
               </div>
             </div>
           );
@@ -1006,7 +1006,7 @@ function EventOccurrencesTab({ eventId }: { eventId: number }) {
     <div>
       {toast ? <Toast {...toast} onClose={() => setToast(null)} /> : null}
       {cancelling ? <CancelOccurrenceConfirmModal occurrence={cancelling} loading={cancelLoading} onCancel={() => setCancelling(null)} onConfirm={() => void confirmCancelOccurrence()} /> : null}
-      <div className="grid grid-cols-1 gap-3 md:grid-cols-4"><TextField label={t('events.dateFrom')} type="date" value={filters.date_from} onChange={(e) => updateFilters({ date_from: e.target.value })} /><TextField label={t('events.dateTo')} type="date" value={filters.date_to} onChange={(e) => updateFilters({ date_to: e.target.value })} /><SelectField label={t('common.status')} value={filters.status} onChange={(e) => updateFilters({ status: e.target.value })}><option value="">{t('common.all')}</option>{occurrenceStatuses.map((s) => <option key={s}>{s}</option>)}</SelectField><button onClick={() => void reload()} className="mt-7 rounded-lg bg-slate-900 px-4 py-3 text-sm font-semibold text-white"><RefreshCw className="mr-2 inline h-4 w-4" />{t('events.filter')}</button></div>
+      <div className="grid grid-cols-1 gap-3 md:grid-cols-4"><TextField label={t('events.dateFrom')} type="date" value={filters.date_from} onChange={(e) => updateFilters({ date_from: e.target.value })} /><TextField label={t('events.dateTo')} type="date" value={filters.date_to} onChange={(e) => updateFilters({ date_to: e.target.value })} /><SelectField label={t('common.status')} value={filters.status} onChange={(e) => updateFilters({ status: e.target.value })}><option value="">{t('common.all')}</option>{occurrenceStatuses.map((s) => <option key={s}>{s}</option>)}</SelectField><button onClick={() => void reload()} className="mt-7 rounded-lg bg-slate-900 px-4 py-3 text-sm font-medium text-white"><RefreshCw className="mr-2 inline h-4 w-4" />{t('events.filter')}</button></div>
       {error ? <p className="mt-4 text-red-600">{error}</p> : null}
       <div className="mt-6 overflow-x-auto">
         <table className="min-w-full text-left text-sm">
@@ -1168,7 +1168,7 @@ function AddParticipantsPanel({ occurrenceId, event, availableSlots, onClose, on
 
   const allPageSelected = selectableUsers.length > 0 && selectableUsers.every((user) => selectedUserIds.includes(user.id));
 
-  return <div className="mb-6 rounded-lg border border-slate-200 bg-white p-5"><div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between"><div><h3 className="text-lg font-semibold">{t('events.addParticipant')}</h3><p className="mt-1 text-sm text-slate-500">Selecteaza unul sau mai multi useri eligibili pentru aparitia curenta.</p></div><button onClick={onClose} className="rounded-lg border px-4 py-2 text-sm font-semibold">{t('common.close')}</button></div>{event?.requires_active_service ? <p className="mt-3 rounded-lg bg-amber-50 px-4 py-3 text-sm text-amber-800"><AlertTriangle className="mr-2 inline h-4 w-4" />{t('events.eventNeedsActiveService')}</p> : null}{blocked ? <p className="mt-3 rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700">{t('events.noAvailablePlaces')}</p> : null}{error ? <p className="mt-3 whitespace-pre-line rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700">{error}</p> : null}<div className="mt-4 space-y-4"><div className="grid grid-cols-1 gap-3 lg:grid-cols-[1fr_180px]"><TextField label={t('events.searchUser')} value={search} onChange={(e) => setSearch(e.target.value)} placeholder={t('events.searchUserPlaceholder')} autoFocus /><SelectField label={t('common.status')} value={status} onChange={(e) => setStatus(e.target.value as ParticipantStatus)} disabled={blocked}>{participantStatuses.map((s) => <option key={s}>{s}</option>)}</SelectField></div><label className="flex items-center gap-3 rounded-lg border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-medium text-slate-700"><input type="checkbox" checked={applyToFuture} onChange={(e) => setApplyToFuture(e.target.checked)} className="h-4 w-4 accent-indigo-600" />{t('events.applyToFutureOccurrences')}</label><div className="overflow-hidden rounded-lg border border-slate-200"><table className="min-w-full text-left text-sm"><thead className="bg-slate-50 text-slate-500"><tr><th className="w-12 px-4 py-3"><input type="checkbox" checked={allPageSelected} onChange={(e) => togglePage(e.target.checked)} disabled={!selectableUsers.length || blocked} className="h-4 w-4 accent-indigo-600" /></th><th className="px-4 py-3">{t('users.user')}</th><th className="px-4 py-3">Email</th><th className="px-4 py-3">{t('members.phone')}</th><th className="px-4 py-3">{t('services.service')}</th></tr></thead><tbody>{selectableUsers.length ? selectableUsers.map((u) => <tr key={u.id} className={`border-t border-slate-100 ${selectedUserIds.includes(u.id) ? 'bg-indigo-50/60' : ''}`}><td className="px-4 py-3"><input type="checkbox" checked={selectedUserIds.includes(u.id)} onChange={(e) => toggleUser(u.id, e.target.checked)} disabled={blocked} className="h-4 w-4 accent-indigo-600" /></td><td className="px-4 py-3 font-medium text-slate-900">{userLabel(u)}</td><td className="px-4 py-3 text-slate-600">{u.email}</td><td className="px-4 py-3 text-slate-600">{u.phone || '-'}</td><td className="px-4 py-3">{hasActiveService(u) ? <span className="inline-flex rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700">{t('users.statusActive')}</span> : <span className="inline-flex rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-600">Eligibil</span>}</td></tr>) : <tr><td colSpan={5} className="px-4 py-8 text-center text-slate-500">{loadingUsers ? t('events.loadingUsers') : t('events.noUsers')}</td></tr>}</tbody></table></div><div className="flex flex-col gap-3 text-sm text-slate-600 md:flex-row md:items-center md:justify-between"><span>{usersMeta.total ? t('events.usersCount', { count: usersMeta.total }) : t('events.noResults')} - {selectedUserIds.length} selectati</span><Pagination page={usersMeta.current_page} lastPage={usersMeta.last_page} onPage={setUsersPage} /></div><label><span className="mb-2 block text-sm font-medium">{t('events.notes')}</span><textarea value={notes} onChange={(e) => setNotes(e.target.value)} className="w-full rounded-lg border px-4 py-3 text-sm" /></label></div><div className="mt-6 flex justify-end gap-2"><button onClick={() => setSelectedUserIds([])} disabled={!selectedUserIds.length || saving} className="rounded-lg border px-4 py-2 text-sm font-semibold disabled:opacity-50">Goleste selectia</button><button onClick={() => void save()} disabled={!selectedUserIds.length || blocked || saving} className="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white disabled:opacity-50">{saving ? t('events.adding') : `Adauga ${selectedUserIds.length} participanti`}</button></div></div>;
+  return <div className="mb-6 rounded-lg border border-slate-200 bg-white p-5"><div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between"><div><h3 className="text-lg font-medium">{t('events.addParticipant')}</h3><p className="mt-1 text-sm text-slate-500">Selecteaza unul sau mai multi useri eligibili pentru aparitia curenta.</p></div><button onClick={onClose} className="rounded-lg border px-4 py-2 text-sm font-medium">{t('common.close')}</button></div>{event?.requires_active_service ? <p className="mt-3 rounded-lg bg-amber-50 px-4 py-3 text-sm text-amber-800"><AlertTriangle className="mr-2 inline h-4 w-4" />{t('events.eventNeedsActiveService')}</p> : null}{blocked ? <p className="mt-3 rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700">{t('events.noAvailablePlaces')}</p> : null}{error ? <p className="mt-3 whitespace-pre-line rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700">{error}</p> : null}<div className="mt-4 space-y-4"><div className="grid grid-cols-1 gap-3 lg:grid-cols-[1fr_180px]"><TextField label={t('events.searchUser')} value={search} onChange={(e) => setSearch(e.target.value)} placeholder={t('events.searchUserPlaceholder')} autoFocus /><SelectField label={t('common.status')} value={status} onChange={(e) => setStatus(e.target.value as ParticipantStatus)} disabled={blocked}>{participantStatuses.map((s) => <option key={s}>{s}</option>)}</SelectField></div><label className="flex items-center gap-3 rounded-lg border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-medium text-slate-700"><input type="checkbox" checked={applyToFuture} onChange={(e) => setApplyToFuture(e.target.checked)} className="h-4 w-4 accent-indigo-600" />{t('events.applyToFutureOccurrences')}</label><div className="overflow-hidden rounded-lg border border-slate-200"><table className="min-w-full text-left text-sm"><thead className="bg-slate-50 text-slate-500"><tr><th className="w-12 px-4 py-3"><input type="checkbox" checked={allPageSelected} onChange={(e) => togglePage(e.target.checked)} disabled={!selectableUsers.length || blocked} className="h-4 w-4 accent-indigo-600" /></th><th className="px-4 py-3">{t('users.user')}</th><th className="px-4 py-3">Email</th><th className="px-4 py-3">{t('members.phone')}</th><th className="px-4 py-3">{t('services.service')}</th></tr></thead><tbody>{selectableUsers.length ? selectableUsers.map((u) => <tr key={u.id} className={`border-t border-slate-100 ${selectedUserIds.includes(u.id) ? 'bg-indigo-50/60' : ''}`}><td className="px-4 py-3"><input type="checkbox" checked={selectedUserIds.includes(u.id)} onChange={(e) => toggleUser(u.id, e.target.checked)} disabled={blocked} className="h-4 w-4 accent-indigo-600" /></td><td className="px-4 py-3 font-medium text-slate-900">{userLabel(u)}</td><td className="px-4 py-3 text-slate-600">{u.email}</td><td className="px-4 py-3 text-slate-600">{u.phone || '-'}</td><td className="px-4 py-3">{hasActiveService(u) ? <span className="inline-flex rounded-full bg-emerald-50 px-3 py-1 text-xs font-medium text-emerald-700">{t('users.statusActive')}</span> : <span className="inline-flex rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-600">Eligibil</span>}</td></tr>) : <tr><td colSpan={5} className="px-4 py-8 text-center text-slate-500">{loadingUsers ? t('events.loadingUsers') : t('events.noUsers')}</td></tr>}</tbody></table></div><div className="flex flex-col gap-3 text-sm text-slate-600 md:flex-row md:items-center md:justify-between"><span>{usersMeta.total ? t('events.usersCount', { count: usersMeta.total }) : t('events.noResults')} - {selectedUserIds.length} selectati</span><Pagination page={usersMeta.current_page} lastPage={usersMeta.last_page} onPage={setUsersPage} /></div><label><span className="mb-2 block text-sm font-medium">{t('events.notes')}</span><textarea value={notes} onChange={(e) => setNotes(e.target.value)} className="w-full rounded-lg border px-4 py-3 text-sm" /></label></div><div className="mt-6 flex justify-end gap-2"><button onClick={() => setSelectedUserIds([])} disabled={!selectedUserIds.length || saving} className="rounded-lg border px-4 py-2 text-sm font-medium disabled:opacity-50">Goleste selectia</button><button onClick={() => void save()} disabled={!selectedUserIds.length || blocked || saving} className="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white disabled:opacity-50">{saving ? t('events.adding') : `Adauga ${selectedUserIds.length} participanti`}</button></div></div>;
 }
 
 function ScanParticipantPanel({ occurrenceId, availableSlots, existingParticipants, onSaved }: { occurrenceId: number; availableSlots?: number | null; existingParticipants: EventParticipant[]; onSaved: () => void }) {
@@ -1213,7 +1213,7 @@ function ScanParticipantPanel({ occurrenceId, availableSlots, existingParticipan
       <div className="grid grid-cols-1 gap-3 md:grid-cols-[1fr_180px_auto]">
         <TextField label="Scaneaza card" value={cardCode} onChange={(e) => setCardCode(e.target.value)} onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); void addByCardCode(); } }} placeholder="Scannerul completeaza codul si apasa Enter" disabled={blocked || scanning} autoFocus />
         <SelectField label="Status" value={status} onChange={(e) => setStatus(e.target.value as ParticipantStatus)} disabled={blocked || scanning}>{participantStatuses.map((s) => <option key={s}>{s}</option>)}</SelectField>
-        <button type="button" onClick={() => void addByCardCode()} disabled={!cardCode.trim() || blocked || scanning} className="mt-7 rounded-lg bg-indigo-600 px-4 py-3 text-sm font-semibold text-white disabled:opacity-50">{scanning ? 'Se adauga...' : 'Adauga rapid'}</button>
+        <button type="button" onClick={() => void addByCardCode()} disabled={!cardCode.trim() || blocked || scanning} className="mt-7 rounded-lg bg-indigo-600 px-4 py-3 text-sm font-medium text-white disabled:opacity-50">{scanning ? 'Se adauga...' : 'Adauga rapid'}</button>
       </div>
       {blocked ? <p className="mt-3 text-sm font-medium text-red-700">Nu exista locuri disponibile.</p> : null}
       {message ? <p className={`mt-3 whitespace-pre-line text-sm font-medium ${message.type === 'success' ? 'text-emerald-700' : 'text-red-700'}`}>{message.text}</p> : null}
@@ -1319,19 +1319,19 @@ function OccurrenceParticipantsPanel({ occurrenceId, showAdd, onShowAddChange, o
   return (
     <div className="rounded-lg border border-slate-200 bg-white p-4">
       <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
-        <h4 className="text-sm font-bold uppercase tracking-wide text-slate-600">{t('events.occurrenceParticipantsTitle', { date: occurrence?.occurrence_date ?? '' })}</h4>
+        <h4 className="text-sm font-medium normal-case tracking-wide text-slate-600">{t('events.occurrenceParticipantsTitle', { date: occurrence?.occurrence_date ?? '' })}</h4>
         <div className="flex flex-wrap justify-end gap-2">
           {permissions.canViewParticipants ? (
-            <button onClick={() => void downloadAttendancePdf()} disabled={attendancePdfLoading} className="rounded-lg border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700 disabled:opacity-60">
+            <button onClick={() => void downloadAttendancePdf()} disabled={attendancePdfLoading} className="rounded-lg border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700 disabled:opacity-60">
               <Download className="mr-2 inline h-4 w-4" />{attendancePdfLoading ? t('common.loading') : t('events.downloadAttendancePdf')}
             </button>
           ) : null}
           {permissions.canManageParticipants ? (
-            <button onClick={() => onShowAddChange(true)} className="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white">
+            <button onClick={() => onShowAddChange(true)} className="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white">
               <Plus className="mr-2 inline h-4 w-4" />{t('events.addParticipant')}
             </button>
           ) : null}
-          <button onClick={onClose} title={t('common.close')} className="rounded-lg border border-slate-200 px-3 py-2 text-sm font-semibold text-slate-700"><X className="h-4 w-4" /></button>
+          <button onClick={onClose} title={t('common.close')} className="rounded-lg border border-slate-200 px-3 py-2 text-sm font-medium text-slate-700"><X className="h-4 w-4" /></button>
         </div>
       </div>
       {showAdd ? <AddParticipantsPanel occurrenceId={id} event={occurrence?.event} availableSlots={occurrence?.available_places} onClose={() => onShowAddChange(false)} onSaved={(summaryMessage) => { onShowAddChange(false); void reload(); onParticipantsChanged?.(); if (summaryMessage) onNotify?.({ type: 'success', message: summaryMessage }); }} /> : null}
@@ -1373,7 +1373,7 @@ function OccurrenceParticipantsPanel({ occurrenceId, showAdd, onShowAddChange, o
                     <div className="mt-3 space-y-2">
                       {participantPayments.length ? participantPayments.map((payment) => (
                         <div key={payment.id} className="rounded-lg border border-slate-200 bg-slate-50 px-3 py-2">
-                          <p className="text-xs font-semibold text-slate-900">Payment #{payment.id} - {formatCurrency(payment.amount)}</p>
+                          <p className="text-xs font-medium text-slate-900">Payment #{payment.id} - {formatCurrency(payment.amount)}</p>
                           <p className="text-xs text-slate-500">{paymentMethodLabel(payment)} - {formatApiDate(payment.paid_at)}</p>
                         </div>
                       )) : <p className="text-xs text-slate-400">{paymentsLoading ? t('events.loadingPayments') : t('events.noPayments')}</p>}

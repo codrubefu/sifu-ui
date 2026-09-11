@@ -352,9 +352,9 @@ export default function ERPAdminPanel() {
   }
 
   return (
-    <div className="min-h-screen bg-[#f3f6fb] text-slate-900">
-      <div className="flex min-h-screen">
-        <Sidebar current={current} setCurrent={handleSidebarChange} profileChildId={profileChildId} setProfileChildId={setProfileChildId} open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+    <div className="app-frame text-slate-900">
+      <div className="flex min-h-[calc(100svh-40px)]">
+        <Sidebar organizationName={organizationName} current={current} setCurrent={handleSidebarChange} profileChildId={profileChildId} setProfileChildId={setProfileChildId} open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
         {sidebarOpen ? (
           <button
             aria-label="Close navigation"

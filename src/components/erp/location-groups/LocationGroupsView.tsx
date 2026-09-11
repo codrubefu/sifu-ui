@@ -123,7 +123,7 @@ export function LocationGroupsView() {
         {success ? <SuccessMessage fixed>{success}</SuccessMessage> : null}
         <SectionCard
           title={editing ? t('locationGroups.editCardTitle', { id: editing.id }) : t('locationGroups.add')}
-          action={<button onClick={closeForm} className="inline-flex items-center gap-2 rounded-lg border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700"><X className="h-4 w-4" />{t('common.close')}</button>}
+          action={<button onClick={closeForm} className="inline-flex items-center gap-2 rounded-lg border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700"><X className="h-4 w-4" />{t('common.close')}</button>}
         >
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <Input label={t('locationGroups.name')} value={form.name} onChange={(event) => setForm((prev) => ({ ...prev, name: event.target.value }))} placeholder="North Region" />
@@ -131,10 +131,10 @@ export function LocationGroupsView() {
           </div>
           <div className="mt-6 flex flex-wrap justify-end gap-2">
             <button onClick={closeForm} className="rounded-lg border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700">{t('common.cancel')}</button>
-            <button onClick={() => void saveGroup()} disabled={saving} className="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:opacity-60">
+            <button onClick={() => void saveGroup()} disabled={saving} className="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white disabled:cursor-not-allowed disabled:opacity-60">
               <Save className="mr-2 inline h-4 w-4" />{saving ? t('common.saving') : t('locationGroups.save')}
             </button>
-            <button onClick={() => void saveGroup(true)} disabled={saving} className="rounded-lg bg-slate-900 px-4 py-2 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:opacity-60">
+            <button onClick={() => void saveGroup(true)} disabled={saving} className="rounded-lg bg-slate-900 px-4 py-2 text-sm font-medium text-white disabled:cursor-not-allowed disabled:opacity-60">
               <Save className="mr-2 inline h-4 w-4" />{saving ? t('common.saving') : t('common.saveAndClose')}
             </button>
           </div>
@@ -149,13 +149,13 @@ export function LocationGroupsView() {
       action={
         <div className="flex flex-wrap items-center gap-2">
           <button onClick={() => void loadGroups()} className="rounded-lg border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700"><RefreshCw className="mr-2 inline h-4 w-4" />{t('common.refresh')}</button>
-          <button onClick={startCreate} className="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white"><Plus className="mr-2 inline h-4 w-4" />{t('locationGroups.add')}</button>
+          <button onClick={startCreate} className="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white"><Plus className="mr-2 inline h-4 w-4" />{t('locationGroups.add')}</button>
         </div>
       }
     >
       <div className="mb-6 grid grid-cols-1 gap-4 md:grid-cols-[minmax(0,1fr)_auto]">
         <Input label={t('common.search')} value={searchTerm} onChange={(event) => setSearchTerm(event.target.value)} onKeyDown={(event) => { if (event.key === 'Enter') void loadGroups(); }} placeholder={t('locationGroups.searchPlaceholder')} />
-        <div className="flex items-end"><button onClick={() => void loadGroups()} className="w-full rounded-lg bg-slate-900 px-4 py-3 text-sm font-semibold text-white">{t('common.search')}</button></div>
+        <div className="flex items-end"><button onClick={() => void loadGroups()} className="w-full rounded-lg bg-slate-900 px-4 py-3 text-sm font-medium text-white">{t('common.search')}</button></div>
       </div>
 
       {error ? <p className="mb-4 rounded-lg border border-red-100 bg-red-50 px-4 py-3 text-sm font-medium text-red-700">{error}</p> : null}
@@ -175,7 +175,7 @@ export function LocationGroupsView() {
           <tbody>
             {groups.map((group) => (
               <TableRow key={group.id}>
-                <TableCell label={t('locationGroups.name')} className="font-semibold text-slate-900">{group.name}</TableCell>
+                <TableCell label={t('locationGroups.name')} className="font-medium text-slate-900">{group.name}</TableCell>
                 <TableCell label={t('locationGroups.description')} className="max-w-[420px] text-slate-600">{group.description || t('locationGroups.defaultDescription')}</TableCell>
                 <TableCell label={t('locationGroups.locations')} className="text-slate-600">{group.locations?.length ?? 0}</TableCell>
                 <TableCell label={t('locationGroups.updated')} className="text-slate-600">{formatDeviceDate(group.updated_at)}</TableCell>
