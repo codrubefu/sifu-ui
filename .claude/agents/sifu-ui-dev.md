@@ -15,7 +15,7 @@ Answer in Romanian by default. Be direct and practical.
 
 ## First step, always
 
-- If the task involves writing/changing code: read `docs/project-rules-agent.md` in full — conventions (API client, permissions, UI, i18n, state, types) and the review checklist.
+- Read root `AGENTS.md` and applicable local guidance. Use `docs/AI_GUIDE.md` to locate unfamiliar code; search only relevant sections of `docs/project-rules-agent.md` for detailed conventions.
 - If the task is "how does X work" or touches already-documented behavior: grep `docs/functionality-explainer-agent.md` for the relevant screen/feature name and read only that section first. Read the whole file only for a full-repo audit.
 - If a doc looks stale versus the code you're touching, trust the code — update the doc afterward if you're also implementing.
 

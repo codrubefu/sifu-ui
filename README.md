@@ -1,5 +1,13 @@
 # Sifu UI
 
+React 19 + TypeScript ERP for sports clubs, backed by the companion Laravel
+`sifu-api` repository. Install locked dependencies with `npm ci`.
+
+Agent navigation: [AGENTS.md](AGENTS.md) · [Task guide](docs/AI_GUIDE.md).
+Run `npm test` for TypeScript + ESLint (no behavioral test suite is installed),
+`npm run typecheck` for types only, and `npm run build` for production output.
+
+
 ## Dezvoltare locală pe sifu.local fără port în URL
 
 Vite acceptă `sifu.local` și subdomeniile sale. Fișierul `Caddyfile` trimite
@@ -7,18 +15,15 @@ cererile HTTP pentru `sifu.local` și `*.sifu.local` către `127.0.0.1:5173`,
 inclusiv conexiunile WebSocket pentru actualizarea automată a paginii.
 Wildcard-ul proxy-ului acoperă un nivel, de exemplu `firma1.sifu.local`.
 
-Cu Caddy instalat și portul 80 liber, rulează în două terminale din proiect:
+Cu Caddy instalat și portul 80 liber, rulează din proiect (scriptul cere sudo
+și pornește atât Caddy, cât și Vite):
 
 ```bash
 npm run dev
 ```
 
-```bash
-sudo caddy run --config ./Caddyfile
-```
-
 Deschide `http://sifu.local` sau `http://firma1.sifu.local`.
-Ambele procese trebuie să rămână pornite.
+Comanda menține ambele procese pornite și le oprește împreună.
 
 Numele trebuie configurate pe sistemul unde rulează browserul. Pentru nume
 explicite, adaugă în `/etc/hosts` (Linux) sau
@@ -35,7 +40,7 @@ Windows; modificarea `/etc/hosts` din WSL nu configurează browserul din Windows
 
 ## Dezvoltare locală pe sifu.demo
 
-Pornește serverul cu `npm run dev`, apoi accesează `http://sifu.demo:5173`.
+Pornește doar Vite, fără Caddy/sudo, cu `npm run dev:vite`, apoi accesează `http://sifu.demo:5173`.
 Vite ascultă pe toate interfețele, pe portul fix 5173, și acceptă domeniul
 `sifu.demo` și toate subdomeniile sale (de exemplu `firma1.sifu.demo`).
 Dacă portul este ocupat, comanda se oprește fără să aleagă alt port.
@@ -60,79 +65,3 @@ Pentru URL-uri fără `:5173`, este necesar un reverse proxy pe portul 80 către
 Vite, cu suport WebSocket pentru HMR și rutare pentru domeniu și subdomenii.
 
 Configurația folosește [opțiunile serverului Vite](https://vite.dev/config/server-options.html#server-allowedhosts).
-
-## React + TypeScript + Vite
-
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
-
-## React Compiler
-
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
-
-Note: This will impact Vite dev & build performances.
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```

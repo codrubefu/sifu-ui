@@ -5,6 +5,8 @@
     "type": "module",
     "scripts": {
         "dev": "bash scripts/dev.sh",
+        "dev:vite": "vite",
+        "typecheck": "tsc -b",
         "build": "tsc -b && vite build",
         "lint": "eslint .",
         "test": "tsc -b && eslint .",

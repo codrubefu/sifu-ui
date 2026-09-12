@@ -1,5 +1,17 @@
 import { useCallback, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { eventService, type EventCategory, type EventFilters, type EventItem, type EventOccurrence, type EventParticipant, type EventUser, type OccurrenceFilters, type Paginated, type PaginationMeta } from '../../../services/eventService';
+import { useAuth } from '../../../context/useAuth';
+
+export function usePermissions() {
+  const { hasAnyRight } = useAuth();
+  return {
+    canViewEvents: hasAnyRight(['events.view', 'events.manage']),
+    canManageEvents: hasAnyRight(['events.manage']),
+    canViewParticipants: hasAnyRight(['event_participants.view', 'event_participants.manage']),
+    canManageParticipants: hasAnyRight(['event_participants.manage']),
+  };
+}
 
 function metaFrom<T>(payload: Paginated<T>): PaginationMeta {
   return payload.meta ?? {
@@ -11,6 +23,7 @@ function metaFrom<T>(payload: Paginated<T>): PaginationMeta {
 }
 
 export function useEvents(params: EventFilters) {
+  const { t } = useTranslation();
   const [events, setEvents] = useState<EventItem[]>([]);
   const [meta, setMeta] = useState<PaginationMeta>({ current_page: 1, last_page: 1, per_page: 15, total: 0 });
   const [loading, setLoading] = useState(false);
@@ -24,11 +37,11 @@ export function useEvents(params: EventFilters) {
       setEvents(payload.data ?? []);
       setMeta(metaFrom(payload));
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Nu am putut incarca evenimentele.');
+      setError(err instanceof Error ? err.message : t('events.loadEventsError'));
     } finally {
       setLoading(false);
     }
-  }, [params]);
+  }, [params, t]);
 
   useEffect(() => {
     void reload();
@@ -38,6 +51,7 @@ export function useEvents(params: EventFilters) {
 }
 
 export function useEvent(id?: number) {
+  const { t } = useTranslation();
   const [event, setEvent] = useState<EventItem | null>(null);
   const [loading, setLoading] = useState(Boolean(id));
   const [error, setError] = useState('');
@@ -49,11 +63,11 @@ export function useEvent(id?: number) {
     try {
       setEvent(await eventService.getEvent(id));
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Nu am putut incarca evenimentul.');
+      setError(err instanceof Error ? err.message : t('events.loadEventError'));
     } finally {
       setLoading(false);
     }
-  }, [id]);
+  }, [id, t]);
 
   useEffect(() => {
     void reload();
@@ -63,6 +77,7 @@ export function useEvent(id?: number) {
 }
 
 export function useEventOccurrences(eventId?: number, params: OccurrenceFilters = {}) {
+  const { t } = useTranslation();
   const [occurrences, setOccurrences] = useState<EventOccurrence[]>([]);
   const [loading, setLoading] = useState(Boolean(eventId));
   const [error, setError] = useState('');
@@ -75,11 +90,11 @@ export function useEventOccurrences(eventId?: number, params: OccurrenceFilters 
       const payload = await eventService.getEventOccurrences(eventId, params);
       setOccurrences(payload.data ?? []);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Nu am putut incarca aparitiile.');
+      setError(err instanceof Error ? err.message : t('events.loadOccurrencesError'));
     } finally {
       setLoading(false);
     }
-  }, [eventId, params]);
+  }, [eventId, params, t]);
 
   useEffect(() => {
     void reload();
@@ -89,6 +104,7 @@ export function useEventOccurrences(eventId?: number, params: OccurrenceFilters 
 }
 
 export function useEventParticipants(occurrenceId?: number) {
+  const { t } = useTranslation();
   const [participants, setParticipants] = useState<EventParticipant[]>([]);
   const [loading, setLoading] = useState(Boolean(occurrenceId));
   const [error, setError] = useState('');
@@ -101,11 +117,11 @@ export function useEventParticipants(occurrenceId?: number) {
       const payload = await eventService.getOccurrenceParticipants(occurrenceId);
       setParticipants(Array.isArray(payload) ? payload : payload.data ?? []);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Nu am putut incarca participantii.');
+      setError(err instanceof Error ? err.message : t('events.loadParticipantsError'));
     } finally {
       setLoading(false);
     }
-  }, [occurrenceId]);
+  }, [occurrenceId, t]);
 
   useEffect(() => {
     void reload();
