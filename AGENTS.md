@@ -7,7 +7,7 @@
 - React Router 6: `main.tsx → routes/AppRoutes.tsx → App.tsx → pages/ERPPage.tsx`.
 - ERPPage selects sections from the URL; `components/erp/Content.tsx` renders them.
 - AuthContext owns identity/rights; features own server state via React state/hooks.
-- Tailwind 4, shared primitives, Lucide icons; i18next locales: ro, en, uk.
+- Tailwind 4, shared primitives, Lucide icons; i18next locales: ro, en, it, fr.
 - JSON API adapters/services use bearer authentication and runtime API config.
 - `npm test` checks types and lint only; no behavioral test runner is installed.
 
@@ -43,7 +43,7 @@ paths and known legacy traps, read `docs/AI_GUIDE.md` only as needed.
 - Keep business transformations outside JSX where practical. Avoid abstractions
   without two real uses and avoid new barrel chains; prefer direct domain imports.
 - Reuse primitives; check rights with useAuth/Can and preserve API-provided statuses.
-- New visible text belongs in all three locales. Persisting forms provide Save and
+- New visible text belongs in all four locales. Persisting forms provide Save and
   Save and close (persist, reload, then return).
 - Do not extend ERPPage's legacy local-cache/seed state for new API-driven features.
 - Search relevant headings in `docs/project-rules-agent.md` for detailed conventions

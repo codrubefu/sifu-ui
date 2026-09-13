@@ -82,7 +82,7 @@
   "home": {
     "title": "Home page",
     "description": "Routing with React Router and separate pages has been added.",
-    "openErp": "Open ERP application",
+    "openErp": "Open Sifu application",
     "aboutProject": "About project"
   },
   "about": {

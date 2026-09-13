@@ -3,7 +3,7 @@ import type React from 'react';
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { eventService, type ApiValidationError, type EventPayload, type EventService, type EventStatus, type RecurrenceType } from '../../../services/eventService';
+import { eventService, type ApiValidationError, type EventPayload, type EventPaymentType, type EventService, type EventStatus, type RecurrenceType } from '../../../services/eventService';
 import { ButtonLink, SectionCard, Toast } from '../../primitives';
 import { useEvent, useEventReferenceData } from './hooks';
 import { dateToDateInput, eventStatuses, fieldError, timeToHourMinute, weekdayLabelKeys, weekdays } from './helpers';
@@ -30,7 +30,7 @@ const emptyEventForm: FormValues = {
   required_service_id: null,
   requires_payment: false,
   payment_amount: null,
-  payment_type: 'RON',
+  payment_type: 'cash',
   max_participants: null,
   status: 'active',
 };
@@ -93,7 +93,7 @@ export function EventForm({ mode }: { mode: 'create' | 'edit' }) {
           required_service_id: sourceEvent.required_service_id,
           requires_payment: sourceEvent.requires_payment,
           payment_amount: sourceEvent.payment_amount ?? null,
-          payment_type: sourceEvent.payment_type ?? 'RON',
+          payment_type: sourceEvent.payment_type ?? 'cash',
           max_participants: sourceEvent.max_participants,
           status: sourceEvent.status,
         });
@@ -131,7 +131,7 @@ export function EventForm({ mode }: { mode: 'create' | 'edit' }) {
       required_service_id: event.required_service_id,
       requires_payment: event.requires_payment,
       payment_amount: event.payment_amount ?? null,
-      payment_type: event.payment_type ?? 'RON',
+      payment_type: event.payment_type ?? 'cash',
       max_participants: event.max_participants,
       status: event.status,
     });
@@ -150,7 +150,7 @@ export function EventForm({ mode }: { mode: 'create' | 'edit' }) {
   }, [needsService]);
 
   useEffect(() => {
-    if (!needsPayment) setForm((prev) => ({ ...prev, payment_amount: null, payment_type: 'RON' }));
+    if (!needsPayment) setForm((prev) => ({ ...prev, payment_amount: null, payment_type: 'cash' }));
   }, [needsPayment]);
 
   const updateField = <K extends keyof FormValues>(field: K, value: FormValues[K]) => {
@@ -219,7 +219,7 @@ export function EventForm({ mode }: { mode: 'create' | 'edit' }) {
         required_service_id: savedEvent.required_service_id,
         requires_payment: savedEvent.requires_payment,
         payment_amount: savedEvent.payment_amount ?? null,
-        payment_type: savedEvent.payment_type ?? 'RON',
+        payment_type: savedEvent.payment_type ?? 'cash',
         max_participants: savedEvent.max_participants,
         status: savedEvent.status,
       });
@@ -282,7 +282,7 @@ export function EventForm({ mode }: { mode: 'create' | 'edit' }) {
               {needsService ? <SelectField label={t('events.requiredService')} value={form.required_service_id ?? ''} onChange={(e) => updateField('required_service_id', e.target.value ? Number(e.target.value) : null)} error={fieldError(errors, 'required_service_id')}><option value="">{t('common.select')}</option>{services.map((s) => <option key={s.id} value={s.id}>{s.name}</option>)}</SelectField> : null}
               <div className="md:col-span-2 rounded-lg border border-slate-200 bg-slate-50 p-4">
                 <label className="flex items-center gap-3 text-sm font-medium text-slate-800"><input type="checkbox" checked={form.requires_payment} onChange={(e) => updateField('requires_payment', e.target.checked)} className="accent-indigo-600" />{t('events.paidEvent')}</label>
-                {needsPayment ? <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2"><TextField label={t('events.paymentAmount')} type="number" min={0} step="0.01" value={form.payment_amount ?? ''} onChange={(e) => updateField('payment_amount', e.target.value ? Number(e.target.value) : null)} error={fieldError(errors, 'payment_amount')} /><TextField label={t('events.currency')} value={form.payment_type ?? 'RON'} onChange={(e) => updateField('payment_type', e.target.value)} error={fieldError(errors, 'payment_type')} /></div> : <p className="mt-2 text-sm text-slate-500">{t('events.paymentFieldsClearedHint')}</p>}
+                {needsPayment ? <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2"><TextField label={t('events.paymentAmount')} type="number" min={0} step="0.01" value={form.payment_amount ?? ''} onChange={(e) => updateField('payment_amount', e.target.value ? Number(e.target.value) : null)} error={fieldError(errors, 'payment_amount')} /><SelectField label={t('payments.paymentMethod')} value={form.payment_type ?? 'cash'} onChange={(e) => updateField('payment_type', e.target.value as EventPaymentType)} error={fieldError(errors, 'payment_type')}><option value="cash">cash</option><option value="card">card</option><option value="bank_transfer">bank_transfer</option></SelectField></div> : <p className="mt-2 text-sm text-slate-500">{t('events.paymentFieldsClearedHint')}</p>}
               </div>
             </div>
           </div>

@@ -26,7 +26,7 @@ This project is a React + TypeScript + Vite ERP frontend with:
 - SMS and notifications screens
 - payments and financial reporting
 - financial segments and exports
-- three localizations: Romanian, English, Ukrainian
+- four localizations: Romanian, English, Italian, French
 
 ## Runtime And Entry Points
 
@@ -110,9 +110,12 @@ Localization setup:
 - `src/i18n/index.ts`
 - `src/i18n/locales/ro.json`
 - `src/i18n/locales/en.json`
-- `src/i18n/locales/uk.json`
+- `src/i18n/locales/it.json`
+- `src/i18n/locales/fr.json`
 
-Any new visible label, button, status, loading text, error, or empty state must be added to all three locale files. Prefer existing namespaces such as `dashboard`, `reports`, `services`, `members`, `payments`, and `common`.
+Any new visible label, button, status, loading text, error, or empty state must be added to all four locale files. Prefer existing namespaces such as `dashboard`, `reports`, `services`, `members`, `payments`, and `common`.
+
+The language selector offers RO, EN, IT, and FR. The selection is saved in `master-erp-language`. Romanian is the default and fallback; unsupported saved preferences (including the removed `uk`) are reset to `ro` on startup.
 
 ## UI Architecture
 
@@ -155,7 +158,7 @@ The dashboard is API-driven and calls `GET /api/dashboard` through `/dashboard` 
 - `src/services/checkInService.ts`
 - `src/components/layout/Sidebar.tsx`
 - `src/pages/erp/ERPContentRoutes.tsx`
-- `src/i18n/locales/ro.json`, `en.json`, `uk.json`
+- `src/i18n/locales/ro.json`, `en.json`, `it.json`, `fr.json`
 
 The reception screen is available at `/erp/check-in` from the sidebar for users with `event_participants.manage` or `checkins.manage`. It loads all scheduled classes for the current day from `GET /api/check-ins/occurrences/current`, lets the operator choose the class, searches members through `POST /api/check-ins/search`, and confirms attendance through `POST /api/check-ins/confirm`.
 

@@ -1,4 +1,4 @@
 {
-  "apiBaseUrl": "https://manager-api.befu.ro/api",
+  "apiBaseUrl": "https://sifu-api.befu.ro/api",
   "devProxyTarget": "http://localhost:8090"
 }

@@ -82,7 +82,7 @@
   "home": {
     "title": "Pagina principala",
     "description": "Am adaugat routing cu React Router si pagini separate.",
-    "openErp": "Deschide aplicatia ERP",
+    "openErp": "Deschide aplicatia Sifu",
     "aboutProject": "Despre proiect"
   },
   "about": {

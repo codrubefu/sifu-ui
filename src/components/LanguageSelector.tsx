@@ -14,7 +14,8 @@ export function LanguageSelector() {
       >
         <option value="ro">RO</option>
         <option value="en">EN</option>
-        <option value="uk">UK</option>
+        <option value="it">IT</option>
+        <option value="fr">FR</option>
       </select>
     </label>
   );

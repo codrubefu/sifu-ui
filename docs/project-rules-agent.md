@@ -22,7 +22,7 @@ This frontend has a companion Laravel API repository, `sifu-api`, which keeps it
 
 **UI.** Reuse `src/components/primitives/*` (Button, SectionCard, StatCard, Alert, StatusBadge, Input, Select, Textarea, DataTable, Modal, Toast) instead of writing new low-level markup. Keep ERP screens dense/operational, not landing-page styled. Persisting forms need both `Save` and `Save and close`; `Save and close` must persist, reload the relevant list, then return/close.
 
-**Localization.** Any new visible string (label, button, status, loading/empty/error text) goes into all three locale files: `src/i18n/locales/ro.json`, `en.json`, `uk.json` — never hardcode user-facing text. Reuse existing namespaces (`dashboard`, `reports`, `services`, `members`, `payments`, `common`, etc.) where the string fits.
+**Localization.** Any new visible string (label, button, status, loading/empty/error text) goes into all four locale files: `src/i18n/locales/ro.json`, `en.json`, `it.json`, `fr.json` — never hardcode user-facing text. Reuse existing namespaces (`dashboard`, `reports`, `services`, `members`, `payments`, `common`, etc.) where the string fits.
 
 **State.** Keep server state inside the owning component or its service, not in `ERPPage`'s shared/local-cache state — those flags (`VITE_USE_LOCAL_ERP_CACHE`, `VITE_USE_LOCAL_ERP_SEED`) are legacy compatibility paths, not a pattern for new work.
 

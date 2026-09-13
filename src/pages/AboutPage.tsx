@@ -12,7 +12,7 @@ export default function AboutPage() {
 
         <div className="mt-8 flex gap-3">
           <Link to="/" className="rounded-2xl border border-slate-200 px-4 py-2.5 text-sm font-medium text-slate-700">{t('about.backHome')}</Link>
-          <Link to="/erp" className="rounded-2xl bg-violet-600 px-4 py-2.5 text-sm font-medium text-white">ERP</Link>
+          <Link to="/erp" className="rounded-2xl bg-violet-600 px-4 py-2.5 text-sm font-medium text-white">Sifu</Link>
         </div>
       </div>
     </main>

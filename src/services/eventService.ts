@@ -6,7 +6,7 @@ export type RecurrenceType = 'once' | 'weekly' | 'monthly';
 export type Weekday = 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday' | 'sunday';
 export type OccurrenceStatus = 'scheduled' | 'cancelled' | 'completed';
 export type ParticipantStatus = 'registered' | 'attended' | 'cancelled' | 'no_show';
-export type EventPaymentType = string;
+export type EventPaymentType = 'cash' | 'card' | 'bank_transfer';
 
 export type PaginationMeta = {
   current_page: number;
