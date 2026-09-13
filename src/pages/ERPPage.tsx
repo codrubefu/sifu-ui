@@ -19,7 +19,7 @@ import type {
   Service,
 } from '../types/erp';
 
-const SECTION_IDS: SectionId[] = ['dashboard', 'profile-info', 'profile-security', 'profile-privacy', 'profile-announcements', 'profile-events', 'profile-services', 'profile-code', 'profile-grades', 'profile-documents', 'branches', 'location-groups', 'admins', 'access', 'custom-fields', 'grades', 'smtp-settings', 'check-in', 'members', 'services', 'events', 'events/calendar', 'events/categories', 'articles', 'campaigns', 'announcements', 'sms', 'payments', 'reports'];
+const SECTION_IDS: SectionId[] = ['dashboard', 'profile-info', 'profile-security', 'profile-privacy', 'profile-announcements', 'profile-events', 'profile-services', 'profile-code', 'profile-grades', 'profile-documents', 'branches', 'location-groups', 'admins', 'access', 'custom-fields', 'grades', 'smtp-settings', 'email-templates', 'check-in', 'members', 'services', 'events', 'events/calendar', 'events/categories', 'articles', 'campaigns', 'announcements', 'sms', 'payments', 'reports'];
 const USE_LOCAL_ERP_CACHE = import.meta.env.VITE_USE_LOCAL_ERP_CACHE === 'true';
 const USE_LOCAL_ERP_SEED = import.meta.env.VITE_USE_LOCAL_ERP_SEED === 'true';
 

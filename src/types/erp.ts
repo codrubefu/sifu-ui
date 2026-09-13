@@ -23,6 +23,7 @@ export type SectionId =
   | 'custom-fields'
   | 'grades'
   | 'smtp-settings'
+  | 'email-templates'
   | 'members'
   | 'services'
   | 'events'

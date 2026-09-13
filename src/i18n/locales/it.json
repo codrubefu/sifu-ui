@@ -20,6 +20,7 @@
     "sms": "SMS e notifiche",
     "payments": "Pagamenti e fatturazione",
     "reports": "Report",
+    "emailTemplates": "Modelli email",
     "smtpSettings": "Impostazioni SMTP"
   },
   "common": {
@@ -1170,5 +1171,31 @@
     "saveError": "Impossibile salvare le impostazioni SMTP.",
     "deleteError": "Impossibile eliminare le impostazioni SMTP.",
     "viewOnlyNotice": "Hai solo il permesso di visualizzare queste impostazioni."
+  },
+  "emailTemplates": {
+    "title": "Modelli email",
+    "subtitle": "Personalizza le email automatiche dell’organizzazione come testo semplice. Le email di eventi e pagamenti rispettano il consenso; la personalizzazione non lo modifica. I pagamenti includono la ricevuta PDF indipendentemente dal testo.",
+    "error": "Impossibile caricare o salvare i modelli.",
+    "invalidText": "Testo obbligatorio: massimo 255 caratteri senza interruzioni di riga per l’oggetto e 20.000 per il corpo.",
+    "invalidVariable": "Usa solo le variabili elencate tra doppie parentesi graffe, senza spazi.",
+    "setupRequired": "Il corpo deve includere {{setup_url}} per impostare la password.",
+    "resetConfirm": "Ripristinare il contenuto predefinito? La personalizzazione verrà eliminata; le email continueranno a essere inviate.",
+    "resetDone": "Contenuto predefinito ripristinato.",
+    "noAccess": "Non hai il permesso di visualizzare i modelli email.",
+    "viewOnly": "Hai accesso in sola lettura.",
+    "customized": "Personalizzato",
+    "default": "Predefinito",
+    "variables": "Variabili disponibili:",
+    "subject": "Oggetto",
+    "body": "Corpo (testo semplice)",
+    "customize": "Personalizza",
+    "reset": "Ripristina predefinito",
+    "view": "Visualizza",
+    "refresh": "Ricarica",
+    "types": {
+      "account_created": "Account creato",
+      "event_attached": "Iscrizione alla sessione",
+      "payment_confirmed": "Pagamento confermato"
+    }
   }
 }

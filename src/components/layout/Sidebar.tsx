@@ -91,6 +91,7 @@ const navGroups: readonly NavGroup[] = [
       { id: 'access', labelKey: 'menu.access', icon: ShieldCheck, rights: ['groups.view', 'groups.manage'] },
       { id: 'custom-fields', labelKey: 'menu.customFields', icon: SlidersHorizontal ,rights: ['custom-fields.view', 'custom-fields.manage'] },
       { id: 'grades', labelKey: 'menu.grades', icon: Award, rights: ['grades.view', 'grades.manage'] },
+      { id: 'email-templates', labelKey: 'menu.emailTemplates', icon: Mail, rights: ['email_templates.view', 'email_templates.manage'] },
       { id: 'smtp-settings', labelKey: 'menu.smtpSettings', icon: Mail, rights: ['smtp_settings.view', 'smtp_settings.manage'] },
     ],
   },

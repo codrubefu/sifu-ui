@@ -20,6 +20,7 @@ import { ReportsView } from './reports/ReportsView';
 import { CampaignsView } from './campaigns/CampaignsView';
 import { QuickCreateMenu } from './shared/QuickCreateMenu';
 import type { ContentProps } from './shared/types';
+import { EmailTemplatesView } from './settings/EmailTemplatesView';
 import { SmtpSettingsView } from './settings/SmtpSettingsView';
 import { SmsView } from './sms/SmsView';
 import { ServicesView } from './services/ServicesView';
@@ -73,6 +74,8 @@ export default function Content({ current, profileChildId, page, membersData, se
         return <CustomFieldsView />;
       case 'grades':
         return <GradesView />;
+      case 'email-templates':
+        return <EmailTemplatesView />;
       case 'smtp-settings':
         return <SmtpSettingsView />;
       case 'check-in':

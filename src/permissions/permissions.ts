@@ -19,6 +19,7 @@ const impliedRights: Record<string, string[]> = {
   'segments.manage': ['segments.view'],
   'campaigns.manage': ['campaigns.view'],
   'gdpr.process': ['gdpr.export'],
+  'email_templates.manage': ['email_templates.view'],
   'smtp_settings.manage': ['smtp_settings.view'],
 };
 

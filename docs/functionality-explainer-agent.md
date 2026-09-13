@@ -361,3 +361,11 @@ Observatii:
 - If `npm` or `node` is not available in the shell PATH, record that validation could not be run.
 - Keep UI explanations aligned with current source files, not older localStorage demo behavior.
 - Do not claim a workflow is API-driven unless a service file actually calls the backend for it.
+
+### Organization Email Templates
+
+`/erp/email-templates` is available under Organization through `EmailTemplatesView`, with `email_templates.view` or `email_templates.manage`; manage implies view. Direct navigation is also guarded, and view-only users cannot mutate content. `emailTemplatesService.ts` uses the shared authenticated JSON client for `/email-templates/types`, the unpaginated `/email-templates` list, POST, PATCH by ID, and DELETE by ID. No organization ID is sent.
+
+The screen merges the API catalog with customizations by type, so defaults remain visible when the customization list is empty. The editor displays allowed variables and plain-text subject/body, validates required content, length, exact variable syntax and the mandatory account `{{setup_url}}`, and displays backend field errors. Save creates or updates; Save and close persists, reloads the catalog/list, then returns to the list. Restore default confirms deletion and reloads the default content; it does not disable emails. Read failures expose Reload, and mutation failures preserve the editor. Copy is in the `emailTemplates` namespace in ro/en/it/fr, with `menu.emailTemplates` for navigation.
+
+Automatic account, session-registration and confirmed-payment delivery remains backend-owned. Content customization grants no notification consent; payment emails attach the existing PDF receipt independently of their text. SMTP, password reset and manual receipt download remain on their existing workflows. The UI does not generate setup tokens, send emails manually or preview real recipient data.

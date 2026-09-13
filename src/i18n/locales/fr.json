@@ -20,6 +20,7 @@
     "sms": "SMS et notifications",
     "payments": "Paiements et facturation",
     "reports": "Rapports",
+    "emailTemplates": "Modèles d’email",
     "smtpSettings": "Paramètres SMTP"
   },
   "common": {
@@ -1170,5 +1171,31 @@
     "saveError": "Impossible d’enregistrer les paramètres SMTP.",
     "deleteError": "Impossible de supprimer les paramètres SMTP.",
     "viewOnlyNotice": "Vous avez uniquement l’autorisation de consulter ces paramètres."
+  },
+  "emailTemplates": {
+    "title": "Modèles d’email",
+    "subtitle": "Personnalisez les emails automatiques de l’organisation en texte brut. Les emails d’événement et de paiement respectent le consentement ; la personnalisation ne le modifie pas. Les paiements incluent le reçu PDF indépendamment du texte.",
+    "error": "Impossible de charger ou d’enregistrer les modèles.",
+    "invalidText": "Texte obligatoire : au maximum 255 caractères sans saut de ligne pour l’objet et 20 000 pour le corps.",
+    "invalidVariable": "Utilisez uniquement les variables indiquées entre doubles accolades, sans espaces.",
+    "setupRequired": "Le corps doit inclure {{setup_url}} pour définir le mot de passe.",
+    "resetConfirm": "Rétablir le contenu par défaut ? La personnalisation sera supprimée ; les emails continueront à être envoyés.",
+    "resetDone": "Contenu par défaut rétabli.",
+    "noAccess": "Vous n’avez pas le droit de consulter les modèles d’email.",
+    "viewOnly": "Vous disposez d’un accès en lecture seule.",
+    "customized": "Personnalisé",
+    "default": "Par défaut",
+    "variables": "Variables disponibles :",
+    "subject": "Objet",
+    "body": "Corps (texte brut)",
+    "customize": "Personnaliser",
+    "reset": "Rétablir par défaut",
+    "view": "Consulter",
+    "refresh": "Recharger",
+    "types": {
+      "account_created": "Compte créé",
+      "event_attached": "Inscription à une séance",
+      "payment_confirmed": "Paiement confirmé"
+    }
   }
 }

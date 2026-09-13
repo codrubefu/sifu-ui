@@ -20,6 +20,7 @@
     "sms": "SMS and notifications",
     "payments": "Payments and billing",
     "reports": "Reports",
+    "emailTemplates": "Email templates",
     "smtpSettings": "SMTP settings"
   },
   "common": {
@@ -1170,5 +1171,31 @@
     "saveError": "Could not save SMTP settings.",
     "deleteError": "Could not delete SMTP settings.",
     "viewOnlyNotice": "You only have permission to view these settings."
+  },
+  "emailTemplates": {
+    "title": "Email templates",
+    "subtitle": "Customize your organization’s automatic emails as plain text. Event and payment emails respect consent; customization does not change it. Payments include the PDF receipt independently of the text.",
+    "error": "Could not load or save templates.",
+    "invalidText": "Text is required: at most 255 characters without line breaks for the subject and 20,000 for the body.",
+    "invalidVariable": "Use only the listed variables in double braces, without spaces.",
+    "setupRequired": "The body must include {{setup_url}} to set the password.",
+    "resetConfirm": "Restore default content? The customization will be deleted; emails will continue to be sent.",
+    "resetDone": "Default content restored.",
+    "noAccess": "You do not have permission to view email templates.",
+    "viewOnly": "You have read-only access.",
+    "customized": "Customized",
+    "default": "Default",
+    "variables": "Available variables:",
+    "subject": "Subject",
+    "body": "Body (plain text)",
+    "customize": "Customize",
+    "reset": "Restore default",
+    "view": "View",
+    "refresh": "Reload",
+    "types": {
+      "account_created": "Account created",
+      "event_attached": "Session registration",
+      "payment_confirmed": "Payment confirmed"
+    }
   }
 }

@@ -20,6 +20,7 @@
     "sms": "SMS si notificari",
     "payments": "Plati si facturare",
     "reports": "Rapoarte",
+    "emailTemplates": "Șabloane email",
     "smtpSettings": "Setari SMTP"
   },
   "common": {
@@ -1172,5 +1173,31 @@
     "saveError": "Nu am putut salva setarile SMTP.",
     "deleteError": "Nu am putut sterge setarile SMTP.",
     "viewOnlyNotice": "Ai doar permisiunea de a vizualiza aceste setari."
+  },
+  "emailTemplates": {
+    "title": "Șabloane email",
+    "subtitle": "Personalizează emailurile automate ale organizației, ca text simplu. Emailurile de eveniment și plată respectă consimțământul; personalizarea nu îl modifică. Plata include chitanța PDF, independent de text.",
+    "error": "Nu am putut încărca sau salva șabloanele.",
+    "invalidText": "Text obligatoriu: maximum 255 de caractere fără linii noi pentru subiect și 20.000 pentru corp.",
+    "invalidVariable": "Folosește numai variabilele afișate, între acolade duble, fără spații.",
+    "setupRequired": "Corpul trebuie să includă {{setup_url}} pentru setarea parolei.",
+    "resetConfirm": "Revii la conținutul implicit? Personalizarea va fi ștearsă; emailurile se trimit în continuare.",
+    "resetDone": "Conținutul implicit a fost restaurat.",
+    "noAccess": "Nu ai dreptul de a vedea șabloanele email.",
+    "viewOnly": "Ai acces doar pentru vizualizare.",
+    "customized": "Personalizat",
+    "default": "Implicit",
+    "variables": "Variabile disponibile:",
+    "subject": "Subiect",
+    "body": "Corp (text simplu)",
+    "customize": "Personalizează",
+    "reset": "Revino la implicit",
+    "view": "Vizualizează",
+    "refresh": "Reîncarcă",
+    "types": {
+      "account_created": "Cont creat",
+      "event_attached": "Înscriere la ședință",
+      "payment_confirmed": "Plată confirmată"
+    }
   }
 }
