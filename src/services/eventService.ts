@@ -6,7 +6,8 @@ export type RecurrenceType = 'once' | 'weekly' | 'monthly';
 export type Weekday = 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday' | 'sunday';
 export type OccurrenceStatus = 'scheduled' | 'cancelled' | 'completed';
 export type ParticipantStatus = 'registered' | 'attended' | 'cancelled' | 'no_show';
-export type EventPaymentType = 'cash' | 'card' | 'bank_transfer';
+// Currency code for `payment_amount` (e.g. RON, EUR), max 3 chars per the API contract.
+export type EventPaymentType = string;
 
 export type PaginationMeta = {
   current_page: number;
